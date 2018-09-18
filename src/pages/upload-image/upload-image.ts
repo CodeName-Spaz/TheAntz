@@ -61,5 +61,4 @@ export class UploadImagePage {
   dismiss(){
     this.view.dismiss();
   }
- 
 }
