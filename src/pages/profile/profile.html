@@ -1,34 +1,51 @@
-<ion-content padding class="home">
-  <ion-icon name="close" class="size" (click)="next()"></ion-icon>
-  <button ion-button (click)="presentPopover()">
-    <ion-icon name="more"></ion-icon>
-  </button>
+<ion-content class="home">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button color="dark" ion-button icon-only clear>
+          <ion-icon name="close" (click)="next()"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col align="right">
+        <button ion-button color="dark" icon-only clear (click)="presentPopover()">
+          <ion-icon name="more"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
   <h1 id="head" align="center">Profile</h1>
   <div id="pic" align="center">
-    <img />
-    <ion-fab right>
-      <ion-icon id="icon" name="aperture"></ion-icon>
-    </ion-fab>
+    <img src="../../assets/23931.png" alt="">
+    <div class="create">
+      <button ion-button icon-only clear color="dark">
+        <ion-icon md="md-create"></ion-icon>
+      </button>
+    </div>
+
+
+
   </div>
-  <ion-list class="list" >
+  <ion-list class="list">
     <ion-item *ngFor="let item of obj">
-        <ion-fab right>
-            <ion-icon id="icon2" name="brush"></ion-icon>
-          </ion-fab>
-          <p id="name">
-            {{item.name}}
-          </p>
-          <p>Email: {{item.email}}
-          </p>
-          <p>Instagram: 
-          </p>
-          <p>Facebook:
-          </p>
-        </ion-item>
+      <ion-fab right>
+        <ion-icon id="icon2" name="brush"></ion-icon>
+      </ion-fab>
+      <p id="name">
+        {{item.name}}
+      </p>
+      <p>Email: {{item.email}}
+      </p>
+      <p>Instagram:
+      </p>
+      <p>Facebook:
+      </p>
+    </ion-item>
   </ion-list>
-    <ion-icon name="add" (click)="upload()"></ion-icon>
-    <button ion-button (click)="retreivePics()">My gallery</button>
+  <ion-icon name="add" (click)="upload()"></ion-icon>
+  <button ion-button (click)="retreivePics()">My gallery</button>
 
   <ion-list>
     <ion-item *ngFor="let a of list">
