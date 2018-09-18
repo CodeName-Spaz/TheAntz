@@ -39,8 +39,19 @@
       </p>
     </ion-item>
   </ion-list>
-  <ion-icon name="add" (click)="upload()"></ion-icon>
-  <button ion-button (click)="retreivePics()">My gallery</button>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button (click)="retreivePics()">My gallery</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button>
+          <ion-icon name="add" (click)="upload()"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 
   <ion-list>
     <ion-item *ngFor="let a of list">
