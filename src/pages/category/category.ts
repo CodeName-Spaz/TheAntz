@@ -32,6 +32,9 @@ export class CategoryPage {
       this.navCtrl.push(ProfilePage, { obj: data });
     })
   }
+  nextpage(){
+    this.navCtrl.push(ProfilePage);
+  }
   typeOfArt() {
     this.art.selectCategory(this.category).then((data) => {
       // this.arr2.push(data);

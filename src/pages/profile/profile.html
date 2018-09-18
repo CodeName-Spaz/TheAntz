@@ -18,42 +18,40 @@
 
   <h1 id="head" align="center">Profile</h1>
   <div id="pic" align="center">
-    <img src="../../assets/23931.png" alt="">
-    <div class="create">
-      <button ion-button icon-only clear color="dark">
-        <ion-icon md="md-create"></ion-icon>
-      </button>
-    </div>
 
-
+      <img [src]="url">
+    <ion-card>
+        <ion-item class="item item-trns text-center">
+          <input type="file" (change)="insertpic($event)">
+        </ion-item>
+      </ion-card>
 
   </div>
   <ion-list class="list">
     <ion-item *ngFor="let item of obj">
-      <ion-fab right>
-        <ion-icon id="icon2" name="brush"></ion-icon>
-      </ion-fab>
-      <p id="name">
-        {{item.name}}
-      </p>
-      <p>Email: {{item.email}}
-      </p>
-      <p>Instagram:
-      </p>
-      <p>Facebook:
-      </p>
-    </ion-item>
+
+        <ion-fab right>
+            <ion-icon id="icon2" name="brush"></ion-icon>
+          </ion-fab>
+          <p>
+            Name:{{item.name}}
+          </p>
+          <p>Email: {{item.email}}
+          </p>
+          <p>Instagram: 
+          </p>
+          <p>Facebook:
+          </p>
+        </ion-item>
+
   </ion-list>
   <ion-icon name="add" (click)="upload()"></ion-icon>
   <button ion-button (click)="retreivePics()">My gallery</button>
 
   <ion-list>
     <ion-item *ngFor="let a of list">
-      <ion-thumbnail item-start>
         <img [src]="a.downloadurl">
-      </ion-thumbnail>
       <h2>{{a.name}}</h2>
-      <button ion-button color="danger" clear item-end (click)="remove(a.key)">remove</button>
     </ion-item>
   </ion-list>
 </ion-content>

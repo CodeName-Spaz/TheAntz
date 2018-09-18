@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EditProfilePage } from '../edit-profile/edit-profile';
+import { LoginPage } from '../login/login';
 /**
  * Generated class for the PopOverProfilePage page.
  *
@@ -26,5 +27,9 @@ export class PopOverProfilePage {
     this.navCtrl.push(EditProfilePage);
   }
  
-
+  logout(){
+    this.art.logout().then(()=>{
+      this.navCtrl.push(LoginPage);
+    },(error)=>{})
+    }
 }
