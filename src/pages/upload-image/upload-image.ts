@@ -42,18 +42,12 @@ export class UploadImagePage {
       reader.readAsDataURL(event.target.files[0]);
       console.log(reader.onload);
     }
+    this.uploadPicture();
   }
+  
   uploadPicture(){
     this.art.uploadPic(this.url,this.name).then(data =>{
       this.imageUrl = data;
-       this.art.storeToDB(data, this.category, this.name).then(() =>{
-         console.log('added to db');
-        //  this.navCtrl.view(ProfilePage);
-     this.view.dismiss();
-       },
-      Error =>{
-        console.log(Error)
-      })
     }, Error =>{
       console.log(Error )
     })
@@ -61,5 +55,19 @@ export class UploadImagePage {
   dismiss(){
     this.view.dismiss();
   }
+
+  uploadData(){
+    this.art.storeToDB(this.imageUrl, this.category, this.name).then(() =>{
+      console.log('added to db');
+     //  this.navCtrl.view(ProfilePage);
+    this.view.dismiss();
+      },
+        Error =>{
+      console.log(Error)
+   })
+  
+  }
+  
+  
  
 }

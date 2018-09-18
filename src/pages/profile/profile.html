@@ -6,9 +6,9 @@
 
   <h1 id="head" align="center">Profile</h1>
   <div id="pic" align="center">
-    <img />
+    <img src="../../assets/me.jpg">
     <ion-fab right>
-      <ion-icon id="icon" name="aperture"></ion-icon>
+      <ion-icon id="icon" name="add"></ion-icon>
     </ion-fab>
   </div>
   <ion-list class="list" >
@@ -16,8 +16,8 @@
         <ion-fab right>
             <ion-icon id="icon2" name="brush"></ion-icon>
           </ion-fab>
-          <p id="name">
-            {{item.name}}
+          <p>
+            Name:{{item.name}}
           </p>
           <p>Email: {{item.email}}
           </p>
@@ -32,11 +32,8 @@
 
   <ion-list>
     <ion-item *ngFor="let a of list">
-      <ion-thumbnail item-start>
         <img [src]="a.downloadurl">
-      </ion-thumbnail>
       <h2>{{a.name}}</h2>
-      <button ion-button color="danger" clear item-end (click)="remove(a.key)">remove</button>
     </ion-item>
   </ion-list>
 </ion-content>

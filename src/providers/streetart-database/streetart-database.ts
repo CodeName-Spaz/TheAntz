@@ -23,32 +23,15 @@ export class StreetartzProvider {
     console.log('Hello StreetartzProvider Provider');
 
   }
-  logout(){
-    firebase.auth().signOut().then(() =>{
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'signing out.....',
-        duration: 3000
-      });
-    }).catch((error)=>{
-      const alert = this.alertCtrl.create({
-        title: error.code,
-        subTitle: error.message,
-        buttons: [
-          {
-            text: 'ok',
-            handler: data => {
-              console.log('Cancel clicked');
-            }
-          }
-        ]
-      });
-      alert.present();
-      console.log(error);
- 
+logout() {
+  return new Promise((resolve, reject) => {
+    firebase.auth().signOut().then(()=>{
+   resolve();
+    } , (error)=>{
+      reject(error)
     })
-  
-  }
+  })
+}
   presentToast1() {
     const toast = this.toastCtrl.create({
       message: 'email or password doesnot match!',
