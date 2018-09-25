@@ -1,45 +1,37 @@
 <ion-header>
-</ion-header>
-<ion-content>
-  <ion-fab top left>
-    <button ion-button clear color="light" (click)="dismiss()">
-      <h2><ion-icon name="close"></ion-icon></h2>
-      
-    </button>
-  </ion-fab>
-  <div class="bg"></div>
-      <div class="logo">
-      <img src="../../assets/imgs/theLogo/ANTZ Logo.png" alt="">
+  </ion-header>
+  <ion-content style=" background-image: url('../../assets/imgs/BG.jpg'); background-size: cover;">
+   
+    <div class="logo">
+        <img src="../../assets/imgs/ANTZ Logo.png" alt="">
     </div>
-  <div class="content">
-
-    <div class="form">
-      <div class="theList">
-        <ion-item>
-          <ion-label stacked>Full name</ion-label>
-          <ion-input type="text" [(ngModel)]="obj.name"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Email</ion-label>
-          <ion-input type="email" [(ngModel)]="obj.email"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="obj.password"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label stacked>Confirm Password</ion-label>
-          <ion-input type="password" [(ngModel)]="obj.confirmPassword"></ion-input>
-        </ion-item>
-      </div>
+    <div class="items">
+      <p>Create account</p>
+        <ion-list no-lines>
+            <ion-item>
+                <ion-label floating>
+                  Full name
+                </ion-label>
+                <ion-input type="text" [(ngModel)]="obj.name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Email</ion-label>
+                <ion-input type="email" [(ngModel)]="obj.email"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Password</ion-label>
+                <ion-input type="password" [(ngModel)]="obj.password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label floating>Confirm Password</ion-label>
+                <ion-input type="password" [(ngModel)]="obj.confirmPassword"></ion-input>
+              </ion-item>
+          </ion-list>
+        <button round ion-button full icon-only id="button" color="secondary" (click)="signUp()">
+          Create
+        </button>
     </div>
-
-    <div class="btn">
-      <button ion-button round color="darker" (click)="signUp()">SIGN UP</button>
-
-    </div>
-
-
-  </div>
-
-</ion-content>
+  </ion-content>
+  <ion-footer (click)="dismiss()">
+      <p>Back to <b>Sign In</b></p>
+        </ion-footer>

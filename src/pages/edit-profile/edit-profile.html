@@ -6,13 +6,38 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>EditProfile</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+    <ion-navbar>
+      <ion-title>EditProfile</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+  <img [src]="url">
+  <ion-card>
+    <ion-item class="item item-trns text-center">
+      <input type="file" (change)="insertpic($event)">
+    </ion-item>
+  </ion-card>
+  <ion-list>
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="name"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label stacked>Facebook</ion-label>
+        <ion-input type="text" [(ngModel)]="facebook"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Instagram</ion-label>
+        <ion-input type="text" [(ngModel)]="instagram"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Twitter</ion-label>
+        <ion-input type="text" [(ngModel)]="twitter"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button (click)="uploadPicture()">Save</button>
+  </ion-content>

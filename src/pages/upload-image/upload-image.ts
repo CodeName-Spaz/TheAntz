@@ -16,7 +16,7 @@ import { ProfilePage } from '../profile/profile';
   templateUrl: 'upload-image.html',
 })
 export class UploadImagePage {
-  url='../../assets/beats.jpg' ;
+  url='../../assets/default.jpg' ;
   name;
   category;
   imageUrl;
@@ -24,6 +24,7 @@ export class UploadImagePage {
   description;
   constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider,public view :ViewController) {
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadModalPage');
   }

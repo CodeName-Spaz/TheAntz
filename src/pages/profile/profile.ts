@@ -10,6 +10,7 @@ import { PopOverProfilePage } from '../pop-over-profile/pop-over-profile';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -27,16 +28,19 @@ export class ProfilePage {
   arr = [];
   uid: any;
   obj;
-  url='../../assets/beats.jpg' ;
+  url='../../assets/download.png' ;
   name;
   imageUrl;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
+    this.retreivePics(); 
   }
   ngOnInit() {
     this.obj = this.navParams.get("obj");
     console.log(this.obj);
   }
   insertpic(event:any){
+    console.log(event);
+    
     if (event.target.files && event.target.files[0]){
       let reader = new FileReader();
       reader.onload = (event:any) =>{
@@ -49,18 +53,19 @@ export class ProfilePage {
   }
 
  
-  uploadPicture(){
-    this.art.uploadPic(this.url,this.name).then(data =>{
+  uploadPicture() {
+    this.art.uploadProfilePic(this.url, this.name).then(data => {
       this.imageUrl = data;
-       this.art.storeProfilePics(data).then(() =>{
-         console.log('added to db');
-       },
-      Error =>{
-        console.log(Error)
-      })
-    }, Error =>{
-      console.log(Error )
+      this.art.storeProfilePics(data,this.name).then(() => {
+        console.log('added to db'); 
+      },
+        Error => {
+          console.log(Error)
+        })
+    }, Error => {
+      console.log(Error)
     })
+  
   }
   next() {
     this.navCtrl.push(CategoryPage);
@@ -108,5 +113,18 @@ export class ProfilePage {
       console.log(Error)
     });
   }
+
+  dismissPage(){
+    this.navCtrl.pop()
+  }
+  nextpage(){
+    this.navCtrl.push(EditProfilePage);
+  }
+ 
+  logout(){
+    this.art.logout().then(()=>{
+      this.navCtrl.setRoot(LoginPage);
+    },(error)=>{})
+    }
  
 }

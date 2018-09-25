@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Popover, PopoverController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { LoginPage } from '../login/login';
@@ -17,7 +17,7 @@ import { LoginPage } from '../login/login';
 })
 export class PopOverProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public popCtrl:  PopoverController) {
   }
 
   ionViewDidLoad() {

@@ -50,11 +50,13 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content autohide padding>
+        <div id="scroll-content">
   <ion-list *ngFor="let a of arr2">
     <img [src]="a.downloadurl">
 </ion-list>
 <ion-fab  edge>
     <button ion-fab mini (click)="typeOfArt()"><ion-icon name="add" ></ion-icon></button>
   </ion-fab>
+  </div>
 </ion-content>

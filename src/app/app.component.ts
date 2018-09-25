@@ -4,12 +4,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
+import { ViewPage } from '../pages/view/view'
 
 
 import firebase from 'firebase';
 import { ProfilePage } from '../pages/profile/profile';
 import { SplashPage } from '../pages/splash/splash';
 import { CategoryPage } from '../pages/category/category';
+import { UploadImagePage } from '../pages/upload-image/upload-image';
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,18 +19,15 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
 
-  rootPage: any = ProfilePage;
-
+  rootPage: any = ViewPage;
   
-
-
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-
+ 
 
     firebase.initializeApp({
       apiKey: "AIzaSyDXJsbuaNORuwbz2gdRBFi-kUQ1JDJKoMA",

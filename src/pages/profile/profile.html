@@ -1,57 +1,116 @@
 <ion-content class="home">
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button color="dark" ion-button icon-only clear>
-          <ion-icon name="close" (click)="next()"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col align="right">
-        <button ion-button color="dark" icon-only clear (click)="presentPopover()">
-          <ion-icon name="more"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <div class="forFab">
+    <ion-fab top right clear class="moreFAB">
+      <button ion-fab mini clear class="moreFAB" color="secondary">
+        <ion-icon ios="ios-more" md="md-more"></ion-icon>
+      </button>
+      <ion-fab-list side="left">
+        <div class="cont">
+          <button class="edit" color="dark" ion-button clear (click)="nextpage()">Edit Profile</button>
+          <button class="signOut" color="dark" ion-button clear (click)="logout()">Sign Out</button>
+        </div>
+
+      </ion-fab-list>
+    </ion-fab>
+  </div>
 
 
-  <h1 id="head" align="center">Profile</h1>
-  <div id="pic" align="center">
 
-      <img [src]="url">
-    <ion-card>
-        <ion-item class="item item-trns text-center">
-          <input type="file" (change)="insertpic($event)">
-        </ion-item>
-      </ion-card>
+  <div class="head">
+    <ion-grid no-padding>
+      <ion-row>
+        <ion-col>
+          <button color="light" ion-button icon-only (click)="dismissPage()" clear>
+            <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col align="center">
+          <h1 id="head">Profile</h1>
+        </ion-col>
+        <ion-col align="right">
+          <button ion-button color="light" icon-only clear (click)="presentPopover()">
+            <ion-icon ios="ios-more" md="md-more"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+    <div id="pic" align="center">
+      <div class="photo">
+        <div class="dp">
+          <img class="m" [src]="url">
+        </div>
+      </div>
+    </div>
+
+    <div class="list">
+      <div *ngFor="let item of obj">
+
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <h3>
+                {{item.name}}
+              </h3>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <div class="social">
+          <ion-grid>
+            <ion-row class="outline">
+              <ion-col>
+                <b>Instagram</b>
+                : {{item.twitter}}</ion-col>
+            </ion-row>
+            <ion-row class="outline">
+              <ion-col>
+                <b>Facebook</b>
+                : {{item.facebook}}</ion-col>
+            </ion-row>
+            <ion-row class="outline">
+              <ion-col>
+                <b>Twitter</b>: {{item.instagram}}</ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+      </div>
+
+    </div>
+
 
   </div>
-  <ion-list class="list">
-    <ion-item *ngFor="let item of obj">
+  <div class="split">
+    <ion-grid>
+      <ion-row id="divider">
+        <ion-col id="divider">My Gallery</ion-col>
+        <ion-col id="divider" align="right">
+          <button ion-button icon-only color="primary" class="btnIcon" (click)="upload()">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-        <ion-fab right>
-            <ion-icon id="icon2" name="brush"></ion-icon>
-          </ion-fab>
-          <p>
-            Name:{{item.name}}
-          </p>
-          <p>Email: {{item.email}}
-          </p>
-          <p>Instagram: 
-          </p>
-          <p>Facebook:
-          </p>
-        </ion-item>
 
-  </ion-list>
-  <ion-icon name="add" (click)="upload()"></ion-icon>
-  <button ion-button (click)="retreivePics()">My gallery</button>
+  </div>
 
-  <ion-list>
-    <ion-item *ngFor="let a of list">
-        <img [src]="a.downloadurl">
-      <h2>{{a.name}}</h2>
-    </ion-item>
-  </ion-list>
+
+
+  <div class="contents">
+
+
+    <ion-grid>
+      <ion-row class="gal">
+        <ion-col *ngFor="let a of list" col-6>
+          <img class="image" [src]="a.downloadurl" alt="">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
 </ion-content>

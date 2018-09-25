@@ -1,3 +1,28 @@
 page-view {
+    .head{
+        // background: red;
+    }
+    .theBack{
+        position: absolute;
+    }
+    .viewedImage{
 
+    }
+    #backBtn{
+        text-shadow: 0 0 10px black;
+    }
+    .theFab{
+        border: 2px solid blue;
+        height: 10px;
+        position: relative;
+
+    }
+    ion-fab{
+
+    }
+
+    @media screen and (min-width: 360px){
+
+
+    }
 }

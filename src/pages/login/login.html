@@ -1,52 +1,25 @@
-<ion-content>
-
-  <div class="mtop"></div>
-
-  <div class="everything">
-
-    <div class="logo">
-      <p style="color: white; text-shadow: 0px 0px 5px black">Welcome to</p>
-      <img src="../../assets/imgs/theLogo/ANTZ Logo.png" alt="">
-    </div>
-
-    <div class="form">
-      <div class="theList">
-        <ion-list no-lines>
+<ion-content style=" background-image: url('../../assets/imgs/BG.jpg'); background-size: cover;">
+  <div class="logo">
+      <p >Welcome to</p>
+      <img src="../../assets/imgs/ANTZ Logo.png" alt="">
+  </div>
+  <div class="items" padding>
+      <ion-list no-lines>
           <ion-item>
-            <ion-label start>
-              <ion-icon ios="ios-person-outline" md="md-person" id="space"></ion-icon></ion-label>
-            <ion-input type="text" value=""[(ngModel)]="obj.email" placeholder="Username"></ion-input>
+            <ion-input type="email" placeholder="Email" value=""[(ngModel)]="obj.email"></ion-input>
           </ion-item>
-
           <ion-item>
-            <ion-label start>
-              <ion-icon ios="ios-key-outline" md="md-key" id="space"></ion-icon></ion-label>
-            <ion-input type="password" [(ngModel)]="obj.password" placeholder="Password"></ion-input>
+            <ion-input type="password" placeholder="Password" [(ngModel)]="obj.password"></ion-input>
           </ion-item>
-          <p (click)="forgotpassword(obj)">Forgot password</p>
+  
         </ion-list>
-      </div>
-      <div class="ctrl">
-              <div class="btn">
-        <button color="darker" ion-button round icon-only block (click)="login()">
-          SIGN IN
-        </button>
-      </div>
-      </div>
-
-
-    </div>
-
-
-
+      <button ion-button full icon-only id="button" color="secondary" (click)="login()">
+        Sign In
+      </button>
+      <p (click)="forgotpassword(obj)">Forgot password</p>
   </div>
-
-  <div class="btn2">
-      <button clear color="light" ion-button full (click)="signup()">
-         <p id="forgot"> Don't have an account?
-          <b id="instruct"> Sign up</b></p>
-        </button>
-  </div>
-
-
-</ion-content>
+  
+  </ion-content>
+  <ion-footer (click)="signup()">
+      <p>Sign Up</p>
+        </ion-footer>
