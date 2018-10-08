@@ -10,6 +10,7 @@ import { ToastController } from 'ionic-angular';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
 @IonicPage()
 @Component({
   selector: 'page-edit-profile',
@@ -23,22 +24,23 @@ export class EditProfilePage {
   facebook:any;
   instagram:any;
   twitter:any;
+  file;
+  bio;
+  contact;
+  skill;
   url = '../../assets/download.png';
-  imageUrl;
+  imageUrl:any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider,public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
   }
+  nexpage(){
+  this.navCtrl.setRoot(ProfilePage);
+}
   ionViewDidLoad() {
     console.log('ionViewDidLoad EditProfilePage');
   }
-  // ngOnInit() {
-  //   this.obj = this.navParams.get("obj");
-  //   console.log(this.obj);
-  // }
-  update() { 
-    this.arr.length = 0;
-    this.art.update(this.name,this.facebook,this.instagram,this.twitter).then((data) => {
-      console.log(data);
-    })
+  ngOnInit() {
+    this.obj = this.navParams.get("obj");
+    console.log(this.obj);
   }
   insertpic(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -49,22 +51,23 @@ export class EditProfilePage {
       reader.readAsDataURL(event.target.files[0]);
       console.log(reader.onload);
     }
+
   }
-  uploadPicture=function() {
-    this.arr.length = 0;
-    this.art.uploadProfilePic(this.url, this.name).then(data => {
-      this.imageUrl = data;
-      this.art.update(this.name,this.facebook,this.instagram,this.twitter).then((data) => {
-      this.art.storeProfilePics(data,this.name).then(() => {
-        console.log('added to db'); 
-      },
-        Error => {
-          console.log(Error)
-        })
-    }, Error => {
-      console.log(Error)
+  uploadPicture(){
+   this.arr.length =0;
+    this.art.uploadProfilePic(this.url,this.name).then(data =>{
+       this.art.storeToDB1(this.name).then(() =>{
+         console.log('added to db');
+         this.art.update(this.name,this.email,this.contact,this.skill,this.bio).then((data) => {
+          console.log(data);
+           })
+       },
+      Error =>{
+        console.log(Error)
+      })
+    }, Error =>{
+      console.log(Error )
     })
-  
-  })
   }
+  
 }

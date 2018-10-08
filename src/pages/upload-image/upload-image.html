@@ -1,44 +1,21 @@
-<ion-content padding class="container">
+<ion-content class="content" padding style="background-image: url('../../assets/imgs/BG.jpg');background-size: cover;" >
   <div>
     <button ion-button clear color="light" icon-only (click)="dismiss()">
       <ion-icon name="close"></ion-icon>
     </button>
   </div>
-  <div class="head">
-    <div class="buttoon">
-      <label for="in">
-          <ion-icon ios="ios-image" md="md-image" id="ico"></ion-icon>
-      </label>
-      <input class="inpe" type="file" id="in" (change)="insertvid($event)">
-    </div>
-    <div class="preview">
-      <img [src]="url" class="uploaded">
-    </div>
-
-
+  <div class="card-background-page">
+      <ion-card>
+          <img [src]="url" imageViewer/>
+          <label for="in" class="input">
+              <ion-icon name="camera"></ion-icon>
+          </label>
+          <input class="inpe" type="file" id="in" accept="image/*" capture="camera" (change)="insertvid($event)">
+       </ion-card>       
   </div>
-  <br>
-  <br>
-
-
-  <div>
-    <ion-item no-lines>
-      <ion-label floating>Name of the artwork</ion-label>
-      <ion-input type="text" [(ngModel)]="name"></ion-input>
-    </ion-item>
-
-
-      <ion-textarea type="text" maxlength="150" placeholder="Description" [(ngModel)]="description" rows="3" cols="50"></ion-textarea>
-
-
-    <!-- Categories Part -->
-
-
-
-  </div>
-  <br>
+<div class="section">
   <ion-item no-borders>
-    <ion-label>Category</ion-label>
+    <ion-label>What is your art?</ion-label>
     <ion-select [(ngModel)]="category">
       <ion-option value="Photography">Photography</ion-option>
       <ion-option value="Sculpting">Sculpting</ion-option>
@@ -48,24 +25,11 @@
       <ion-option value="General">General</ion-option>
     </ion-select>
   </ion-item>
-  <br>
-
   <ion-item>
-    <button ion-button full colo="primary" (click)=" uploadPicture()">Upload Artwork</button>
+    <ion-label floating>Art name</ion-label>
+    <ion-input type="text" [(ngModel)]="name"></ion-input>
   </ion-item>
-  <!-- <button ion-button (click)="viewImage()">view image</button>
-<ion-list *ngFor="let a of arr">
- <img [src]="a.downloadurl">
- <p>{{a.name}}</p>
-</ion-list> -->
-
-
-
-  <!-- Test -->
-
-
-
-
-
-
+    <ion-textarea type="text" maxlength="150" placeholder="Tell more about your art" [(ngModel)]="description" rows="3" cols="50"></ion-textarea>
+</div>
+  <button class="btn" ion-button full color="primary" (click)="uploadPicture()">Upload your work</button>
 </ion-content>

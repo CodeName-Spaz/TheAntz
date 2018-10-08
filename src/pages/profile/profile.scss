@@ -1,198 +1,21 @@
-page-profile {
-
-
-@media screen and (max-width: 414px){
-    .outline{
-        border-bottom: 0.05px solid white;
-        text-align: center
-    }
-    .contents{
-        padding-top: 15px;
-        margin: 0 auto;
-    }
-
-    .social{
-        margin: 0 auto;
-        // border: 2px solid red;
-        width: 300px;
-    }
-
-
-    .image{
-        width: 200px;
-        height: 170px;
-    }
-    .cont{
-        background: white;
-        animation: 1s slideInRight;
-        animation: 1s fadeIn;
-        box-shadow: 0px 0px 15px black;
-    }
-    .edit{
-        animation: 0.5s slideInRight;
-        // color: black;
-    }
-    .signOut{
-        // margin-top: 40px;
-        // margin-right: -100px;
-        animation: 1.5s slideInRight;
-        // color: black;
-    }
-    .moreFAB{
-        margin-top: -12px;
-        margin-right: -12px;
-        box-shadow: 0px 3px 5px rgb(0,78,66);
-    }
-    p, h3{
-        text-align: center;
+page-profile{
+    .threeButton{
+        font-size: 25px;
     }
     .head{
-        background: rgb(0,78,66)
-    }
-    .list{
+        background: rgb(1,17,39);
         color: white;
     }
-    h3{
-        font-family: calibri;
+    .DP{
+        width: 100px;
+        border-radius: 500px;
     }
-    .m{
-        height: 150px;
-        width: 150px;
-        border-radius: 150px;
+    p{
+        font-size:12px;
     }
-    .addBtn{
-        height: 20px;
-        width: 30px;
-        
+    .bio{
+        background: red;
+        border: 2px solid red;
     }
-    #divider{
-        height: 30px;
-    }
-    #head{
-        margin-top:50px;
-        color: white;
-    }        
-    .uploadBtn{
-        width: 50px;
-        height: 50px;
-        border-radius: 50px;
-    }
-
-    .head{
-        box-shadow: 0px 30px 5px black;
-        padding-bottom: 10px;
-    }
-    .split{
-        border-bottom: 1px solid grey;
-        height: 30px;
-        background: rgb(0,78,66);
-        color: white;
-        // box-shadow: inset 0px 5px 1px rgb(0,78,66);
-    }
-    .btnIcon{
-        height: 40px;
-        width: 40px;
-        border-radius: 50px;
-        border-left: 1px solid grey;
-        margin-top: 0px;
-    }
-
-}
-
-@media screen and (min-width: 415px){
-    .contents{
-        padding-top: 15px;
-        max-width: 850px;
-        // border: 2px solid red;
-        margin: 0 auto;
-    }
-
-    .social{
-        margin: 0 auto;
-        // border: 2px solid red;
-        width: 300px;
-    }
-
-
-    .image{
-        width: 400px;
-        height: 400px;
-    }
-    .cont{
-        background: white;
-        animation: 1s slideInRight;
-        animation: 1s fadeIn;
-        // box-shadow: 0px 0px 15px black;
-    }
-    .edit{
-        animation: 0.5s slideInRight;
-        // color: black;
-    }
-    .signOut{
-        // margin-top: 40px;
-        // margin-right: -100px;
-        animation: 1.5s slideInRight;
-        // color: black;
-    }
-    .moreFAB{
-        margin-top: -12px;
-        margin-right: -12px;
-        box-shadow: 0px 3px 5px rgb(0,78,66);
-    }
-    p, h3{
-        text-align: center;
-    }
-    .head{
-        background: rgb(0,78,66)
-    }
-    .list{
-        color: white;
-    }
-    h3{
-        font-family: calibri;
-    }
-    .m{
-        height: 150px;
-        width: 150px;
-        border-radius: 150px;
-    }
-    .addBtn{
-        height: 20px;
-        width: 30px;
-        
-    }
-    #divider{
-        height: 30px;
-    }
-    #head{
-        margin-top:50px;
-        color: white;
-    }        
-    .uploadBtn{
-        width: 50px;
-        height: 50px;
-        border-radius: 50px;
-    }
-
-    .head{
-        box-shadow: 0px 30px 5px rgb(0,78,66);
-        padding-bottom: 10px;
-    }
-    .split{
-        border-bottom: 1px solid grey;
-        height: 30px;
-        background: rgb(0,78,66);
-        color: white;
-        box-shadow: inset 0px 5px 1px rgb(0,78,66);
-    }
-    .btnIcon{
-        height: 40px;
-        width: 40px;
-        border-radius: 50px;
-        border-left: 1px solid grey;
-        margin-top: 0px;
-    }
-
-
-}
+    
 }

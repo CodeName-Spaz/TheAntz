@@ -1,20 +1,96 @@
-
 <ion-content>
-  <div class="head">
-    <ion-buttons class="theBack" start>
-      <button clear color="light" ion-button icon-only><ion-icon id="backBtn" name="arrow-back"></ion-icon></button>
-    </ion-buttons>
-    <img class="viewedImage" src="../../assets/beats.jpg" alt="">
+  <ion-fab top left>
+    <button ion-button clear icon-only color="light" (click)="GoBackToCategory()">
+      <ion-icon class="ico" name="arrow-back"></ion-icon>
+    </button>
+  </ion-fab>
 
-    <ion-buttons end>
-      <button ion-button icon-only><ion-icon name="cart"></ion-icon></button>
-    </ion-buttons>
+
+  <!-- <div class="head">
+    <img class="chosenImage" src="{{downloadurl}}" alt="">
+  </div> -->
+
+
+  <div class="post">
+    <img class="postedIMG" src="{{downloadurl}}"/>
+    <ion-item color="light" class="arter" no-lines>
+      <ion-avatar item-start>
+        <img src="{{downloadurl}}" />
+      </ion-avatar>
+      <h2 class="artistName">artist name</h2>
+    </ion-item>
+    <div class="title">
+     
+        <h4 class="caption">Caption Text</h4>
+
+      <p class="statements">
+        This is the short description of the photograph above. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores,
+        eos?
+      </p>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3>
+            <button ion-button clear>12 likes</button>
+          </ion-col>
+          <ion-col>
+            <button ion-button clear>500 comments</button>
+          </ion-col>
+                  <ion-fab right class="cart">
+              <button ion-fab mini>
+                <img class="pay" src="../../assets/icon/basket.svg" alt="">
+              </button>
+            </ion-fab>    
+        </ion-row>
+      </ion-grid>
+
+
+
+    </div>
   </div>
+
   <div>
 
-  </div>
-  <div class="body">
 
+
+
+      <ion-card>
+
+        <ion-item>
+          <ion-avatar item-start>
+            <img src="../../assets/imgs/User.png" imageViewer>
+          </ion-avatar>
+          <h2>Player1505</h2>
+          <p>November 5, 1955</p>
+        </ion-item>
+        <ion-card-content>
+          <p>This is a sample text showing how comments would look like in this instance.</p>
+        </ion-card-content>
+
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-start clear small>
+              <ion-icon name="thumbs-up"></ion-icon>
+              <div>0</div>
+            </button>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-card>
+ 
   </div>
 
 </ion-content>
+<ion-footer no-padding>
+  <ion-toolbar>
+    <ion-item class="footItem" no-lines>
+      <ion-input type="text" [(ngModel)]="comment" placeholder="Comment" id="commentTXT"></ion-input>
+      <button ion-button class="sendBtn" item-end icon-only large (click)="sendComment()">
+          <ion-icon ios="ios-send" md="md-send"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-toolbar>
+
+
+
+</ion-footer>

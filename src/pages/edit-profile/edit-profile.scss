@@ -1,3 +1,94 @@
 page-edit-profile {
-
+    ion-textarea{
+        color: #fab335;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    div.scroll-content{
+        padding: 0%;
+        margin: 0%;
+        // background: linear-gradient(#082246da,#010e1f);
+    }
+    #mark{
+        font-size: 240%;
+        color: #fab335;
+    }
+    .card-background-page {
+        ion-card {
+            background-color: transparent;
+            // background: linear-gradient(#082246da,#010e1f);
+          position: relative;
+          text-align: center;
+          width: 92vw;
+          box-shadow: 0 0 1px white;
+        //   border-radius: 100%;
+        }
+      #pic{
+          height: 40vh;
+          filter: blur(6px);
+         
+      }
+      #file{
+          margin: 0%;
+          font-size: 30%;
+          text-align: right;
+          background-color: transparent;
+          width: 45vw;
+          border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        box-shadow: 0 0 1px white;
+        color: #082246da;
+      }
+        .card-title {
+            margin: 0%;
+            border: none;
+          position: absolute;
+          top: 8vh;
+          left:23vw;
+          font-size: 2.0em;
+          width: 45vw;
+          font-weight: bold;
+          color: #fff;
+        //   border-radius: 100%;
+        img{
+            box-shadow: 0 0 1px white;
+            height: 25vh;
+           background-image: url('../../assets/imgs/person-icon.jpg');
+           background-size: cover;
+        //    border-radius: 100%;
+        }
+        }
+      
+        .card-subtitle {
+          font-size: 1.0em;
+          position: absolute;
+          top: 52%;
+          width: 100%;
+          color: #fff;
+        }
+      
+      }
+    .content{
+        position: absolute;
+        padding:10%;
+    }
+    .item{
+        margin: 2%;
+        box-shadow: 0 0 3px #011127;
+        width: 78.5vw;
+        background-color: #011127;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+        border-bottom-left-radius: 50px;
+        border-bottom-right-radius: 50px;
+    }
+    ion-icon{
+        color: #fab335;
+    }
+    input{
+        margin: 0%;
+    color: #fab335;
+    }
 }

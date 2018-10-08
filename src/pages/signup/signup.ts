@@ -22,16 +22,15 @@ export class SignupPage {
   }
 
   signUp(obj: obj) {
-  if(this.obj.password != this.obj.confirmPassword) {
-      this.presentToast1();
-  } else { 
+
+ 
       this.art.register(this.obj);
       console.log(this.obj);
       this.presentToast();
       this.navCtrl.setRoot(CategoryPage); 
   }
       
-  }
+  
 
   dismiss() {
     this.viewCtrl.dismiss();

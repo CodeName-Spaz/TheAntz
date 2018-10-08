@@ -1,28 +1,200 @@
 page-view {
+
+    .postedIMG{
+        box-shadow: 0 0 1px grey;
+        width: 100%;
+        max-width: 500px;
+        text-align: center;
+    }
+    .statements{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .post{
+        box-shadow: 0 2px  5px grey;
+        background: #011127;
+        color: white;
+    }
+    .arter{
+        background: #011127;
+        color: white;
+    }
+    .caption{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .artistName{
+        text-transform: capitalize;
+    }
+
+    .chosenImage{
+        width: 100%
+    }
+    #backBTN{
+        position: absolute;
+        z-index: inherit;
+    }
+    .ico{
+        text-shadow: 0 0 5px black;
+    }
     .head{
         // background: red;
+        position: relative
     }
-    .theBack{
+    .split{
+        // border-bottom: 1px solid grey;
+        z-index: 1;
+        background: rgba(0, 78, 66, 0);
+        color: black;
+        transform: translateY(-25px)
+        // box-shadow: inset 0px 5px 1px rgb(0,78,66);
+    }
+    .cart{
+
         position: absolute;
+        // display: block;
+        // margin-top: 20px;
+        z-index: 1;
+        // margin-left: -50px;
     }
-    .viewedImage{
-
+    .artist{
+        position: absolute;
+        margin-top: -35px;
+        z-index: -2;
+        // border: 2px solid red;
+        background: #323787;
+        color: white;
     }
-    #backBtn{
-        text-shadow: 0 0 10px black;
-    }
-    .theFab{
-        border: 2px solid blue;
-        height: 10px;
+    .avatar{
         position: relative;
+        margin-top: -100px;
+        border: 5px solid red;
+    }
+    .comment{
+        border: 2px saturate($color: #000000, $amount: 1) solid deepskyblue;
+    }
+    .pay{
+        padding: 1px;
+        // transform: rotate(30deg);
+    }
+    .viewerComment{
+        width: 100%;
+        // background: green;
 
     }
-    ion-fab{
 
+    .sendBtn{
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+        font-size: 12px;
     }
 
-    @media screen and (min-width: 360px){
-
-
+    #commentTXT{
+        border: 2px solid red;
+        height: 40px;
+        // padding-top: -10px;
+        border-radius: 40px;
+        width: 50%;
     }
+    ion-footer {
+        &.footer-md::before {
+            background-image: none;
+        }
+    }
+    .footItem{
+        background: rgba(255, 0, 0, 0);
+        padding-left: 10px;
+        padding-right: 10px;
+        line-break: auto;
+    }
+    .artistAvatar{
+        background: rgba(255, 0, 0, 0)
+    }
+
+
+    @media screen and (max-width: 320px){
+        .postedIMG{
+            width: 100%
+        }
+        #backBTN{
+            position: absolute;
+            z-index: inherit;
+        }
+        .ico{
+            text-shadow: 0 0 5px black;
+        }
+        .head{
+            // background: red;
+            position: relative
+        }
+        .split{
+            // border-bottom: 1px solid grey;
+            z-index: 1;
+            background: rgba(0, 78, 66, 0);
+            color: black;
+            transform: translateY(-25px)
+            // box-shadow: inset 0px 5px 1px rgb(0,78,66);
+        }
+        .cart{
+            width:50px;
+            height: 50px;
+            border-radius: 50px;
+        }
+        .artist{
+            position: absolute;
+            margin-top: -35px;
+            z-index: -2;
+            // border: 2px solid red;
+            background: #323787;
+            color: white;
+        }
+        .avatar{
+            position: relative;
+            margin-top: -100px;
+            border: 2px solid red;
+        }
+        .comments{
+            padding-top: 50%;
+            // background: red;
+        }
+        .viewerComment{
+            width: 100%;
+            // background: green;
+            padding-top: 30px;
+        }
+        .statement{
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 5px black;
+            color: black;
+        }
+        .sendBtn{
+            width: 40px;
+            height: 40px;
+            border-radius: 50px;
+            font-size: 12px;
+        }
+    
+        #commentTXT{
+            border: 1px solid rgb(207, 207, 207);
+            height: 40px;
+            // padding-top: -10px;
+            border-radius: 40px;
+            width: 50%;
+        }
+        ion-footer {
+            &.footer-md::before {
+                background-image: none;
+            }
+        }
+        .footItem{
+            background: rgba(255, 0, 0, 0);
+            
+        }
+        .artistAvatar{
+            background: rgba(255, 0, 0, 0)
+        }
+    }
+
 }

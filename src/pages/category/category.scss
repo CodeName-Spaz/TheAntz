@@ -1,3 +1,112 @@
 page-category {
+    .smaller{
+        font-size: 11px;
+    }
+    .artist-name{
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .details{
+        margin: 0 auto;
+        width: 49vw;
+        background: white;
+        height: 50px;
+        margin-top: -4%;
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        box-shadow: 0 5px 10px grey;
+        box-shadow: inset 0 -3px 5px grey;
+        z-index: 1;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        // margin: 0 auto;
+    }
+    // .theImg{
+    //     height: 29vh;
+    //     width: 53vw;
+    //     padding-left: 2px;
+    //     padding-right: 2px;
+    //     object-fit: center;
+      
+    //   }
+    .theImg{
+        height: 29vh;
+        width: 53vw;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-top:5px;
+        object-fit: cover;
+        z-index: 1;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        // box-shadow: 0 -2px 5px grey;
+        box-shadow: inset 0 0px 5px grey;
+    }
+    .shift{
+        height: 5px;
+    }
+    .col{
+        // text-align: center;
+        border: 2px solid white;
+    }
 
+    #gotoTop{
+        width: 30px;
+        height: 30px;
+        border-radius: 40px;
+    }
+    ion-grid{
+        margin: 0%;
+        padding: 0%;
+        width: 100%;
+        max-width: 550px;
+    }
+    ion-row{
+        margin: 0%;
+        padding: 5px;
+    }
+    ion-col{
+        margin: 0%;
+        // border: 2px solid green;
+    }
+    #images{
+        height: 29vh;
+        max-height: 300px;
+        width: 53vw;
+        padding-left: 2px;
+        padding-right: 2px;
+        // box-shadow: 0 0 4px grey;
+        object-fit: cover;
+    }
+    .person{
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+    }
+    .CatBar{
+        padding-right: 10px;
+        // border-radius:100px;
+        width: 100%;
+        // opacity:0.6;
+    }
+    #start{
+        transition: 700ms;
+           
+    }
+    a{
+        text-decoration: none;
+        font-size: 20px;
+        padding-top: 5px;
+    }
+
+    .dp{
+        height: auto;
+        width: 35px;
+        border-radius:50%;
+    }
 }
+
+
+
+

@@ -1,25 +1,38 @@
-<ion-content style=" background-image: url('../../assets/imgs/BG.jpg'); background-size: cover;">
-  <div class="logo">
-      <p >Welcome to</p>
-      <img src="../../assets/imgs/ANTZ Logo.png" alt="">
-  </div>
-  <div class="items" padding>
+<ion-content class="container">
+  <div>
+    <div class="everything">
+    <div class="logo">
+      <img src="../../assets/imgs/theLogo/ANTZ Logo.png" alt="">
+    </div>
+    <div class="items" padding>
       <ion-list no-lines>
-          <ion-item>
-            <ion-input type="email" placeholder="Email" value=""[(ngModel)]="obj.email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input type="password" placeholder="Password" [(ngModel)]="obj.password"></ion-input>
-          </ion-item>
-  
-        </ion-list>
-      <button ion-button full icon-only id="button" color="secondary" (click)="login()">
+
+        <div class="textFields">
+          <ion-input type="email" placeholder="Email" value="" [(ngModel)]="obj.email"></ion-input>
+
+
+          <ion-input type="password" placeholder="Password" [(ngModel)]="obj.password"></ion-input>
+
+        </div>
+
+
+      </ion-list>
+
+
+      <button ion-button block id="button" color="primary" (click)="login()">
         Sign In
       </button>
-      <p (click)="forgotpassword(obj)">Forgot password</p>
+      <br>
+      <p class="forgot" (click)="forgotpassword(obj)">Forgot password?</p>
+
+    </div>
+
+    <p>Don't have an account?
+      <b (click)="signup()" class="forgot">Sign Up</b>
+    </p>
+  </div>
   </div>
   
-  </ion-content>
-  <ion-footer (click)="signup()">
-      <p>Sign Up</p>
-        </ion-footer>
+
+
+</ion-content>

@@ -1,116 +1,40 @@
-<ion-content class="home">
-
-  <div class="forFab">
-    <ion-fab top right clear class="moreFAB">
-      <button ion-fab mini clear class="moreFAB" color="secondary">
-        <ion-icon ios="ios-more" md="md-more"></ion-icon>
+<ion-header transparent #head>
+  <ion-navbar color="secondary">
+    <ion-buttons end>
+      <button class="threeButton" ion-button (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
       </button>
-      <ion-fab-list side="left">
-        <div class="cont">
-          <button class="edit" color="dark" ion-button clear (click)="nextpage()">Edit Profile</button>
-          <button class="signOut" color="dark" ion-button clear (click)="logout()">Sign Out</button>
-        </div>
-
-      </ion-fab-list>
-    </ion-fab>
-  </div>
-
-
-
-  <div class="head">
-    <ion-grid no-padding>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-fab bottom right>
+    <button ion-fab mini>
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+  <div class="head" id="top">
+    <ion-grid *ngFor="let item of obj">
       <ion-row>
+        <ion-col col-5 *ngFor="let a of obj">
+          <div class="profile-picture">
+            <img class="DP" [src]="a.downloadurl" alt="">
+          </div>
+        </ion-col>
         <ion-col>
-          <button color="light" ion-button icon-only (click)="dismissPage()" clear>
-            <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col align="center">
-          <h1 id="head">Profile</h1>
-        </ion-col>
-        <ion-col align="right">
-          <button ion-button color="light" icon-only clear (click)="presentPopover()">
-            <ion-icon ios="ios-more" md="md-more"></ion-icon>
-          </button>
+          <p>Sithembiso Leonard Luvuno</p>
+          <p>Photographer</p>
+          <p>spaz@gmail.com</p>
+          <p>0813917127</p>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-
-
-    <div id="pic" align="center">
-      <div class="photo">
-        <div class="dp">
-          <img class="m" [src]="url">
-        </div>
-      </div>
-    </div>
-
-    <div class="list">
-      <div *ngFor="let item of obj">
-
-
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <h3>
-                {{item.name}}
-              </h3>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <div class="social">
-          <ion-grid>
-            <ion-row class="outline">
-              <ion-col>
-                <b>Instagram</b>
-                : {{item.twitter}}</ion-col>
-            </ion-row>
-            <ion-row class="outline">
-              <ion-col>
-                <b>Facebook</b>
-                : {{item.facebook}}</ion-col>
-            </ion-row>
-            <ion-row class="outline">
-              <ion-col>
-                <b>Twitter</b>: {{item.instagram}}</ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-
-      </div>
-
-    </div>
-
-
   </div>
-  <div class="split">
-    <ion-grid>
-      <ion-row id="divider">
-        <ion-col id="divider">My Gallery</ion-col>
-        <ion-col id="divider" align="right">
-          <button ion-button icon-only color="primary" class="btnIcon" (click)="upload()">
-            <ion-icon name="add"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
-  </div>
-
-
-
-  <div class="contents">
-
-
-    <ion-grid>
-      <ion-row class="gal">
-        <ion-col *ngFor="let a of list" col-6>
-          <img class="image" [src]="a.downloadurl" alt="">
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
+  <div *ngFor="let item of obj">
+    <div class="bio" padding>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea possimus vitae dolores numquam veniam ab, quis magnam quod ut
+    alias. Molestias saepe ex magnam dicta unde? Explicabo molestiae sunt consequuntur!
+    </div>
   </div>
 </ion-content>

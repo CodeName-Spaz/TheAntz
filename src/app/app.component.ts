@@ -12,6 +12,8 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SplashPage } from '../pages/splash/splash';
 import { CategoryPage } from '../pages/category/category';
 import { UploadImagePage } from '../pages/upload-image/upload-image';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
+import { SignupPage } from '../pages/signup/signup';
 @Component({
   templateUrl: 'app.html'
 })
@@ -19,7 +21,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
 
-  rootPage: any = ViewPage;
+  rootPage: any =LoginPage;
   
   pages: Array<{title: string, component: any}>;
 
@@ -30,16 +32,17 @@ export class MyApp {
  
 
     firebase.initializeApp({
-      apiKey: "AIzaSyDXJsbuaNORuwbz2gdRBFi-kUQ1JDJKoMA",
-        authDomain: "street-artz-181f2.firebaseapp.com",
-        databaseURL: "https://street-artz-181f2.firebaseio.com",
-        projectId: "street-artz-181f2",
-        storageBucket: "street-artz-181f2.appspot.com",
-        messagingSenderId: "118526884863"
-    })
+      apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
+      authDomain: "streetartsdatabase.firebaseapp.com",
+      databaseURL: "https://streetartsdatabase.firebaseio.com",
+      projectId: "streetartsdatabase",
+      storageBucket: "streetartsdatabase.appspot.com",
+      messagingSenderId: "202504182684"
+    });
 
+
+    
   }
-
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
