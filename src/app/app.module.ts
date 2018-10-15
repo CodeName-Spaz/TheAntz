@@ -27,7 +27,7 @@ import * as firebase from 'firebase';
 
 
 
-import firebase from 'firebase';
+
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
   
@@ -54,8 +54,8 @@ firebase.initializeApp({
     EditProfilePage,
     PopOverProfilePage,
 
-    UploadedPage
-=======
+    UploadedPage,
+
     ForgotPasswordPage,
     EulaPage
   
@@ -80,7 +80,7 @@ firebase.initializeApp({
     EditProfilePage,
     PopOverProfilePage,
 
-    UploadedPage
+    UploadedPage,
 
 
     ForgotPasswordPage,

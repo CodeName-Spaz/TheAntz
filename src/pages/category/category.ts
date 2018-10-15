@@ -28,6 +28,7 @@ export class CategoryPage {
   username;
   comments;
   name;
+  email;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
   
   }
@@ -61,9 +62,9 @@ export class CategoryPage {
             url: data[k].url,
             username: data[k].username,
 
-            likes : data[k].likes
+            likes : data[k].likes,
 
-            email:data[k].email,
+           email:data[k].email,
             location: data[k].location,
             price: data[k].price,
 
@@ -89,14 +90,14 @@ export class CategoryPage {
     });
   }
 
-  pushArtistDetails(pic, name, key,url,comments,email, likes) {
+  // pushArtistDetails(pic, name, key,url,comments,email, likes) {
 
-    console.log(key)
+  //   console.log(key)
 
 
-      console.log(this.arr2);
-    });
-  }
+  //     console.log(this.arr2);
+  //   });
+  // }
 
   pushArtistDetails(pic, name, key,url,comments,email,username,description,location,price,likes) {
 
@@ -112,18 +113,18 @@ export class CategoryPage {
     }
     this.navCtrl.push(ViewPage, { obj: obj });
 
-      username:username,
-      description:description,
-      location:location,
-      price:price,
-      likes:likes
-    }
-    this.navCtrl.push(ViewPage, { obj: obj });
-    console.log(obj);
+//       username:username,
+//       description:description,
+//       location:location,
+//       price:price,
+//       likes:likes
+//     }
+//     this.navCtrl.push(ViewPage, { obj: obj });
+//     console.log(obj);
 
 
-  }
-}
+//   }
+// }
 
 // }
 // //  likePic=function(keyIndex){
@@ -173,4 +174,6 @@ export class CategoryPage {
             
 // })
 // }
+  }
+}
 
