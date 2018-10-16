@@ -129,7 +129,7 @@ export class ViewPage {
   likePic(key,obj) {
 
   if (this.obj.key) {
-    this.art.likePic(this.obj.key).then((data: any) => {
+    this.art.likePic(this.obj.key,this.numlikes).then((data: any) => {
     this.art.addNumOfLikes(this.obj.key, this.numlikes).then (data =>{
 
 

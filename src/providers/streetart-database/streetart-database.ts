@@ -631,19 +631,40 @@ export class StreetartzProvider {
     })
   }
  
-  likePic(key) {
+  // // likePic(key) {
+  // //   var user = firebase.auth().currentUser;
+  // //   return new Promise((accpt, rejc) => {
+  // //     firebase.database().ref('likes/' + key).push(
+  // //       //Add like information like user_id
+  // //       {
+  // //         user_id: firebase.auth().currentUser.uid
+  // //       }
+  // //     )
+  // //     accpt('success');
+  // //   });
+
+  // }
+
+  likePic(key, num) {
     var user = firebase.auth().currentUser;
+    console.log(user.uid)
     return new Promise((accpt, rejc) => {
-      firebase.database().ref('likes/' + key).push(
-        //Add like information like user_id
-        {
-          user_id: firebase.auth().currentUser.uid
+      firebase.database().ref('likes/' + key).child(key).on('value', snapshot => {
+        if (!snapshot.hasChild(user.uid)) {
+       
         }
-      )
+        else {
+          firebase.database().ref('likes/' + key).push({
+            uid: user.uid
+          })
+        }
+
+      });
       accpt('success');
-    });
+    })
 
   }
+
   addNumOfLikes(key, num){
     num =  num  + 1;
     return new Promise ((accpt, rej) =>{
