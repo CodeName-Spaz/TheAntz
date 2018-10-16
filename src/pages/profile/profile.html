@@ -1,20 +1,16 @@
-<ion-content class="home">
-
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button ion-button clear icon-only (click)="next()">
-          <ion-icon name="close" class="sizeq"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col></ion-col>
-      <ion-col align="right">
-        <button ion-button clear icon-only (click)="presentPopover()">
-          <ion-icon name="more"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-header transparent>
+  <ion-toolbar color="secondary">
+    <button ion-button clear color="light" icon-only (click)="GoBackToCategory()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button class="threeDots" (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content #popoverContent class="home">
   <ion-fab bottom right>
@@ -73,40 +69,4 @@
       </ion-row>
     </ion-grid>
   </div>
-  <ion-list class="list">
-    <ion-item *ngFor="let item of obj">
-      <ion-fab right>
-        <ion-icon id="icon2" name="brush"></ion-icon>
-      </ion-fab>
-      <p>
-        Name: {{item.name}}
-      </p>
-      <p>Email: {{item.email}}
-      </p>
-      <p>Instagram:
-      </p>
-      <p>Facebook:
-      </p>
-    </ion-item>
-  </ion-list>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button ion-button (click)="retreivePics()">My gallery</button>
-      </ion-col>
-      <ion-col>
-        <button ion-button>
-          <ion-icon name="add" (click)="upload()"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-  <ion-list>
-    <ion-item *ngFor="let a of list">
-      <img [src]="a.downloadurl">
-      <h2>{{a.name}}</h2>
-    </ion-item>
-  </ion-list>
 </ion-content>
