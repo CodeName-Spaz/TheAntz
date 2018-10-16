@@ -2,58 +2,52 @@ page-profile {
     .threeDots{
         font-size: 20px;
     }
-    color: white;
-    .remover{
-        margin-left: 5px;
-        margin-top: 5px;
-        position: absolute;
-        height: 35px;
-        border-radius: 30px;
-        border: 2px solid white;
-        width: 35px;
-        color:white;
-        font-weight: bold;
-        text-align: center;
-        padding-top: 7px;
-        background: rgba(0,0,0,0.5);
-    }
-    .artist-name{
-        text-transform: uppercase;
-    }
-    .Caps-Lock{
-        text-transform: capitalize;
-    }
-    .lowerCase{
-        text-transform: lowercase;
-    }
-    a{
-        text-decoration: none;
-        font-size: 20px;
-        padding-top: 5px;
-    }
-    #gotoTop{
-        width: 30px;
-        height: 30px;
-        border-radius: 40px;
-        transform: rotate(90deg)
-    }
-    .bio{
-        padding: 20px;
+    .size{
+        font-size:5vh;
         color: white;
-        font-size: 11px;
-        // border-top: 0.5px solid white;
-        width: 100%;
+        font-weight: bolder;
+        text-shadow: 0px 0px 10px white;
     }
-    .displayPhoto{
-        text-align: left;
-        // border-right: 1px solid white;
-        padding-right: 16px;
+    #icon{
+        color: white;
+        font-size:6vh;
     }
-    .head{
-        background: #011127;
+    #icon2{
+        color: white;
+    }
+    img{
+        border-left: 7px inset white;
+        border-right: 2px outset black;
+        border-radius: 100%;
+        box-shadow: 0 0 5px black;
+        background-image: url('../../assets/person-icon.jpg');
+        background-size: cover;
+        height: 55vw;
+        width: 55vw;
+    }
+    #head{
+        color: white;
+    }
+    .list{
+        margin-top: 10%;
+        color: white;
+        text-align: center;
+        font-size: 110%;
+        font-family: 'Times New Roman', Times, serif;
+    }
+    #name{
+        font-size: 250%;
+        font-weight: bolder;
+    }
+    .size{
+        font-size:5vh;
+    }
+    .galBtn{
+        width: 80%;
+    }
 
 
-    }
+    
     
     @media screen and (max-width: 414px){
         .icons{
@@ -320,5 +314,5 @@ page-profile {
     }
     
     
-    }
+}
     
