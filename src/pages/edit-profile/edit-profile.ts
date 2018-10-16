@@ -65,7 +65,6 @@ export class EditProfilePage implements OnInit {
   uploadPicture() {
     this.arr.length = 0;
     this.art.uploadProfilePic(this.downloadurl, this.name).then(data => {
-      // this.art.storeToDB1(this.name).then(() => {
         console.log('added to db');
         this.art.update(this.name,this.email,this.contact,this.bio,this.downloadurl).then((data) => {
           this.arr.push(data);
@@ -76,9 +75,7 @@ export class EditProfilePage implements OnInit {
         Error => {
           console.log(Error)
         })
-    // }, Error => {
-    //   console.log(Error)
-    // })
+   
   }
   getUid1() {
     this.art.getUserID().then(data => {
@@ -101,7 +98,7 @@ export class EditProfilePage implements OnInit {
             downloadurl: data[k].downloadurl
           }
           this.arr.push(objt);
-          console.log(this.arr)
+         
         }
       }
       loader.dismiss();

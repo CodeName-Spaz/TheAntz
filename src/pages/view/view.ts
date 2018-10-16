@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
@@ -20,7 +20,7 @@ import { CategoryPage } from '../category/category';
 })
 //viewpage Ts\\
 
-export class ViewPage {
+export class ViewPage implements OnInit{
   comment: any;
   data: any;
   name;
@@ -52,6 +52,7 @@ export class ViewPage {
   price
   currentUserId;
   likeArr = [];
+  CommentArr=[];
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer) {
     this.obj = this.navParams.get("obj");
@@ -81,10 +82,32 @@ export class ViewPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewPage');
-    console.log(this.obj);
     this.viewcomments();
-    this.currentUserId = this.art.returnUID();
-    console.log(this.currentUserId);
+    this.currentUserId = this.art.returnUID();  
+
+    
+
+  }
+
+  ngOnInit(){
+    this.art.viewComments(this.obj.key, this.comment).then((data) => {
+      console.log(data)
+      var keys1: any = Object.keys(data);
+      for (var i = 0; i < keys1.length; i++) {
+        var key = keys1[i];
+        let obj = {
+          comment: data[key].comment,
+          uid: data[key].uid,
+          downloadurl: data[key].url,
+          username: data[key].username,
+          date: data[key].date
+        }
+        this.CommentArr.push(obj);
+        console.log(this.CommentArr);
+      }
+      this.commentsLeng = this.CommentArr.length;
+  
+    })
   }
   BuyArt() {
     let email = {
@@ -101,34 +124,15 @@ export class ViewPage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(CategoryPage);
   }
 
   viewcomments() {
-    this.art.viewComments(this.obj.key, this.comment).then((data) => {
-      console.log(data)
-      var keys1: any = Object.keys(data);
-      for (var i = 0; i < keys1.length; i++) {
-        var key = keys1[i];
-        let obj = {
-          comment: data[key].comment,
-          uid: data[key].uid,
-          downloadurl: data[key].url,
-          username: data[key].username,
-          date: data[key].date
-        }
-        this.arr2.push(obj);
-        console.log(this.arr2);
-      }
-      console.log("janet");
-      this.commentsLeng = this.arr2.length;
-      console.log(this.commentsLeng);
-    })
+  
 
 
   }
   likePicture() {
-   // this.art.likePic(this.obj.key)
    this.art.viewLikes(this.obj.key).then(data =>{
      console.log(data)
      if (data == "not found"){
@@ -155,7 +159,6 @@ export class ViewPage {
         })
       })
       this.numComments++;
-      console.log(this.numComments)
     })
     this.comment = "";
   }
