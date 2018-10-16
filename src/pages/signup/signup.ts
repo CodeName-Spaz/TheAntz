@@ -31,12 +31,40 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
   signUp() {
-    if(this.obj.email ==null || this.obj.email == undefined){
+    if(this.obj.email ==null || this.obj.email == undefined)
+    {
       const alert = this.alertCtrl.create({
-        subTitle: 'Please enter your details',
+        subTitle: 'Please enter your Email.',
         buttons: ['OK']
       });
       alert.present();
+  }
+  else if (this.obj.name ==null || this.obj.name == undefined){
+    const alert = this.alertCtrl.create({
+      subTitle: 'Please enter your Name.',
+      buttons: ['OK']
+    });
+    alert.present();
+
+  }
+  else if (this.obj.password ==null || this.obj.password == undefined){
+    const alert = this.alertCtrl.create({
+      subTitle: 'Please enter your password.',
+      buttons: ['OK']
+    });
+    alert.present();
+
+  
+  }
+
+  else if (this.obj.password.length < 6 || this.obj.password == undefined){
+    const alert = this.alertCtrl.create({
+      subTitle: 'Please enter minimum of 6 characters.',
+      buttons: ['OK']
+    });
+    alert.present();
+
+  
   }
   else{
     this.art.register(this.obj).then(() => {

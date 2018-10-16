@@ -91,7 +91,7 @@ export class StreetartzProvider {
         ]
       });
       alert.present();
-     
+
     })
 
   }
@@ -113,7 +113,7 @@ export class StreetartzProvider {
           ]
         });
         alert.present();
-      
+
       })
     })
   }
@@ -127,18 +127,7 @@ export class StreetartzProvider {
       let userID = firebase.auth().currentUser;
       firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
         let details = data.val();
-        if (data.val() == undefined) {
-          this.arr2 = null;
-          const alert = this.alertCtrl.create({
-            subTitle: 'No art work is uploaded yet, go to your profile to get started.',
-            buttons: ['OK']
-          });
-          alert.present();
-        }
-        else {
-          this.arr.push(details);
-         
-        }
+        this.arr.push(details);
       });
       pass(this.arr);
     })
@@ -248,7 +237,7 @@ export class StreetartzProvider {
           alert.present();
         }
         accpt(DisplayData);
-        
+
       }, Error => {
         rejc(Error.message)
       })
@@ -334,7 +323,7 @@ export class StreetartzProvider {
         if (b !== null) {
         }
         this.storeImgur(b[keys[0]].downloadurl);
-        // console.log(b[keys[0]].downloadurl);
+
         accpt(b);
       }, Error => {
         rejc(Error.message)
@@ -385,7 +374,7 @@ export class StreetartzProvider {
               obj.email = profileData.email
             });
             pass(this.arr);
-          
+
           }
 
 
@@ -424,7 +413,7 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-    
+
         if (data == null) {
 
         }
@@ -433,7 +422,7 @@ export class StreetartzProvider {
           for (var j = 0; j < keys.length; j++) {
             firebase.database().ref("uploads").on('value', (data2: any) => {
               let uploads2 = data2.val();
-          
+
               var keys2: any = Object.keys(uploads2);
               for (var i = 0; i < keys2.length; i++) {
                 var k = keys2[i];
@@ -472,19 +461,6 @@ export class StreetartzProvider {
     this.arr2.length = 0;
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
-
-        if (data.val() != undefined) {
-          var data = data.val();
-          if (data == null) {
-            this.arr2 = null;
-            const alert = this.alertCtrl.create({
-              subTitle: 'No art work are uploaded yet',
-              buttons: ['OK']
-            });
-            alert.present();
-          }
-          else {
-
         var data = data.val();
         if (data == null) {
           this.arr2 = null;
@@ -585,7 +561,7 @@ export class StreetartzProvider {
               obj.url = profileData.downloadurl
               obj.username = profileData.name
               this.keyArr.push(obj);
-              
+
             });
           }
         }

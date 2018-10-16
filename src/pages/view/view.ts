@@ -20,7 +20,7 @@ import { CategoryPage } from '../category/category';
 })
 //viewpage Ts\\
 
-export class ViewPage implements OnInit{
+export class ViewPage {
   comment: any;
   data: any;
   name;
@@ -71,7 +71,7 @@ export class ViewPage implements OnInit{
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
 
-
+    this.viewcomments();
 
     this.emailComposer.isAvailable().then((available: boolean) => {
       if (available) {
@@ -82,33 +82,14 @@ export class ViewPage implements OnInit{
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewPage');
-    this.viewcomments();
+
     this.currentUserId = this.art.returnUID();  
 
-    
-
   }
 
-  ngOnInit(){
-    this.art.viewComments(this.obj.key, this.comment).then((data) => {
-      console.log(data)
-      var keys1: any = Object.keys(data);
-      for (var i = 0; i < keys1.length; i++) {
-        var key = keys1[i];
-        let obj = {
-          comment: data[key].comment,
-          uid: data[key].uid,
-          downloadurl: data[key].url,
-          username: data[key].username,
-          date: data[key].date
-        }
-        this.CommentArr.push(obj);
-        console.log(this.CommentArr);
-      }
-      this.commentsLeng = this.CommentArr.length;
   
-    })
-  }
+  
+  
   BuyArt() {
     let email = {
       to: this.obj.email,
@@ -128,8 +109,24 @@ export class ViewPage implements OnInit{
   }
 
   viewcomments() {
+    this.art.viewComments(this.obj.key, this.comment).then((data) => {
+      console.log(data)
+      var keys1: any = Object.keys(data);
+      for (var i = 0; i < keys1.length; i++) {
+        var key = keys1[i];
+        let obj = {
+          comment: data[key].comment,
+          uid: data[key].uid,
+          downloadurl: data[key].url,
+          username: data[key].username,
+          date: data[key].date
+        }
+        this.CommentArr.push(obj);
+        console.log(this.CommentArr);
+      }
+      this.commentsLeng = this.CommentArr.length;
   
-
+    })
 
   }
   likePicture() {

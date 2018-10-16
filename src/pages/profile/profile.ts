@@ -33,8 +33,7 @@ export class ProfilePage  {
   name;
   details;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
-    this.retreivePics1();
-    this.retreivePics();
+
 
     this.art.profile(this.details).then((data) => {
       this.arr.length = 0
@@ -56,11 +55,10 @@ export class ProfilePage  {
   }
 
   ionViewDidLoad() {
- 
+    this.retreivePics1();
+    this.retreivePics();
   }
   ngOnInit() {
-
-
   }
 
   EditProfile() {
@@ -88,10 +86,7 @@ export class ProfilePage  {
     this.list.length = 0;
     this.getUid();
     this.art.viewPicGallery().then(data => {
-      var loader = this.loadingCtrl.create({
-        content: "please wait...",
-        duration: 6000
-      });
+   
       var keys: any = Object.keys(data);
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
@@ -109,7 +104,7 @@ export class ProfilePage  {
        
         }
       }
-      loader.dismiss();
+ 
     }, Error => {
       console.log(Error)
     });
@@ -124,10 +119,6 @@ export class ProfilePage  {
     this.arr.length = 0;
     this.getUid1();
     this.art.viewPicGallery1().then(data => {
-      var loader = this.loadingCtrl.create({
-        content: "please wait...",
-        duration: 6000
-      });
       var keys: any = Object.keys(data);
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
@@ -136,10 +127,9 @@ export class ProfilePage  {
             downloadurl: data[k].downloadurl
           }
           this.arr.push(objt);
-          console.log(this.arr)
         }
       }
-      loader.dismiss();
+  
     }, Error => {
       console.log(Error)
     });
