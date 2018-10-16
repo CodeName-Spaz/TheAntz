@@ -52,11 +52,11 @@ export class SignupPage {
     this.navCtrl.setRoot(LoginPage);
   }
   presentLoading() {
-    const loader = this.loadingCtrl.create({
-      content: "signing in....",
-      duration: 4000
+    const toast = this.toastCtrl.create({
+      message: this.obj.email + 'You have succesfflly registered',
+      duration: 2000
     });
-    loader.present();
+    toast.present();
   }
   presentLoading1() {
     const loader = this.loadingCtrl.create({

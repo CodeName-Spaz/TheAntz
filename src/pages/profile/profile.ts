@@ -24,7 +24,7 @@ import firebase from 'firebase';
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage  {
   list = [];
   arr = [];
   uid: any;
@@ -35,12 +35,7 @@ export class ProfilePage implements OnInit {
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     this.retreivePics1();
     this.retreivePics();
-  }
 
-  ionViewDidLoad() {
-
-  }
-  ngOnInit() {
     this.art.profile(this.details).then((data) => {
       this.arr.length = 0
       var keys: any = Object.keys(data);
@@ -55,9 +50,16 @@ export class ProfilePage implements OnInit {
           contact: data[k].contact
         }
         this.arr.push(obj)
-        console.log(this.arr);
+     
       }
     })
+  }
+
+  ionViewDidLoad() {
+ 
+  }
+  ngOnInit() {
+
 
   }
 
@@ -104,7 +106,7 @@ export class ProfilePage implements OnInit {
             key: k
           }
           this.list.push(obj);
-          console.log(this.list)
+       
         }
       }
       loader.dismiss();
@@ -160,16 +162,13 @@ export class ProfilePage implements OnInit {
         {
           text: 'Ok',
           handler: () => {
-            console.log('Disagree clicked');
             this.art.RemoveUploadedPicture(key);
-            console.log(key);
             this.retreivePics();
           }
         },
         {
           text: 'Cancel',
           handler: () => {
-            console.log('Agree clicked');
           }
         }
       ]

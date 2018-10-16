@@ -34,23 +34,18 @@
       </p>
       <ion-grid>
         <ion-row>
-          <ion-col> <!--col-3 -->
+          <ion-col>
             <button class="statements" ion-button clear (click)="likePicture()"> {{numlikes}} Likes</button>
           </ion-col>
           <ion-col>
             <button ion-button class="statements" clear>{{numComments}} Comments</button>
           </ion-col>
-          <!-- 
-          <ion-col class="carts">
-            
-          </ion-col> -->
-
         </ion-row>
       </ion-grid>
     </div>
   </div>
   <div>
-    <ion-list *ngFor="let a of arr2">
+    <ion-list *ngFor="let a of CommentArr">
       <ion-card>
         <ion-item>
           <ion-avatar item-start>
