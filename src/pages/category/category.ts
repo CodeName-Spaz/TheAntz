@@ -33,20 +33,13 @@ export class CategoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     this.retreivePics();
     
-    // this.reload()
+ 
   }
 
   ionViewDidLoad() {
 
   }
-  reload(){
-    setTimeout(() => {
-      this.retreivePics();
-    
-        console.log('reloading');
-        
-    }, 50000);
-  }
+
 
 
   nextpage() {
@@ -89,7 +82,7 @@ export class CategoryPage {
       this.arr2 = data;
       console.log(this.arr2);
     });
-    this.reload();
+
   }
 
   pushArtistDetails(pic, name, key,url,comments,email,username,description,location,price,likes) {

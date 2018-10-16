@@ -101,7 +101,7 @@ export class ViewPage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(CategoryPage);
   }
 
   viewcomments() {
