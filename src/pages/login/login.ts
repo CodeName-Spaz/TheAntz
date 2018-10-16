@@ -30,8 +30,6 @@ import { UploadedPage } from '../uploaded/uploaded';
   selector: 'page-login',
   templateUrl: 'login.html',
 })
-
-
 export class LoginPage {
   email: any; 
   password: any;
@@ -52,21 +50,7 @@ export class LoginPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-  //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then((result) => {
-
-  //     if(result){
-  //       console.log("yes")
-  //       this.navCtrl.setRoot('LoginPage');
-  //     }else{
-  //       console.log("CategoryPage");
-  //       this.navCtrl.setRoot('LoginPage');
-        
-  //     }
-
-  //   });
-   }
-
-  
+    
   signup() {
   this.navCtrl.setRoot(EulaPage);
   }

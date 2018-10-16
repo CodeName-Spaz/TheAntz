@@ -14,9 +14,7 @@ page-view {
         font-size: 13px;
         font-weight: bold;
         margin-top: 17px;
-    }
-
-   
+    } 
     .postedIMG{
         box-shadow: 0 0 1px grey;
         width: 100%;
@@ -27,8 +25,12 @@ page-view {
         padding-left: 10px;
         padding-right: 10px;
         font-size: 12px;
-
-
+    }
+    .statementa{
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 12px;
+        text-transform: initial;
     }
     .post{
         box-shadow: 0 2px  5px grey;

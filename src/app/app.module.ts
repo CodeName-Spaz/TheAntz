@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 
 import { StreetartzProvider } from '../providers/streetart-database/streetart-database';
-import { FirebaseOptions } from '@firebase/app-types';
+
 
 import { MyApp } from './app.component';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
@@ -22,79 +22,63 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { PopOverProfilePage } from '../pages/pop-over-profile/pop-over-profile';
 import { EmailComposer } from '@ionic-native/email-composer';
 
-import { UploadedPage } from '../pages/uploaded/uploaded';
-import * as firebase from 'firebase';
-
-
-
-
+import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
-  
 
 firebase.initializeApp({
-  apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
-  authDomain: "streetartsdatabase.firebaseapp.com",
-  databaseURL: "https://streetartsdatabase.firebaseio.com",
-  projectId: "streetartsdatabase",
-  storageBucket: "streetartsdatabase.appspot.com",
-  messagingSenderId: "202504182684"
+ apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
+ authDomain: "streetartsdatabase.firebaseapp.com",
+ databaseURL: "https://streetartsdatabase.firebaseio.com",
+ projectId: "streetartsdatabase",
+ storageBucket: "streetartsdatabase.appspot.com",
+ messagingSenderId: "202504182684"
 })
 
-@NgModule({ 
-  declarations: [
-    MyApp,
-    SplashPage,
-    LoginPage,
-    SignupPage,
-    CategoryPage,
-    ProfilePage,
-    UploadImagePage,
-    ViewPage,
-    EditProfilePage,
-    PopOverProfilePage,
 
-    UploadedPage,
-
-    ForgotPasswordPage,
-    EulaPage
-  
-
- 
-  ],
-  imports: [
-    BrowserModule, HttpClientModule ,
-    IonicModule.forRoot(MyApp),
-    IonicImageViewerModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    SplashPage,
-    LoginPage,
-    SignupPage,
-    CategoryPage,
-    ProfilePage,
-    UploadImagePage,
-    ViewPage,
-    EditProfilePage,
-    PopOverProfilePage,
-
-    UploadedPage,
+@NgModule({
+ declarations: [
+   MyApp,
+   SplashPage,
+   LoginPage,
+   SignupPage,
+   CategoryPage,
+   ProfilePage,
+   UploadImagePage,
+   ViewPage,
+   EditProfilePage,
+   PopOverProfilePage,
+   ForgotPasswordPage,
+   EulaPage
 
 
-    ForgotPasswordPage,
-    EulaPage
+ ],
+ imports: [
+   BrowserModule, HttpClientModule ,
+   IonicModule.forRoot(MyApp),
+   IonicImageViewerModule
+ ],
+ bootstrap: [IonicApp],
+ entryComponents: [
+   MyApp,
+   SplashPage,
+   LoginPage,
+   SignupPage,
+   CategoryPage,
+   ProfilePage,
+   UploadImagePage,
+   ViewPage,
+   EditProfilePage,
+   PopOverProfilePage,
+   ForgotPasswordPage,
+   EulaPage
 
- 
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    StreetartzProvider,EmailComposer
-  ]
+ ],
+ providers: [
+   StatusBar,
+   SplashScreen,
+   {provide: ErrorHandler, useClass: IonicErrorHandler},
+   StreetartzProvider,EmailComposer
+ ]
 })
-export class AppModule {
-  
-}
+export class AppModule {}

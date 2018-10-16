@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
-CategoryPage
+
 /**
  * Generated class for the UploadedPage page.
  *

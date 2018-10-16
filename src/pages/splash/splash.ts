@@ -22,15 +22,17 @@ export class SplashPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SplashPage');
-    this.nextpage();
+    this.GoToSignIn();
   }
 
-  nextpage(){
-  let timer = setInterval(()=>{
-    
-    this.navCtrl.setRoot(LoginPage);
-    clearInterval(timer)
-  },8000)
+
+  GoToSignIn() {
+    let timer = setInterval(() => {
+      this.navCtrl.setRoot(LoginPage);
+      clearInterval(timer)
+    }, 8000)
+
+
   }
 
   

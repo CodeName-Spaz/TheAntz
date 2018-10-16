@@ -2,7 +2,7 @@
   <ion-toolbar color="secondary">
     <ion-title>Edit Profile</ion-title>
     <ion-buttons left>
-      <button color="primary" ion-button icon-only (click)="nexpage()">
+      <button ion-button icon-only (click)="nexpage()">
         <ion-icon name="arrow-back" id="mark"></ion-icon>
       </button>
     </ion-buttons>
@@ -15,7 +15,6 @@
 </ion-header>
 <ion-content padding>
   <br>
-  <ion-list no-lines>
   <div class="preview">
     <div class="inp">
       <label for="file" id="cam">
@@ -26,6 +25,7 @@
     <img [src]="downloadurl">
   </div>
   <br>
+
   <ion-item no-lines class="item">
     <ion-label>
       <ion-icon name="person"></ion-icon>
@@ -48,5 +48,5 @@
   </ion-item>
   <br>
   <ion-textarea id="areaText" type="text" [value]="bio" [(ngModel)]="bio" placeholder="Bio"></ion-textarea>
-</ion-list>
+
 </ion-content>
