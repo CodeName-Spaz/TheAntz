@@ -579,6 +579,29 @@ export class StreetartzProvider {
     })
   }
 
+  // likePic(key, num) {
+  //   var user = firebase.auth().currentUser;
+  //   console.log(user.uid)
+  //   return new Promise((accpt, rejc) => {
+  //     firebase.database().ref('likes/' + key).child(key).on('value', snapshot => {
+  //       if (!snapshot.hasChild(user.uid)) {
+  //         firebase.database().ref('likes/' + key).push({
+  //           uid: user.uid
+  //         })
+  //         num = num + 1;
+  //         firebase.database().ref('uploads/' + key).update({ likes: num });
+  //       }
+  //       else {
+  //         num =  num -1;
+  //         firebase.database().ref('uploads/' + key).update({ likes: num });
+  //         firebase.database().ref('likes/' + key).remove();
+  //       }
+
+  //     });
+  //     accpt('success');
+  //   })
+
+  // }
   likePic(key) {
     console.log('adding like');
     var user = firebase.auth().currentUser

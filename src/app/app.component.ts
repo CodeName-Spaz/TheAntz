@@ -13,6 +13,7 @@ import { CategoryPage } from '../pages/category/category';
 import { ViewPage } from '../pages/view/view';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { viewParentEl } from '@angular/core/src/view/util';
+
 import { UploadImagePage } from '../pages/upload-image/upload-image';
 
 
@@ -37,12 +38,8 @@ export class MyApp {
      }
     })
    this.initializeApp();
-
-   // used for an example of ngFor and navigation
-
-
-
  }
+
 
  initializeApp() {
    this.platform.ready().then(() => {
