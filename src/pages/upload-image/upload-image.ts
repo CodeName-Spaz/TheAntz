@@ -47,7 +47,6 @@ export class UploadImagePage {
     if(this.category !=null || this.description !=null || this.name !=null || this.location !=null || this.price !=null){
       this.art.uploadPic(this.url,this.name).then(data =>{
         this.art.storeToDB(data, this.category,this.name,this.description,this.location,this.price).then(() =>{
-          console.log('added to db');
           this.navCtrl.push(ProfilePage);
         },
        Error =>{
@@ -64,7 +63,6 @@ export class UploadImagePage {
         {
           text: 'Ok',
           handler: () => {
-            console.log('Disagree clicked');
           }
         },
       ]

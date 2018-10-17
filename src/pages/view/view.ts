@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
@@ -53,6 +53,7 @@ export class ViewPage {
   price
   currentUserId;
   likeArr = [];
+  CommentArr=[];
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer) {
     this.obj = this.navParams.get("obj");
@@ -72,7 +73,7 @@ export class ViewPage {
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
 
-
+    this.viewcomments();
 
 
     this.emailComposer.isAvailable().then((available: boolean) => {
@@ -86,6 +87,12 @@ export class ViewPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewPage');
     console.log(this.obj);
+
+  }
+
+
+
+    this.currentUserId = this.art.returnUID();  
 
   }
 
@@ -112,7 +119,7 @@ export class ViewPage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(CategoryPage);
   }
   sendComment(comment) {
     this.art.comments(this.obj.key, this.comment).then((data) => {
@@ -144,12 +151,15 @@ export class ViewPage {
       console.log("janet");
       this.commentsLeng = this.arr2.length;
       console.log(this.commentsLeng);
+        this.CommentArr.push(obj);
+        console.log(this.CommentArr);
+      }
+      this.commentsLeng = this.CommentArr.length;
+  
     })
-
 
   }
   likePicture() {
-   // this.art.likePic(this.obj.key)
    this.art.viewLikes(this.obj.key).then(data =>{
      console.log(data)
      if (data == "not found"){
@@ -201,7 +211,6 @@ export class ViewPage {
         })
       })
       this.numComments++;
-      console.log(this.numComments)
     })
     this.comment = "";
   }
