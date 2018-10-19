@@ -46,6 +46,8 @@ export class UploadImagePage {
   }
 
   uploadPicture() {
+    if(this.url !="../../assets/default.jpg"){     
+   
     if (this.category == undefined || this.category == null,
       this.name == undefined  || this.name == null ,
       this.description == undefined || this.description == null,
@@ -76,6 +78,11 @@ export class UploadImagePage {
           console.log(Error)
         })
       }
+    }
+    else{
+      console.log('no image');
+      
+    }
     
   }
 
