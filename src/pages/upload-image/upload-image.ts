@@ -44,15 +44,20 @@ export class UploadImagePage {
       console.log(reader.onload);
     }
   }
-
+  omit_special_char(event)
+  {   
+     var k;  
+     k = event.charCode;  //         k = event.keyCode;  (Both can be used)
+     return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57)); 
+  }
   uploadPicture() {
     if(this.url !="../../assets/default.jpg"){     
    
     if (this.category == undefined || this.category == null,
-      this.name == undefined  || this.name == null ,
-      this.description == undefined || this.description == null,
-      this.location == undefined ||this.location == null,
-      this.price == undefined || this.price == null) {
+      this.name == ""  || this.name == null ,
+      this.description == null || this.description == "",
+      this.location == "" ||this.location == null,
+      this.price == "" || this.price == null) {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
         subTitle: "Please make sure that all the fields are filled.",
@@ -80,9 +85,10 @@ export class UploadImagePage {
       }
     }
     else{
+      
       console.log('no image');
       const confirm = this.alertCtrl.create({
-        title: "No Image",
+        title: "No Photo",
         subTitle: "Please insert a photograph to continue.",
         buttons: [
           {
