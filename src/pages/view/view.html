@@ -1,11 +1,21 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons left>
+      <button ion-button clear icon-only color="light" (click)="GoBackToCategory()">
+        <ion-icon class="ico" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-fab top left>
-    <button ion-button clear icon-only color="light" (click)="GoBackToCategory()">
-      <ion-icon class="ico" name="arrow-back"></ion-icon>
-    </button>
-  </ion-fab>
+
   <div class="post">
-    <img class="postedIMG" src="{{downloadurl}}" />
+    <div class="theImage">
+
+      <img class="postedIMG" src="{{downloadurl}}" />
+    </div>
+
     <ion-grid>
       <ion-row>
         <ion-col col-9>
@@ -13,16 +23,19 @@
             <ion-avatar item-start>
               <img src="{{downloadurl1}}" />
             </ion-avatar>
-            <h2 class="artistName">{{name}} <br></h2>
+            <h2 class="artistName">{{name}}
+              <br>
+            </h2>
             <p id="Location">
               <ion-icon ios="ios-pin" md="md-pin"></ion-icon> {{location}}</p>
 
           </ion-item>
         </ion-col>
         <ion-col col-3>
-          <button class="buy" ion-button outline (click)="BuyArt()">
+          <p class="thePrices">
             R{{price}}
-          </button>
+          </p>
+
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -39,6 +52,11 @@
           </ion-col>
           <ion-col>
             <button ion-button class="statements" clear>{{numComments}} Comments</button>
+          </ion-col>
+          <ion-col>
+            <button class="statements" block outline ion-button  (click)="BuyArt()">
+               <p> <ion-icon ios="ios-basket" md="md-basket"></ion-icon>   ORDER</p> 
+            </button>
           </ion-col>
         </ion-row>
       </ion-grid>

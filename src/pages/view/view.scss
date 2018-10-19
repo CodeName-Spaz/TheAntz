@@ -1,9 +1,17 @@
 page-view {
+    .thePrices{
+        float: right;
+        color: rgb(250,179,53);
+        // font-size: 12px;
+    }
+    .theImage{
+        display: block;
+        z-index: 1;
+    }
     .Caps-Lock{
         text-transform: capitalize;
       
     }
-
     #Location{
         color: grey;
         font-size: 12px;
@@ -204,7 +212,6 @@ page-view {
             border-radius: 50px;
             font-size: 12px;
         }
-
         ion-footer {
             &.footer-md::before {
                 background-image: none;

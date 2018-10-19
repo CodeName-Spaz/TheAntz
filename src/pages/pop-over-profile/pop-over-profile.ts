@@ -32,7 +32,9 @@ export class PopOverProfilePage{
   logout() {
     this.art.logout().then(() => {
       this.navCtrl.push(LoginPage);
-      this.navCtrl.pop();
-    },(error)=>{})
-    }
+    }, (error) => {
+      console.log(error.message);
+     })
+  }
+
 }

@@ -2,7 +2,7 @@
   <ion-toolbar color="secondary">
     <ion-title>Edit Profile</ion-title>
     <ion-buttons left>
-      <button ion-button icon-only (click)="nexpage()">
+      <button ion-button icon-only (click)="GoToProfile()">
         <ion-icon name="arrow-back" id="mark"></ion-icon>
       </button>
     </ion-buttons>
@@ -44,7 +44,7 @@
     <ion-label>
       <ion-icon name="call"></ion-icon>
     </ion-label>
-    <ion-input type="number" [value]="contact" [(ngModel)]="contact" max="10" placeholder="Mobile"></ion-input>
+    <ion-input type="number" [value]="contact" [(ngModel)]="contact" maxlength="11"  placeholder="Mobile"></ion-input>
   </ion-item>
   <br>
   <ion-textarea id="areaText" type="text" [value]="bio" [(ngModel)]="bio" placeholder="Bio"></ion-textarea>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { ProfilePage } from '../profile/profile';
 import { AlertController } from 'ionic-angular';
@@ -16,65 +16,71 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'upload-image.html',
 })
 export class UploadImagePage {
-  url='../../assets/default.jpg' ;
+  url = '../../assets/default.jpg';
   name;
   category;
   imageUrl;
-  arr=[];
+  arr = [];
   description;
   location;
   price;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider,public view :ViewController,public alertCtrl: AlertController) {
+  downloadurl;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController) {
   }
-  
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadModalPage');
   }
 
-  insertvid(event:any){
-      if (event.target.files && event.target.files[0]) {
-        let reader = new FileReader();
+  insertvid(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      let reader = new FileReader();
 
-        reader.onload = (event: any) => {
-          this.url = event.target.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-        console.log(reader.onload);
-      } 
+      reader.onload = (event: any) => {
+        this.url = event.target.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
+      console.log(reader.onload);
+    }
   }
 
-  uploadPicture(){
-    if(this.category !=null || this.description !=null || this.name !=null || this.location !=null || this.price !=null){
-      this.art.uploadPic(this.url,this.name).then(data =>{
-        this.art.storeToDB(data, this.category,this.name,this.description,this.location,this.price).then(() =>{
-          this.navCtrl.push(ProfilePage);
-        },
-       Error =>{
-         console.log(Error)
-       })
-     }, Error =>{
-       console.log(Error )
-     })
-   }
-   else{
-    const confirm = this.alertCtrl.create({
-      message: 'Please enter all details to upload your image',
-      buttons: [
-        {
-          text: 'Ok',
-          handler: () => {
-          }
-        },
-      ]
-    });
-    confirm.present();
-   }
-  
+  uploadPicture() {
+    if (this.category == undefined || this.category == null,
+      this.name == undefined  || this.name == null ,
+      this.description == undefined || this.description == null,
+      this.location == undefined ||this.location == null,
+      this.price == undefined || this.price == null) {
+      const confirm = this.alertCtrl.create({
+        title: "Fields Missing",
+        subTitle: "Please make sure that all the fields are filled.",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
     }
+    else { 
+        this.art.uploadPic(this.url, this.name).then(data => {
+          this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
+            this.navCtrl.setRoot(ProfilePage);
+          },
+            Error => {
+              console.log(Error)
+            })
+        }, Error => {
+          console.log(Error)
+        })
+      }
     
+  }
 
-    dismiss(){
-      this.view.dismiss();
-    }
+
+  dismiss() {
+    this.view.dismiss();
+  }
 }
-   
+
