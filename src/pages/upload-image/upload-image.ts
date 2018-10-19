@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { ProfilePage } from '../profile/profile';
 import { AlertController } from 'ionic-angular';
+import { CategoryPage } from '../category/category';
 /**
  * Generated class for the UploadImagePage page.
  *
@@ -64,7 +65,7 @@ export class UploadImagePage {
       confirm.present();
     }
     else { 
-        this.art.uploadPic(this.url, this.name).then(data => {
+        this.art.uploadPic(this.url).then(data => {
           this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
             this.navCtrl.setRoot(ProfilePage);
           },
@@ -80,7 +81,6 @@ export class UploadImagePage {
 
 
   dismiss() {
-    this.view.dismiss();
+    this.navCtrl.setRoot(CategoryPage);
   }
 }
-

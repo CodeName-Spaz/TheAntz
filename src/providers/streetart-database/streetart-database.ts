@@ -165,8 +165,8 @@ export class StreetartzProvider {
       alert.present();
     })
   }
-  uploadPic(pic, name) {
-    var d = Date.now();
+  uploadPic(pic) {
+    var name = Date.now();
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait',
@@ -174,7 +174,7 @@ export class StreetartzProvider {
     });
     return new Promise((accpt, rejc) => {
       loading.present();
-      firebase.storage().ref(d + name).putString(pic, 'data_url').then(() => {
+      firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
         accpt(name);
       }, Error => {
         rejc(Error.message)
@@ -182,8 +182,9 @@ export class StreetartzProvider {
     })
   }
   storeToDB(name, category, picName, description, location, price) {
+    var d = Date.now();
     return new Promise((accpt, rejc) => {
-      var storageRef = firebase.storage().ref(name);
+      var storageRef = firebase.storage().ref(name + "jpg");
       storageRef.getDownloadURL().then(url => {
         var user = firebase.auth().currentUser;
         var link = url;
