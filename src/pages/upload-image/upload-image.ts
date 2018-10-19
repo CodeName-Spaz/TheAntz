@@ -81,7 +81,18 @@ export class UploadImagePage {
     }
     else{
       console.log('no image');
-      
+      const confirm = this.alertCtrl.create({
+        title: "No Image",
+        subTitle: "Please insert a photograph to continue.",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
     }
     
   }
