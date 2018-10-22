@@ -98,8 +98,7 @@ export class EditProfilePage implements OnInit {
      k = event.charCode;  //         k = event.keyCode;  (Both can be used)
      l = this.contact.length; // Character length
      console.log(l);
-    //  return((l > 10 && l < 10));
-     return((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57) || (l > 10 && l < 10)); 
+     return((k >= 48 && k <= 57) || (l == 10)); 
   }
   retreivePics1() {
     this.arr.length = 0;

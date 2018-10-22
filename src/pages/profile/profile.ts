@@ -12,6 +12,7 @@ import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { AlertController } from 'ionic-angular';
+;
 import firebase from 'firebase';
 /**
  * Generated class for the ProfilePage page.
@@ -54,8 +55,9 @@ export class ProfilePage {
     this.navCtrl.push(EditProfilePage);
   }
 
-  upload() {
-    this.navCtrl.push(UploadImagePage);
+  upload(){
+    const modal = this.modalCtrl.create(UploadImagePage);
+    modal.present();
   }
   presentPopover() {
     const popover = this.popoverCtrl.create(PopOverProfilePage);

@@ -61,32 +61,35 @@ export class StreetartzProvider {
 
   }
   register(email, password, name) {
-    return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
-      var user = firebase.auth().currentUser
-      firebase.database().ref("profiles/" + user.uid).set({
-        name: name,
-        email: email,
-        password: password,
-        contact: "",
-        downloadurl: '../../assets/download.png',
-        bio: "You have not yet inserted a description about your skills and abilities, update profile to get started.",
-      })
-    }).catch((error) => {
-      const alert = this.alertCtrl.create({
-        subTitle: error.message,
-        buttons: [
-          {
-            text: 'ok',
-            handler: data => {
-              console.log('Cancel clicked');
+    return new Promise((resolve , reject)=>{
+      return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
+        var user = firebase.auth().currentUser
+        firebase.database().ref("profiles/" + user.uid).set({
+          name: name,
+          email: email,
+          contact: "",
+          downloadurl: '../../assets/download.png',
+          bio: "You have not yet inserted a description about your skills and abilities, update profile to get started.",
+        })
+        resolve() ;
+      }).catch((error) => {
+        const alert = this.alertCtrl.create({
+          subTitle: error.message,
+          buttons: [
+            {
+              text: 'ok',
+              handler: data => {
+                console.log('Cancel clicked');
+              }
             }
-          }
-        ]
-      });
-      alert.present();
-      console.log(error);
+          ]
+        });
+        alert.present();
+        console.log(error);
+      })
     })
   }
+  
   login(email, password) {
     return new Promise((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
@@ -211,6 +214,7 @@ export class StreetartzProvider {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
+        console.log(DisplayData)
         if (DisplayData == null) {
           this.arr2 = null;
           const alert = this.alertCtrl.create({
@@ -231,7 +235,6 @@ export class StreetartzProvider {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var a = data.val();
         if (a !== null) {
-
         }
         accpt(user.uid);
       }, Error => {
@@ -318,13 +321,8 @@ export class StreetartzProvider {
       this.arr.length = 0;
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data == null) {
+        if (data == null || data == undefined) {
           this.arr2 = null;
-          const alert = this.alertCtrl.create({
-            subTitle: 'No artwork in this category yet',
-            buttons: ['OK']
-          });
-          alert.present();
         }
         else {
           var keys2: any = Object.keys(uploads);
@@ -438,16 +436,14 @@ export class StreetartzProvider {
     })
   }
   viewPicMain(name, username) {
-    this.arr2.length = 0;
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data == null) {
+        if (data == null || data == undefined) {
           this.arr2 = null;
         }
         else {
           var keys1: any = Object.keys(data);
-          this.arr2.length = 0;
           for (var i = 0; i < keys1.length; i++) {
             var keys1: any = Object.keys(data);
             for (var i = 0; i < keys1.length; i++) {
@@ -622,7 +618,6 @@ export class StreetartzProvider {
     return new Promise((accpt, rej) => {
       this.arr.length = 0;
       firebase.database().ref('uploads/' + key).remove();
-      console.log(key)
       accpt('image deleted')
     })
   }

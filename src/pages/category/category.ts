@@ -35,18 +35,18 @@ export class CategoryPage implements OnInit{
 
 
   }
-  ionViewDidLoad() {
-    this.retreivePics();
-  }
+  // ionViewDidLoad() {
+  //   this.retreivePics();
+  // }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
   ngOnInit(){
     this.retreivePics();
   }
-  // ionViewWillEnter() {
-   
-  // }
+  ionViewWillEnter() {
+    this.retreivePics();
+  }
   typeOfArt() {
     this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {
