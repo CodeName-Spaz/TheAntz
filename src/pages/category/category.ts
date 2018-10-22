@@ -22,7 +22,7 @@ import { ToastController } from 'ionic-angular';
   selector: 'page-category',
   templateUrl: 'category.html',
 })
-export class CategoryPage implements OnInit{
+export class CategoryPage {
   obj = {} as obj
   category: any;
   categoryArr = [];
@@ -41,9 +41,9 @@ export class CategoryPage implements OnInit{
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-  ngOnInit(){
-    this.retreivePics();
-  }
+  // ngOnInit(){
+  //   this.retreivePics();
+  // }
   ionViewWillEnter() {
     this.retreivePics();
   }
