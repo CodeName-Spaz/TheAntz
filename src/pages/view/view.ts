@@ -86,7 +86,7 @@ export class ViewPage implements OnInit {
   scroll(event){
     console.log(event);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
-      // backBTN.style.transition = 
+      
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
         backBTN[0].style.transition = 1 + "s"
