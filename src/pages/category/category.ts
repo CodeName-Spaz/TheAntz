@@ -34,9 +34,9 @@ export class CategoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
   this.retreivePics();
   }
-  ngOnInit() {
-    this.retreivePics();
-  }
+  // ngOnInit() {
+  //   this.retreivePics();
+  // }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }

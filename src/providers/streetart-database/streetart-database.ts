@@ -335,12 +335,12 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (this.arr2 == null || this.arr2 == undefined) {
-          this.arr2 = null;
+        if (data== null || data == undefined && this.arr2 == null ||  this.arr2 == undefined) {
+          this.selectCategoryArr = null;
           console.log('empty');
         }
         else {
-          this.arr2.length = 0;
+          this.selectCategoryArr.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
             var k = keys2[i];
@@ -359,7 +359,7 @@ export class StreetartzProvider {
                 username: "",
                 email: uploads[k].email
               }
-              this.arr2.push(obj);
+              this.selectCategoryArr.push(obj);
               this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
@@ -371,7 +371,7 @@ export class StreetartzProvider {
             }
           }
         }
-      }), pass(this.arr2);
+      }), pass(this.selectCategoryArr);
     })
   }
   update(name, email, contact, bio, downloadurl) {
@@ -453,7 +453,7 @@ export class StreetartzProvider {
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data == null ||data == undefined &&   this.arr2 == null ||   this.arr2 == undefined) {
+        if (data == null ||data == undefined &&   this.arr2 == null ||  this.arr2 == undefined) {
           this.arr2 = null;
         } 
         else {
