@@ -71,10 +71,10 @@ export class ViewPage implements OnInit{
     this.numlikes = this.obj.likes;
 
 
-   this.Retrivecomments();
+  this.Retrivecomments();
   }
   ionViewDidEnter() {
-    this.Retrivecomments();
+  this.Retrivecomments();
 
   }
   ngOnInit() {
@@ -103,7 +103,7 @@ export class ViewPage implements OnInit{
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
 
   Retrivecomments() {
