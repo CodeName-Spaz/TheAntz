@@ -86,15 +86,19 @@ export class ViewPage implements OnInit {
   scroll(event){
     console.log(event);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
-      
+      let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
-        backBTN[0].style.transition = 1 + "s"
+        backBTN[0].style.transition = 0.5 + "s";
+        theContent[0].style.marginTop = 15 + "px"
+      //  console.log(theContent);
       }
-      else if(event.directionY == 'up' && event.deltaY < -10){
+      else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
       }
-    
+      else if (event.scrollTop <= 30){
+        backBTN[0].style.transform="translateY(0%)";
+      }
     
   }
 
