@@ -449,10 +449,11 @@ export class StreetartzProvider {
     })
   }
   viewPicMain(name, username) {
+   
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data == null ||data == undefined) {
+        if (data == null ||data == undefined &&   this.arr2 == null ||   this.arr2 == undefined) {
           this.arr2 = null;
         } 
         else {
