@@ -32,15 +32,20 @@ export class CategoryPage {
   username;
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-       this.retreivePics();
+  this.retreivePics();
+  }
+  ngOnInit() {
+    this.retreivePics();
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
+
+
   typeOfArt() {
     this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {
-      if (this.category == undefined || this.category == null) {
+      if (data == undefined || data == null) {
         console.log('empty')
       }
       else {
@@ -62,10 +67,11 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
+            console.log(this.categoryArr);
           }
         }
       }
-      if (this.category == "All") {
+      if (this.category == 'All') {
         this.retreivePics()
       }
     })

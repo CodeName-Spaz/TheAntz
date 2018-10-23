@@ -8,6 +8,7 @@ import { ToastController } from 'ionic-angular';
 import firebase from 'firebase';
 import moment from 'moment';
 import { dateDataSortValue } from 'ionic-angular/util/datetime-util';
+import { empty } from 'rxjs/Observer';
 /*
   Generated class for the StreetartzProvider provider.
   See https://angular.io/guide/dependency-injection for more info on providers
@@ -29,7 +30,7 @@ export class StreetartzProvider {
   name;
   url;
   username;
-  selectCategoryArr=[];
+  selectCategoryArr = [];
   emailComposer;
   email;
   password
@@ -62,13 +63,13 @@ export class StreetartzProvider {
 
   }
   register(email, password, name) {
-    return new Promise((resolve , reject)=>{
-        let loading = this.loadingCtrl.create({
-          spinner: 'bubbles',
-          content: 'Sign in....',
-          duration: 4000
-        });
-        loading.present();
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'Sign in....',
+        duration: 4000
+      });
+      loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
         var user = firebase.auth().currentUser
         firebase.database().ref("profiles/" + user.uid).set({
@@ -78,7 +79,7 @@ export class StreetartzProvider {
           downloadurl: '../../assets/download.png',
           bio: "You have not yet inserted a description about your skills and abilities, update profile to get started.",
         })
-        resolve() ;
+        resolve();
       }).catch((error) => {
         const alert = this.alertCtrl.create({
           subTitle: error.message,
@@ -96,17 +97,17 @@ export class StreetartzProvider {
       })
     })
   }
-  
+
   login(email, password) {
     return new Promise((resolve, reject) => {
-      if(this.email == undefined || this.password == undefined){
-        const alert = this.alertCtrl.create({
-          subTitle: "This email is not registered, please sign up to continue.",
-          buttons: ['OK']
-        });
-        alert.present();
-      }
-      else{
+      // if(this.email == undefined || this.password == undefined){
+      //   const alert = this.alertCtrl.create({
+      //     subTitle: "This email is not registered, please sign up to continue.",
+      //     buttons: ['OK']
+      //   });
+      //   alert.present();
+      // }
+      // else{
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
         content: 'Sign in....',
@@ -129,7 +130,7 @@ export class StreetartzProvider {
         });
         alert.present();
       })
-    }
+      // }
     })
   }
   retrieve() {
@@ -150,7 +151,7 @@ export class StreetartzProvider {
   }
   forgotpassword(email) {
     return new Promise((resolve, reject) => {
-      if (email == null || email == undefined  ) {
+      if (email == null || email == undefined) {
         const alert = this.alertCtrl.create({
           subTitle: 'Please enter your Email.',
           buttons: ['OK']
@@ -158,16 +159,16 @@ export class StreetartzProvider {
         alert.present();
       }
       else if (email != null || email != undefined) {
-        firebase.auth().sendPasswordResetEmail(email).then(() =>{
+        firebase.auth().sendPasswordResetEmail(email).then(() => {
           const alert = this.alertCtrl.create({
             title: 'Password request Sent',
             subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
             buttons: ['OK']
-            
+
           });
           alert.present();
           resolve()
-        }, Error =>{
+        }, Error => {
           const alert = this.alertCtrl.create({
             subTitle: Error.message,
             buttons: ['OK']
@@ -334,12 +335,12 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (  this.selectCategoryArr  == null ||   this.selectCategoryArr  == undefined) {
-          this.selectCategoryArr = null;
+        if (this.arr2 == null || this.arr2 == undefined) {
+          this.arr2 = null;
           console.log('empty');
         }
         else {
-          this.selectCategoryArr.length = 0;
+          this.arr2.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
             var k = keys2[i];
@@ -358,7 +359,7 @@ export class StreetartzProvider {
                 username: "",
                 email: uploads[k].email
               }
-              this.selectCategoryArr.push(obj);
+              this.arr2.push(obj);
               this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
@@ -366,15 +367,11 @@ export class StreetartzProvider {
               });
             }
             else if (uploads[k].category == undefined || uploads[k].category == null) {
-              const alert = this.alertCtrl.create({
-                subTitle: 'this category is not yet avaliable',
-                buttons: ['OK']
-              });
-              alert.present();
+             console.log('nex');
             }
           }
         }
-      }), pass(this.selectCategoryArr);
+      }), pass(this.arr2);
     })
   }
   update(name, email, contact, bio, downloadurl) {
@@ -451,13 +448,13 @@ export class StreetartzProvider {
       })
     })
   }
-  viewPicMain(name,username) {
+  viewPicMain(name, username) {
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data  == null || data == undefined) {
+        if (data == null ||data == undefined) {
           this.arr2 = null;
-        }
+        } 
         else {
           this.arr2.length = 0;
           var keys1: any = Object.keys(data);
@@ -598,7 +595,6 @@ export class StreetartzProvider {
                 }
               }
             })
-
           }
           accpt(results)
         }
