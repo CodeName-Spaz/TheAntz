@@ -32,30 +32,21 @@ export class CategoryPage {
   username;
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-
-
+  this.retreivePics();
   }
-  // ionViewDidLoad() {
-  //   this.retreivePics();
-  // }
+  ngOnInit() {
+    this.retreivePics();
+  }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-  // ngOnInit(){
-  //   this.retreivePics();
-  // }
-  ionViewWillEnter() {
-    this.retreivePics();
-  }
+
+
   typeOfArt() {
     this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {
-      if (this.category == undefined) {
-        const alert = this.alertCtrl.create({
-          subTitle: 'this category is not yet avaliable',
-          buttons: ['OK']
-        });
-        alert.present();
+      if (data == undefined || data == null) {
+        console.log('empty')
       }
       else {
         var keys: any = Object.keys(data);
@@ -68,26 +59,29 @@ export class CategoryPage {
               name: data[k].name,
               key: k,
               url: data[k].url,
+              comments: data[k].comments,
               username: data[k].username,
+              likes: data[k].likes,
               email: data[k].email,
               location: data[k].location,
               price: data[k].price,
             }
             this.categoryArr.push(obj);
+            console.log(this.categoryArr);
           }
         }
       }
       if (this.category == 'All') {
         this.retreivePics()
-
       }
     })
 
   }
   retreivePics() {
     this.categoryArr.length = 0;
-    this.art.viewPicMain(this.name, this.username).then((data: any) => {
-      this.categoryArr = data;
+    this.art.viewPicMain(this.name,this.username).then((data: any) => {
+    this.categoryArr = data;
+
     });
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes) {

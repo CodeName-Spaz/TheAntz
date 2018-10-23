@@ -83,6 +83,7 @@ export class ViewPage implements OnInit {
     this.Retrivecomments();
     this.currentUserId = this.art.returnUID();
   }
+
   scroll(event){
     console.log(event);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
