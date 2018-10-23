@@ -17,6 +17,12 @@ page-view {
         float: right;
         color: rgb(250,179,53);
         // font-size: 12px;
+        transition: 1s
+    }
+    .thePrices:active{
+        float: right;
+        color: white;
+        // font-size: 12px;
     }
     .theWidth{
         width: 100vw;
