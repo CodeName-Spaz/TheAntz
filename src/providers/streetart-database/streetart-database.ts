@@ -29,6 +29,7 @@ export class StreetartzProvider {
   name;
   url;
   username;
+  selectCategoryArr=[];
   emailComposer;
   email;
   password
@@ -62,6 +63,12 @@ export class StreetartzProvider {
   }
   register(email, password, name) {
     return new Promise((resolve , reject)=>{
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'Sign in....',
+          duration: 4000
+        });
+        loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
         var user = firebase.auth().currentUser
         firebase.database().ref("profiles/" + user.uid).set({
@@ -92,6 +99,20 @@ export class StreetartzProvider {
   
   login(email, password) {
     return new Promise((resolve, reject) => {
+      if(this.email == undefined || this.password == undefined){
+        const alert = this.alertCtrl.create({
+          subTitle: "This email is not registered, please sign up to continue.",
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+      else{
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'Sign in....',
+        duration: 4000
+      });
+      loading.present();
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
       }).catch((error) => {
@@ -108,6 +129,7 @@ export class StreetartzProvider {
         });
         alert.present();
       })
+    }
     })
   }
   retrieve() {
@@ -141,6 +163,7 @@ export class StreetartzProvider {
             title: 'Password request Sent',
             subTitle: "We've sent you and email with a reset link, go to your email to recover your account.",
             buttons: ['OK']
+            
           });
           alert.present();
           resolve()
@@ -214,15 +237,6 @@ export class StreetartzProvider {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
-        console.log(DisplayData)
-        if (DisplayData == null) {
-          this.arr2 = null;
-          const alert = this.alertCtrl.create({
-            subTitle: 'You have no art work yet',
-            buttons: ['OK']
-          });
-          alert.present();
-        }
         accpt(DisplayData);
       }, Error => {
         rejc(Error.message)
@@ -318,13 +332,14 @@ export class StreetartzProvider {
   }
   selectCategory(category) {
     return new Promise((pass, fail) => {
-      this.arr.length = 0;
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data == null || data == undefined) {
-          this.arr2 = null;
+        if (  this.selectCategoryArr  == null ||   this.selectCategoryArr  == undefined) {
+          this.selectCategoryArr = null;
+          console.log('empty');
         }
         else {
+          this.selectCategoryArr.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
             var k = keys2[i];
@@ -334,20 +349,21 @@ export class StreetartzProvider {
                 uid: uploads[k].uid,
                 name: uploads[k].name,
                 category: uploads[k].category,
+                comments: uploads[k].comments,
                 downloadurl: uploads[k].downloadurl,
                 location: uploads[k].location,
                 price: uploads[k].price,
+                likes: uploads[k].likes,
                 url: this.url,
                 username: "",
                 email: uploads[k].email
               }
-              this.arr.push(obj);
+              this.selectCategoryArr.push(obj);
               this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
                 obj.email = profileData.email
               });
-              pass(this.arr);
             }
             else if (uploads[k].category == undefined || uploads[k].category == null) {
               const alert = this.alertCtrl.create({
@@ -358,7 +374,7 @@ export class StreetartzProvider {
             }
           }
         }
-      }), pass(this.arr);
+      }), pass(this.selectCategoryArr);
     })
   }
   update(name, email, contact, bio, downloadurl) {
@@ -435,14 +451,15 @@ export class StreetartzProvider {
       })
     })
   }
-  viewPicMain(name, username) {
+  viewPicMain(name,username) {
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data == null || data == undefined) {
+        if (data  == null || data == undefined) {
           this.arr2 = null;
         }
         else {
+          this.arr2.length = 0;
           var keys1: any = Object.keys(data);
           for (var i = 0; i < keys1.length; i++) {
             var keys1: any = Object.keys(data);
@@ -466,6 +483,7 @@ export class StreetartzProvider {
                 url: this.url,
               }
               this.arr2.push(obj);
+              console.log(this.arr2);
               this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.email = profileData.email
