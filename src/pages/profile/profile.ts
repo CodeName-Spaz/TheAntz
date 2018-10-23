@@ -12,6 +12,7 @@ import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { AlertController } from 'ionic-angular';
+;
 import firebase from 'firebase';
 /**
  * Generated class for the ProfilePage page.
@@ -24,7 +25,7 @@ import firebase from 'firebase';
   selector: 'page-profile',
   templateUrl: 'profile.html',
 })
-export class ProfilePage  {
+export class ProfilePage {
   list = [];
   arr = [];
   uid: any;
@@ -33,40 +34,30 @@ export class ProfilePage  {
   name;
   details;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+    this.retreivePics();
 
-
-    this.art.profile(this.details).then((data) => {
+    let userID = firebase.auth().currentUser;
+    firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
       this.arr.length = 0
-      var keys: any = Object.keys(data);
-      for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        let obj = {
-          downloadurl: data[k].downloadurl,
-          name: data[k].name,
-          key: k,
-          email: data[k].email,
-          bio: data[k].bio,
-          contact: data[k].contact
-        }
-        this.arr.push(obj)
-     
-      }
+      let details = data.val();
+      this.arr.push(details);
     })
   }
 
+
+
+
   ionViewDidLoad() {
-    this.retreivePics1();
-    this.retreivePics();
-  }
-  ngOnInit() {
+
   }
 
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
   }
 
-  upload() {
-    this.navCtrl.push(UploadImagePage);
+  upload(){
+    const modal = this.modalCtrl.create(UploadImagePage);
+    modal.present();
   }
   presentPopover() {
     const popover = this.popoverCtrl.create(PopOverProfilePage);
@@ -86,25 +77,25 @@ export class ProfilePage  {
     this.list.length = 0;
     this.getUid();
     this.art.viewPicGallery().then(data => {
-   
-      var keys: any = Object.keys(data);
-      for (var i = 0; i < keys.length; i++) {
-        var k = keys[i];
-        if (this.uid == data[k].uid) {
-          let obj = {
-            uid: data[k].uid,
-            category: data[k].category,
-            downloadurl: data[k].downloadurl,
-            location: data[k].location,
-            price: data[k].price,
-            name: data[k].name,
-            key: k
+        var keys: any = Object.keys(data);
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i];
+          if (this.uid == data[k].uid) {
+            let obj = {
+              uid: data[k].uid,
+              category: data[k].category,
+              downloadurl: data[k].downloadurl,
+              location: data[k].location,
+              price: data[k].price,
+              name: data[k].name,
+              key: k
+            }
+            this.list.push(obj);
+            console.log(this.list);
+
           }
-          this.list.push(obj);
-       
         }
-      }
- 
+      
     }, Error => {
       console.log(Error)
     });
@@ -129,7 +120,7 @@ export class ProfilePage  {
           this.arr.push(objt);
         }
       }
-  
+
     }, Error => {
       console.log(Error)
     });
