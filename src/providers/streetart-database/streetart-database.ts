@@ -335,7 +335,7 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (this.arr2 == null || this.arr2 == undefined) {
+        if (data == null || data == undefined && this.arr2 == null || this.arr == undefined) {
           this.arr2 = null;
           console.log('empty');
         }

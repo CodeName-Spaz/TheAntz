@@ -99,4 +99,4 @@ export class SignupPage {
     loader.present();
   }
 
-}
+}    

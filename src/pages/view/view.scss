@@ -1,4 +1,14 @@
 page-view {
+    .watermark{
+        position: absolute;
+        top: 15%;
+        // transform: rotate(45deg);
+        display: block;
+        z-index: 1;
+        opacity: .3;
+        width: 90%;
+        transform: translateX(5%)
+    }
     .price{
         color: white;
         text-shadow: 0 0 4px black;
@@ -30,7 +40,9 @@ page-view {
     }
     .theImage{
         display: block;
-        z-index: 1;
+        // z-index: 1;
+        // background: url('../../assets/imgs/Watermark/WaterMark.png');
+        // z-index: 10000000;
     }
     .Caps-Lock{
         text-transform: capitalize;
@@ -173,6 +185,10 @@ page-view {
         width: 100%;
         max-width: 500px;
         margin: 0 auto;
+    }
+    .postedIMG{
+        width: 100%;
+        z-index: -100000;
     }
     @media screen and (max-width: 320px){
         .postedIMG{
