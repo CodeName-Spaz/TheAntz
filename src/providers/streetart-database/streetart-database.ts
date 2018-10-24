@@ -39,6 +39,7 @@ export class StreetartzProvider {
   constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello StreetartzProvider Provider');
   }
+
   checkstate() {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
@@ -58,10 +59,16 @@ export class StreetartzProvider {
       }, (error) => {
         reject(error)
 
-      });
-    });
-
-  }
+logout() {
+  return new Promise((resolve, reject) => {
+    firebase.auth().signOut().then(()=>{
+   resolve();
+    } , (error)=>{
+      reject(error)
+    })
+  })
+}
+  
   register(email, password, name) {
     return new Promise((resolve, reject) => {
       let loading = this.loadingCtrl.create({

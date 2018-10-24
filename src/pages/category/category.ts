@@ -41,7 +41,6 @@ export class CategoryPage {
     this.navCtrl.push(ProfilePage);
   }
 
-
   typeOfArt() {
     this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {

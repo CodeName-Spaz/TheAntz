@@ -10,10 +10,12 @@ import { PopOverProfilePage } from '../pop-over-profile/pop-over-profile';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { AlertController } from 'ionic-angular';
 ;
 import firebase from 'firebase';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -31,6 +33,7 @@ export class ProfilePage {
   uid: any;
   uid1: any;
   obj;
+
   name;
   details;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
@@ -49,6 +52,18 @@ export class ProfilePage {
 
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
+    
+  }
+  ngOnInit() {
+    this.obj = this.navParams.get("obj");
+    console.log(this.obj);
+  }
+  
+  next() {
+    this.navCtrl.push(CategoryPage);
+
   }
 
   upload() {

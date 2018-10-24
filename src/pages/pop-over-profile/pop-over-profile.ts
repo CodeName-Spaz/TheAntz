@@ -3,8 +3,10 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { LoginPage } from '../login/login';
+
 import { obj } from '../../app/class';
 import { LoadingController } from 'ionic-angular';
+
 /**
  * Generated class for the PopOverProfilePage page.
  *

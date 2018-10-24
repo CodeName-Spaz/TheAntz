@@ -42,7 +42,9 @@ export class UploadImagePage {
       reader.readAsDataURL(event.target.files[0]);
       console.log(reader.onload);
     }
+    this.uploadPicture();
   }
+
   omit_special_char(event)
   {   
      var k;  
@@ -184,11 +186,38 @@ export class UploadImagePage {
 
 
 
+
+  
+  uploadPicture(){
+    this.art.uploadPic(this.url,this.name).then(data =>{
+      this.imageUrl = data;
+    }, Error =>{
+      console.log(Error )
+    })
+
   }
 
 
   dismiss() {
     this.view.dismiss();
   }
+
+}
+
+
+  uploadData(){
+    this.art.storeToDB(this.imageUrl, this.category, this.name).then(() =>{
+      console.log('added to db');
+     //  this.navCtrl.view(ProfilePage);
+    this.view.dismiss();
+      },
+        Error =>{
+      console.log(Error)
+   })
+  
+  }
+  
+  
+ 
 }
 
