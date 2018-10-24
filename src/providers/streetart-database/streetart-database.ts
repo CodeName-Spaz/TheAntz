@@ -39,7 +39,6 @@ export class StreetartzProvider {
   constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello StreetartzProvider Provider');
   }
-
   checkstate() {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user) => {
@@ -59,16 +58,10 @@ export class StreetartzProvider {
       }, (error) => {
         reject(error)
 
-logout() {
-  return new Promise((resolve, reject) => {
-    firebase.auth().signOut().then(()=>{
-   resolve();
-    } , (error)=>{
-      reject(error)
-    })
-  })
-}
-  
+      });
+    });
+
+  }
   register(email, password, name) {
     return new Promise((resolve, reject) => {
       let loading = this.loadingCtrl.create({
@@ -104,9 +97,19 @@ logout() {
       })
     })
   }
+
   login(email, password) {
-    return new Promise((resolve, reject) => {
-      // if (this.email != null || this.email != undefined && this.password != null || this.password != undefined) {
+      return new Promise((resolve, reject) => {
+        // if(this.email== undefined  && this.password== undefined ){
+        //   const alert = this.alertCtrl.create({
+        //     title: 'Oops!',
+        //     subTitle: "You are not registered as a user, sign up to get started",
+        //     buttons: ['OK']
+
+        //   });
+        //   alert.present();
+        // }
+        // else{
         let loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           content: 'Sign in....',
@@ -129,13 +132,7 @@ logout() {
           });
           alert.present();
         })
-      // }
-      // else {
-      //   const alert = this.alertCtrl.create({
-      //     subTitle: "This email is not registered, please sign up to continue.",
-      //     buttons: ['OK']
-      //   });
-      //   alert.present();
+   
       // }
     })
   }
@@ -199,7 +196,7 @@ logout() {
     })
   }
   uploadPic(pic) {
-    var name = Date.now();
+    var name = "SA" + Date.now();
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait',
@@ -209,13 +206,14 @@ logout() {
       loading.present();
       firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
         accpt(name);
+        console.log(name)
       }, Error => {
         rejc(Error.message)
       })
     })
   }
   storeToDB(name, category, picName, description, location, price) {
-    var d = Date.now();
+    var d = "SA" + Date.now();
     return new Promise((accpt, rejc) => {
       var storageRef = firebase.storage().ref(name + "jpg");
       storageRef.getDownloadURL().then(url => {
@@ -224,6 +222,7 @@ logout() {
         firebase.database().ref('uploads/').push({
           downloadurl: link,
           name: picName,
+          name1:name,
           category: category,
           uid: user.uid,
           description: description,
@@ -233,6 +232,7 @@ logout() {
           comments: 0
         });
         accpt('success');
+        console.log(name)
       }, Error => {
         rejc(Error.message);
         console.log(Error.message);
@@ -245,6 +245,7 @@ logout() {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
         accpt(DisplayData);
+        console.log(DisplayData)
       }, Error => {
         rejc(Error.message)
       })
@@ -341,11 +342,7 @@ logout() {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data == null || data == undefined && this.arr2 == null || this.arr2 == undefined) {
-          this.selectCategoryArr = null;
-          console.log('empty');
-        }
-        else {
+        if (data != null || data != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined) {
           this.selectCategoryArr.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
@@ -355,6 +352,7 @@ logout() {
               let obj = {
                 uid: uploads[k].uid,
                 name: uploads[k].name,
+                name1:uploads[k].name1,
                 category: uploads[k].category,
                 comments: uploads[k].comments,
                 downloadurl: uploads[k].downloadurl,
@@ -372,10 +370,14 @@ logout() {
                 obj.email = profileData.email
               });
             }
-            else if (uploads[k].category == undefined || uploads[k].category == null) {
-              console.log('nex');
-            }
+            // if (uploads[k].category == undefined || uploads[k].category == null) {
+            //   console.log('nex');
+            // }
           }
+        }
+        else {
+          this.selectCategoryArr = null;
+          console.log('empty');
         }
       }), pass(this.selectCategoryArr);
     })
@@ -426,6 +428,7 @@ logout() {
                 if (this.arr == uploads[k].arr) {
                   let obj = {
                     name: uploads[k].name,
+                    name1: uploads[k].name1,
                     key: keys2,
                     downloadurl: uploads[k].downloadurl,
                     url: uploads[k].downloadurl,
@@ -455,7 +458,6 @@ logout() {
     })
   }
   viewPicMain(name, username) {
-
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
@@ -481,6 +483,7 @@ logout() {
                 price: data[k].price,
                 likes: data[k].likes,
                 name: data[k].name,
+                name1: data[k].name1,
                 username: "",
                 email: "",
                 key: k,

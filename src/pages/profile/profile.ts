@@ -53,19 +53,10 @@ export class ProfilePage {
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController,public toastCtrl: ToastController) {
-    
   }
-  ngOnInit() {
-    this.obj = this.navParams.get("obj");
-    console.log(this.obj);
-  }
+
   
-  next() {
-    this.navCtrl.push(CategoryPage);
-
-  }
-
+ 
   upload() {
     const modal = this.modalCtrl.create(UploadImagePage);
     modal.present();
@@ -76,7 +67,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
   getUid() {
     this.art.getUserID().then(data => {
@@ -140,8 +131,6 @@ export class ProfilePage {
       console.log(Error)
     });
   }
-
-
   nextpage() {
     this.navCtrl.push(EditProfilePage);
   }
@@ -149,7 +138,6 @@ export class ProfilePage {
   dismissPage() {
     this.navCtrl.pop();
   }
-
   removeImage(key) {
     const confirm = this.alertCtrl.create({
       title: 'Confirm',
