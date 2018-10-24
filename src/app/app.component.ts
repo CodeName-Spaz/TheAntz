@@ -23,7 +23,6 @@ import { UploadImagePage } from '../pages/upload-image/upload-image';
 export class MyApp {
  @ViewChild(Nav) nav: Nav;
 
-
  rootPage: any ;;
 
  pages: Array<{title: string, component: any}>;
@@ -34,7 +33,7 @@ export class MyApp {
        this.rootPage = CategoryPage;
      }
      else {
-       this.rootPage = SplashPage
+       this.rootPage = LoginPage
      }
     })
    this.initializeApp();

@@ -19,7 +19,7 @@ import { CategoryPage } from '../category/category';
   templateUrl: 'view.html',
 })
 
-export class ViewPage implements OnInit {
+export class ViewPage implements OnInit{
   comment: any;
   data: any;
   name;
@@ -48,7 +48,8 @@ export class ViewPage implements OnInit {
   numlikes;
   viewComments;
   viewlike;
-  price
+  price;
+  name1;
   currentUserId;
   likeArr = [];
   CommentArr = [];
@@ -56,7 +57,7 @@ export class ViewPage implements OnInit {
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
     console.log("this is my index");
-    console.log(this.email);
+    console.log(this.obj.name1);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -69,23 +70,22 @@ export class ViewPage implements OnInit {
     this.location = this.obj.location;
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
+    this.name1 = this.obj.name1;
 
 
-
-
-
+  this.Retrivecomments();
   }
   ionViewDidEnter() {
-    this.Retrivecomments();
+  this.Retrivecomments();
 
   }
   ngOnInit() {
-    this.Retrivecomments();
+    // this.Retrivecomments();
     this.currentUserId = this.art.returnUID();
   }
 
   scroll(event){
-    console.log(event.scrollTop);
+    // console.log(event);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
@@ -101,8 +101,6 @@ export class ViewPage implements OnInit {
       }
     
   }
-
-
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {
       if (available) {
@@ -113,23 +111,22 @@ export class ViewPage implements OnInit {
       to: this.obj.email,
       cc: 'theantz39@gmail.com',
       attachments: [
-        this.downloadurl
+        this.obj.url
       ],
-      subject: this.obj.username,
-      body: this.obj.pic,
+      subject: this.obj.name1,
+      body: "Greetings, <br> I would like to place an order for this image click here. <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br> to view the image.",
       isHtml: true
     };
     this.emailComposer.open(email);
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
 
   Retrivecomments() {
     this.art.viewComments(this.obj.key, this.comment).then((data) => {
       if (data == null || data == undefined) {
-
       }
       else {
         this.CommentArr.length = 0;
@@ -147,7 +144,7 @@ export class ViewPage implements OnInit {
           this.CommentArr.push(obj);
           console.log(this.CommentArr);
         }
-        this.commentsLeng = this.CommentArr.length;
+        this.commentsLeng = this.CommentArr.length
       }
 
     })

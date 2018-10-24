@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
+import { SignupPage } from '../signup/signup';
 
 /**
  * Generated class for the ForgotPasswordPage page.
@@ -28,9 +29,11 @@ export class ForgotPasswordPage {
 
   forgotpassword(obj: obj) {
     this.art.forgotpassword(this.obj.email).then(() => {
+      // this.navCtrl.setRoot(SignupPage);
     }, (error)=>{
       alert(error)
-    })         
+    })     
+    // this.obj.email ="";    
   }
 
 }

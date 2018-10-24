@@ -71,7 +71,7 @@ export class EditProfilePage implements OnInit {
           this.arr.push(data);
           console.log(this.contact);
         })
-        this.navCtrl.push(ProfilePage);
+        this.navCtrl.setRoot(ProfilePage);
       },
         Error => {
           console.log(Error)
@@ -106,7 +106,7 @@ export class EditProfilePage implements OnInit {
     this.art.viewPicGallery1().then(data => {
       var loader = this.loadingCtrl.create({
         content: "please wait...",
-        duration: 6000
+        duration: 9000
       });
       var keys: any = Object.keys(data);
       for (var i = 0; i < keys.length; i++) {

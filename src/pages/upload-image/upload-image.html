@@ -6,18 +6,12 @@
         <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-
   </ion-toolbar>
-
 </ion-header>
 <ion-content>
-
   <div class="container">
-
   </div>
   <div class="body" padding>
-
-
     <div class="image">
       <div class="btn">
         <label for="insert" id="attach">
@@ -41,11 +35,7 @@
             <ion-option value="General">General</ion-option>
           </ion-select>
         </ion-item>
-
         <br>
-
-
-
         <ion-input class="theItem" placeholder="Artwork Name" [(ngModel)]="name" type="text" maxlength="30"></ion-input>
         <br>
         <ion-input class="theItem" placeholder="Location" type="text" [(ngModel)]="location" maxlength="20" row="4"></ion-input>
@@ -56,6 +46,5 @@
           row="4"></ion-textarea>
       </div>
     </ion-list>
-
     <button class="uploadBtn" ion-button full color="primary" (click)="uploadPicture()">Upload Artwork</button>
   </div>

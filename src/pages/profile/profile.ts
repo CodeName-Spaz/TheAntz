@@ -10,10 +10,12 @@ import { PopOverProfilePage } from '../pop-over-profile/pop-over-profile';
 import { LoadingController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { AlertController } from 'ionic-angular';
 ;
 import firebase from 'firebase';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -31,6 +33,7 @@ export class ProfilePage {
   uid: any;
   uid1: any;
   obj;
+
   name;
   details;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
@@ -43,19 +46,18 @@ export class ProfilePage {
       this.arr.push(details);
     })
   }
-
-
-
-
   ionViewDidLoad() {
 
   }
 
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
+
   }
 
-  upload(){
+  
+ 
+  upload() {
     const modal = this.modalCtrl.create(UploadImagePage);
     modal.present();
   }
@@ -65,7 +67,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
   getUid() {
     this.art.getUserID().then(data => {
@@ -77,6 +79,10 @@ export class ProfilePage {
     this.list.length = 0;
     this.getUid();
     this.art.viewPicGallery().then(data => {
+      if (data == null || data == undefined) {
+        console.log('no data');
+      }
+      else {
         var keys: any = Object.keys(data);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
@@ -95,7 +101,7 @@ export class ProfilePage {
 
           }
         }
-      
+      }
     }, Error => {
       console.log(Error)
     });
@@ -125,8 +131,6 @@ export class ProfilePage {
       console.log(Error)
     });
   }
-
-
   nextpage() {
     this.navCtrl.push(EditProfilePage);
   }
@@ -134,7 +138,6 @@ export class ProfilePage {
   dismissPage() {
     this.navCtrl.pop();
   }
-
   removeImage(key) {
     const confirm = this.alertCtrl.create({
       title: 'Confirm',

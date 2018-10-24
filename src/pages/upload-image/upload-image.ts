@@ -46,7 +46,7 @@ export class UploadImagePage {
   }
   omit_special_char(event)
   {   
-    console.log(event.charCode)
+    // console.log(event.charCode)
      var k;  
      k = event.charCode;  //         k = event.keyCode;  (Both can be used)
      return((k >= 48 && k <= 57)); 
