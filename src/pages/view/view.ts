@@ -85,7 +85,7 @@ export class ViewPage implements OnInit {
   }
 
   scroll(event){
-    // console.log(event);
+    console.log(event.scrollTop);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){

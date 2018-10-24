@@ -6,8 +6,15 @@ page-view {
         display: block;
         z-index: 1;
         opacity: .3;
-        width: 90%;
-        transform: translateX(5%)
+        width: 70%;
+        transform: translateX(25vw);
+        transform:rotate(45deg);
+    }
+    .theGrid{
+        z-index: 1000;
+        background: red;
+        display: block;
+        float: center
     }
     .price{
         color: white;
