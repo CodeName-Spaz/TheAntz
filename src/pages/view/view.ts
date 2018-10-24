@@ -48,7 +48,8 @@ export class ViewPage implements OnInit{
   numlikes;
   viewComments;
   viewlike;
-  price
+  price;
+  name1;
   currentUserId;
   likeArr = [];
   CommentArr = [];
@@ -56,7 +57,7 @@ export class ViewPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
     console.log("this is my index");
-    console.log(this.obj.email);
+    console.log(this.obj.name1);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -69,6 +70,7 @@ export class ViewPage implements OnInit{
     this.location = this.obj.location;
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
+    this.name1 = this.obj.name1;
 
 
   this.Retrivecomments();
@@ -109,10 +111,10 @@ export class ViewPage implements OnInit{
       to: this.obj.email,
       cc: 'theantz39@gmail.com',
       attachments: [
-        this.downloadurl1
+        this.obj.url
       ],
-      subject: this.obj.username,
-      body: "Greetings, <br> I would like to place an order for this image. <br> click <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> to view the image.",
+      subject: this.obj.name1,
+      body: "Greetings, <br> I would like to place an order for this image click here. <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br> to view the image.",
       isHtml: true
     };
     this.emailComposer.open(email);

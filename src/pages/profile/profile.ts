@@ -56,11 +56,7 @@ export class ProfilePage {
   }
 
   
-  next() {
-    this.navCtrl.push(CategoryPage);
-
-  }
-
+ 
   upload() {
     const modal = this.modalCtrl.create(UploadImagePage);
     modal.present();
@@ -71,7 +67,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
   getUid() {
     this.art.getUserID().then(data => {
