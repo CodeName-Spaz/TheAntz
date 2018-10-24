@@ -52,13 +52,7 @@ export class StreetartzProvider {
       })
     })
   }
-  logout() {
-    return new Promise((resolve, reject) => {
-      firebase.auth().signOut().then(() => {
-        resolve()
-      }, (error) => {
-        reject(error)
-
+  
 logout() {
   return new Promise((resolve, reject) => {
     firebase.auth().signOut().then(()=>{
