@@ -97,39 +97,38 @@ export class StreetartzProvider {
       })
     })
   }
-
   login(email, password) {
     return new Promise((resolve, reject) => {
-      // if(this.email == undefined || this.password == undefined){
+      // if (this.email != null || this.email != undefined && this.password != null || this.password != undefined) {
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'Sign in....',
+          duration: 4000
+        });
+        loading.present();
+        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+          resolve();
+        }).catch((error) => {
+          const alert = this.alertCtrl.create({
+            subTitle: error.message,
+            buttons: [
+              {
+                text: 'ok',
+                handler: data => {
+                  console.log('Cancel clicked');
+                }
+              }
+            ]
+          });
+          alert.present();
+        })
+      // }
+      // else {
       //   const alert = this.alertCtrl.create({
       //     subTitle: "This email is not registered, please sign up to continue.",
       //     buttons: ['OK']
       //   });
       //   alert.present();
-      // }
-      // else{
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Sign in....',
-        duration: 4000
-      });
-      loading.present();
-      firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-        resolve();
-      }).catch((error) => {
-        const alert = this.alertCtrl.create({
-          subTitle: error.message,
-          buttons: [
-            {
-              text: 'ok',
-              handler: data => {
-                console.log('Cancel clicked');
-              }
-            }
-          ]
-        });
-        alert.present();
-      })
       // }
     })
   }
@@ -335,7 +334,7 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data== null || data == undefined && this.arr2 == null ||  this.arr2 == undefined) {
+        if (data == null || data == undefined && this.arr2 == null || this.arr2 == undefined) {
           this.selectCategoryArr = null;
           console.log('empty');
         }
@@ -367,7 +366,7 @@ export class StreetartzProvider {
               });
             }
             else if (uploads[k].category == undefined || uploads[k].category == null) {
-             console.log('nex');
+              console.log('nex');
             }
           }
         }
@@ -449,13 +448,13 @@ export class StreetartzProvider {
     })
   }
   viewPicMain(name, username) {
-   
+
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
-        if (data == null ||data == undefined &&   this.arr2 == null ||  this.arr2 == undefined) {
+        if (data == null || data == undefined && this.arr2 == null || this.arr2 == undefined) {
           this.arr2 = null;
-        } 
+        }
         else {
           this.arr2.length = 0;
           var keys1: any = Object.keys(data);

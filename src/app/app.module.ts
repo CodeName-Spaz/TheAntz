@@ -75,6 +75,7 @@ firebase.initializeApp({
  providers: [
    StatusBar,
    SplashScreen,
+   EmailComposer,
    {provide: ErrorHandler, useClass: IonicErrorHandler},
    StreetartzProvider,EmailComposer
  ]

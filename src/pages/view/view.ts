@@ -93,7 +93,7 @@ export class ViewPage implements OnInit{
       to: this.obj.email,
       cc: 'theantz39@gmail.com',
       attachments: [
-        this.downloadurl
+        this.downloadurl1
       ],
       subject: this.obj.username,
       body: "Greetings, <br> I would like to place an order for this image. <br> click <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> to view the image.",
