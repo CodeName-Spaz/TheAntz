@@ -3,5 +3,9 @@ export interface obj{
     email:string;
     password:string;
     cateogry:string;
-    confirmPassword:string;
+    bio:string;
+    contact:string;
+    skill:string;
+    downloadurl:string;
+
     }

@@ -1,52 +1,24 @@
-<ion-content>
-
-  <div class="mtop"></div>
-
-  <div class="everything">
-
-    <div class="logo">
-      <p style="color: white; text-shadow: 0px 0px 5px black">Welcome to</p>
-      <img src="../../assets/imgs/theLogo/ANTZ Logo.png" alt="">
-    </div>
-
-    <div class="form">
-      <div class="theList">
+<ion-header></ion-header>
+<ion-content class="container">
+    <div class="everything">
+      <div class="logo">
+        <img src="../../assets/imgs/theLogo/ANTZ Logo.png" alt="">
+      </div>
+      <div class="items" padding>
         <ion-list no-lines>
-          <ion-item>
-            <ion-label start>
-              <ion-icon ios="ios-person-outline" md="md-person" id="space"></ion-icon></ion-label>
-            <ion-input type="text" value=""[(ngModel)]="obj.email" placeholder="Username"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-label start>
-              <ion-icon ios="ios-key-outline" md="md-key" id="space"></ion-icon></ion-label>
-            <ion-input type="password" [(ngModel)]="obj.password" placeholder="Password"></ion-input>
-          </ion-item>
-          <p (click)="forgotpassword(obj)">Forgot password</p>
+          <div class="textFields">
+            <ion-input type="email" placeholder="Email" value="" [(ngModel)]="email"></ion-input>
+            <ion-input type="password" placeholder="Password" [(ngModel)]="password"></ion-input>
+          </div>
         </ion-list>
-      </div>
-      <div class="ctrl">
-              <div class="btn">
-        <button color="darker" ion-button round icon-only block (click)="login()">
-          SIGN IN
+        <button ion-button block id="button" color="primary" (click)="login()">
+          Sign In
         </button>
+        <br><br>
+        <p class="forgot" (click)="forgotpassword()">Forgot password?</p>
       </div>
-      </div>
-
-
+      <p>Don't have an account?
+        <b (click)="signup()" class="forgot">Sign Up</b>
+      </p>
     </div>
-
-
-
-  </div>
-
-  <div class="btn2">
-      <button clear color="light" ion-button full (click)="signup()">
-         <p id="forgot"> Don't have an account?
-          <b id="instruct"> Sign up</b></p>
-        </button>
-  </div>
-
-
-</ion-content>
+  </ion-content>

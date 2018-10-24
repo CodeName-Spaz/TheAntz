@@ -4,7 +4,7 @@ page-splash {
         animation: 1.5s slideInRight
     }
     .body{
-        background: linear-gradient(#0000003b, #000000), url('../../assets/imgs/BG.jpg');
+        background: linear-gradient(rgb(1, 17, 39),rgba(1, 17, 39, 0.575)), url('../../assets/imgs/BG.jpg');
         height: 100%; 
         background-size: cover; 
         background-position: center;
@@ -14,11 +14,10 @@ page-splash {
         width: 100%;
         max-width: 250px;
         align-content: center;
-        margin-top: 50%
+        margin-top: 50%;
+        animation: 4s fadeIn; 
     }
     .theLogo{
         text-align: center;
     }
-
-
 }
