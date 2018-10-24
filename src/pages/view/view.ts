@@ -78,11 +78,27 @@ export class ViewPage implements OnInit{
 
   }
   ngOnInit() {
-    this.Retrivecomments();
+    // this.Retrivecomments();
     this.currentUserId = this.art.returnUID();
   }
 
-
+  scroll(event){
+    // console.log(event);
+      let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
+      let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
+      if(event.scrollTop>60 && event.directionY == "down"){
+        backBTN[0].style.transform = "translateY(-100%)";
+        backBTN[0].style.transition = 0.5 + "s";
+        theContent[0].style.marginTop = 15 + "px"
+      }
+      else if(event.directionY == 'up' && event.deltaY < -30){
+        backBTN[0].style.transform="translateY(0%)";
+      }
+      else if (event.scrollTop <= 30){
+        backBTN[0].style.transform="translateY(0%)";
+      }
+    
+  }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {
       if (available) {

@@ -54,10 +54,7 @@ export class ProfilePage {
     this.navCtrl.push(EditProfilePage);
 
   }
-  ngOnInit() {
-    this.obj = this.navParams.get("obj");
-    console.log(this.obj);
-  }
+
   
   next() {
     this.navCtrl.push(CategoryPage);
@@ -138,8 +135,6 @@ export class ProfilePage {
       console.log(Error)
     });
   }
-
-
   nextpage() {
     this.navCtrl.push(EditProfilePage);
   }
@@ -147,7 +142,6 @@ export class ProfilePage {
   dismissPage() {
     this.navCtrl.pop();
   }
-
   removeImage(key) {
     const confirm = this.alertCtrl.create({
       title: 'Confirm',

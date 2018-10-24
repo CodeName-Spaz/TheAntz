@@ -33,8 +33,9 @@ export class CategoryPage {
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
   this.retreivePics();
+  this.typeOfArt();
   }
-  // ngOnInit() {
+  // ionViewDidLoad() {
   //   this.retreivePics();
   // }
   GoToProfilePage() {
