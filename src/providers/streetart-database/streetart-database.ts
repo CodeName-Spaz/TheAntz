@@ -344,7 +344,7 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data != null || data != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined) {
+        if (data != null || data != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined && uploads != null || uploads !=undefined) {
           this.selectCategoryArr.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
@@ -372,9 +372,9 @@ export class StreetartzProvider {
                 obj.email = profileData.email
               });
             }
-            // if (uploads[k].category == undefined || uploads[k].category == null) {
-            //   console.log('nex');
-            // }
+            if (uploads[k].category == undefined || uploads[k].category == null) {
+              console.log('nex');
+            }
           }
         }
         else {

@@ -121,7 +121,7 @@ export class ViewPage implements OnInit{
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
 
   Retrivecomments() {
