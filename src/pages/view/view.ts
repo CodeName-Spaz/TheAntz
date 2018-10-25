@@ -57,7 +57,7 @@ export class ViewPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
     console.log("this is my index");
-    console.log(this.obj.name1);
+    console.log(this.obj.email);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -85,20 +85,28 @@ export class ViewPage implements OnInit{
   }
 
   scroll(event){
-    // console.log(event);
+    console.log(event.scrollTop);
+    let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
+      let waterMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
         backBTN[0].style.transition = 0.5 + "s";
-        theContent[0].style.marginTop = 15 + "px"
+        theContent[0].style.marginTop = 15 + "px";
+        // waterMark[0].style.transform= "translateX(15%)";
       }
       else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
+        // waterMark[0].style.transform= "translateX(15%)";
       }
       else if (event.scrollTop <= 30){
         backBTN[0].style.transform="translateY(0%)";
+        // waterMark[0].style.transform= "translateX(15%)";
       }
+      waterMark[0].style.transform = "translateY(-" + event.scrollTop  + "px)";
+      // waterMark[0].style.transform= "translateX(15%)";
+      // page[0].style.marginTop = 150 + "px"
     
   }
   BuyArt() {
@@ -113,8 +121,8 @@ export class ViewPage implements OnInit{
       attachments: [
         this.obj.url
       ],
-      subject: this.obj.name1,
-      body: "Greetings, <br> I would like to place an order for this image click here. <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br> to view the image.",
+      subject: "REF#" + this.obj.name1,
+      body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
       isHtml: true
     };
     this.emailComposer.open(email);

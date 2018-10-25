@@ -44,21 +44,18 @@ export class UploadImagePage {
       console.log(reader.onload);
     }
   }
-  omit_special_char(event)
-  {   
-    // console.log(event.charCode)
-     var k;  
-     k = event.charCode;  //         k = event.keyCode;  (Both can be used)
-     return((k >= 48 && k <= 57)); 
+  omit_special_char(event) {
+    var k;
+    k = event.charCode;
+    return ((k >= 48 && k <= 57));
   }
   uploadPicture() {
-    if(this.url !="../../assets/default.jpg"){     
-   
-    if (this.category == undefined || this.category == null,
-      this.name == ""  || this.name == null ,
-      this.description == null || this.description == "",
-      this.location == "" ||this.location == null,
-      this.price == "" || this.price == null) {
+    if (this.category == undefined ||
+      this.name == undefined ||
+      this.description == undefined ||
+      this.location == undefined ||
+      this.price == undefined ||
+      this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
         subTitle: "Please make sure that all the fields are filled.",
@@ -72,25 +69,10 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else { 
-        this.art.uploadPic(this.url).then(data => {
-          this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-            this.navCtrl.setRoot(ProfilePage);
-          },
-            Error => {
-              console.log(Error)
-            })
-        }, Error => {
-          console.log(Error)
-        })
-      }
-    }
-    else{
-      
-      console.log('no image');
+    else if(this.category == undefined){
       const confirm = this.alertCtrl.create({
-        title: "No Photo",
-        subTitle: "Please insert a photograph to continue.",
+        title: "category",
+        subTitle: "you did not select the category",
         buttons: [
           {
             text: 'Ok',
@@ -101,7 +83,20 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    
+    else {
+      this.art.uploadPic(this.url).then(data => {
+        this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
+          this.navCtrl.setRoot(ProfilePage);
+        },
+          Error => {
+            console.log(Error)
+          })
+      }, Error => {
+        console.log(Error)
+      })
+
+    }
+
   }
 
 
@@ -109,3 +104,4 @@ export class UploadImagePage {
     this.navCtrl.setRoot(CategoryPage);
   }
 }
+

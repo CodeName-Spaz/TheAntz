@@ -17,7 +17,6 @@ import { LoginPage } from '../login/login';
   templateUrl: 'eula.html',
 })
 export class EulaPage {
-key;
   constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
   }
 

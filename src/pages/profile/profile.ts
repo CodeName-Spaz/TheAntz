@@ -49,14 +49,10 @@ export class ProfilePage {
   ionViewDidLoad() {
 
   }
-
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
 
   }
-
-  
- 
   upload() {
     const modal = this.modalCtrl.create(UploadImagePage);
     modal.present();
@@ -67,7 +63,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(CategoryPage);
   }
   getUid() {
     this.art.getUserID().then(data => {
@@ -136,7 +132,7 @@ export class ProfilePage {
   }
 
   dismissPage() {
-    this.navCtrl.pop();
+    this.navCtrl.setRoot(CategoryPage);
   }
   removeImage(key) {
     const confirm = this.alertCtrl.create({

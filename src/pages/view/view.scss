@@ -1,14 +1,14 @@
 page-view {
     .watermark{
         position: absolute;
-        top: 15%;
-        // transform: rotate(45deg);
-        display: block;
+        top: 10%;
         z-index: 1;
         opacity: .3;
-        width: 70%;
-        transform: translateX(25vw);
-        transform:rotate(45deg);
+        width: 80%;
+        // transform: translateY(15%);
+        transform: translateX(15%)
+        // transform:rotate(30deg);
+
     }
     .theGrid{
         z-index: 1000;
@@ -46,7 +46,7 @@ page-view {
         // border: 2px solid red;
     }
     .theImage{
-        display: block;
+        display: inline-block;
         // z-index: 1;
         // background: url('../../assets/imgs/Watermark/WaterMark.png');
         // z-index: 10000000;
