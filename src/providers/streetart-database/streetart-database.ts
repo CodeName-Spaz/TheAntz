@@ -64,12 +64,12 @@ export class StreetartzProvider {
   }
   register(email, password, name) {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Sign in....',
-        duration: 4000
-      });
-      loading.present();
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'Sign in....',
+          duration: 4000
+        });
+        loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
         var user = firebase.auth().currentUser
         firebase.database().ref("profiles/" + user.uid).set({
@@ -100,17 +100,17 @@ export class StreetartzProvider {
 
   login(email, password) {
     return new Promise((resolve, reject) => {
-      if (this.email != null || this.password != null) {
+      // if (this.email != null || this.password != null) {
         let loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           content: 'Sign in....',
           duration: 4000
         });
         loading.present();
-      }
-      else {
-        console.log('error');
-      }
+      // }
+      // else {
+      //   console.log('error');
+      // }
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
       }).catch((error) => {
@@ -242,8 +242,12 @@ export class StreetartzProvider {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
+        var keys = Object.keys(DisplayData);
+        this.storeImgur(DisplayData[keys[0]].downloadurl);
+        console.log(DisplayData[keys[0]].downloadurl);
         accpt(DisplayData);
         console.log(DisplayData)
+        
       }, Error => {
         rejc(Error.message)
       })
@@ -340,7 +344,7 @@ export class StreetartzProvider {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
-        if (data != null || data != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined) {
+        if (data != null || data != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined && uploads != null || uploads !=undefined) {
           this.selectCategoryArr.length = 0;
           var keys2: any = Object.keys(uploads);
           for (var i = 0; i < keys2.length; i++) {
@@ -368,9 +372,9 @@ export class StreetartzProvider {
                 obj.email = profileData.email
               });
             }
-            // if (uploads[k].category == undefined || uploads[k].category == null) {
-            //   console.log('nex');
-            // }
+            if (uploads[k].category == undefined || uploads[k].category == null) {
+              console.log('nex');
+            }
           }
         }
         else {
@@ -495,6 +499,7 @@ export class StreetartzProvider {
                 obj.url = profileData.downloadurl
               });
               accpt(this.arr2);
+              console.log(this.arr2);
               this.storeImgur(data[keys1[0]].downloadurl);
             }
           }
