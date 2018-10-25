@@ -64,12 +64,12 @@ export class StreetartzProvider {
   }
   register(email, password, name) {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Sign in....',
-        duration: 4000
-      });
-      loading.present();
+        let loading = this.loadingCtrl.create({
+          spinner: 'bubbles',
+          content: 'Sign in....',
+          duration: 4000
+        });
+        loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
         var user = firebase.auth().currentUser
         firebase.database().ref("profiles/" + user.uid).set({
@@ -99,41 +99,34 @@ export class StreetartzProvider {
   }
 
   login(email, password) {
-      return new Promise((resolve, reject) => {
-        // if(this.email== undefined  && this.password== undefined ){
-        //   const alert = this.alertCtrl.create({
-        //     title: 'Oops!',
-        //     subTitle: "You are not registered as a user, sign up to get started",
-        //     buttons: ['OK']
-
-        //   });
-        //   alert.present();
-        // }
-        // else{
+    return new Promise((resolve, reject) => {
+      // if (this.email != null || this.password != null) {
         let loading = this.loadingCtrl.create({
           spinner: 'bubbles',
           content: 'Sign in....',
           duration: 4000
         });
         loading.present();
-        firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-          resolve();
-        }).catch((error) => {
-          const alert = this.alertCtrl.create({
-            subTitle: error.message,
-            buttons: [
-              {
-                text: 'ok',
-                handler: data => {
-                  console.log('Cancel clicked');
-                }
-              }
-            ]
-          });
-          alert.present();
-        })
-   
       // }
+      // else {
+      //   console.log('error');
+      // }
+      firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+        resolve();
+      }).catch((error) => {
+        const alert = this.alertCtrl.create({
+          subTitle: error.message,
+          buttons: [
+            {
+              text: 'ok',
+              handler: data => {
+                console.log('Cancel clicked');
+              }
+            }
+          ]
+        });
+        alert.present();
+      })
     })
   }
   retrieve() {
@@ -202,9 +195,14 @@ export class StreetartzProvider {
       content: 'Please wait',
       duration: 3000
     });
+    const toast = this.toastCtrl.create({
+      message: 'your imagine had been uploaded!',
+      duration: 3000
+    });
     return new Promise((accpt, rejc) => {
       loading.present();
       firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
+        toast.present();
         accpt(name);
         console.log(name)
       }, Error => {
@@ -222,7 +220,7 @@ export class StreetartzProvider {
         firebase.database().ref('uploads/').push({
           downloadurl: link,
           name: picName,
-          name1:name,
+          name1: name,
           category: category,
           uid: user.uid,
           description: description,
@@ -244,8 +242,12 @@ export class StreetartzProvider {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
+        var keys = Object.keys(DisplayData);
+        this.storeImgur(DisplayData[keys[0]].downloadurl);
+        console.log(DisplayData[keys[0]].downloadurl);
         accpt(DisplayData);
         console.log(DisplayData)
+        
       }, Error => {
         rejc(Error.message)
       })
@@ -352,7 +354,7 @@ export class StreetartzProvider {
               let obj = {
                 uid: uploads[k].uid,
                 name: uploads[k].name,
-                name1:uploads[k].name1,
+                name1: uploads[k].name1,
                 category: uploads[k].category,
                 comments: uploads[k].comments,
                 downloadurl: uploads[k].downloadurl,
@@ -497,6 +499,7 @@ export class StreetartzProvider {
                 obj.url = profileData.downloadurl
               });
               accpt(this.arr2);
+              console.log(this.arr2);
               this.storeImgur(data[keys1[0]].downloadurl);
             }
           }

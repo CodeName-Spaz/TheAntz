@@ -37,6 +37,7 @@ export class CategoryPage {
   }
   // ionViewDidLoad() {
   //   this.retreivePics();
+  //   this.typeOfArt();
   // }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
@@ -72,7 +73,6 @@ export class CategoryPage {
         }
       }
       if (this.category == 'All') {
-        this.categoryArr.length =0;
         this.retreivePics()
       }
     })
