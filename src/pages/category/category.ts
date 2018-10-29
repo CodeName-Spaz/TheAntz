@@ -32,24 +32,28 @@ export class CategoryPage {
   username;
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-  this.retreivePics();
-  this.typeOfArt();
+    this.retreivePics();
+    // this.typeOfArt()
   }
-  // ionViewDidLoad() {
-  //   this.retreivePics();
-  //   this.typeOfArt();
-  // }
+  ionViewDidLoad() {
+    // this.retreivePics();
+    // this.typeOfArt();
+  }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-
+  ionViewDidEnter() {
+ 
+  
+    }
   typeOfArt() {
-    this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {
       if (data == undefined || data == null) {
         console.log('empty')
       }
       else {
+        this.categoryArr.length = 0;
+        this.categoryArr = [];
         var keys: any = Object.keys(data);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
@@ -68,12 +72,17 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
-            console.log(this.categoryArr);
           }
         }
       }
       if (this.category == 'All') {
-        this.retreivePics()
+        this.categoryArr.length = 0;
+        this.art.viewPicMain(this.name,this.username).then((data: any) => {
+          this.categoryArr = [];
+          this.categoryArr = data;
+        });
+    
+        
       }
     })
 
@@ -81,8 +90,8 @@ export class CategoryPage {
   retreivePics() {
     this.categoryArr.length = 0;
     this.art.viewPicMain(this.name,this.username).then((data: any) => {
-    this.categoryArr = data;
-
+      this.categoryArr = [];
+      this.categoryArr = data;
     });
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes,name1) {

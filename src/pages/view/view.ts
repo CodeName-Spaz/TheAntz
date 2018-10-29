@@ -4,7 +4,7 @@ import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
-
+import firebase from 'firebase';
 
 /**
  * Generated class for the ViewPage page.
@@ -51,6 +51,8 @@ export class ViewPage implements OnInit{
   price;
   name1;
   currentUserId;
+  currentName;
+  Buyer;
   likeArr = [];
   CommentArr = [];
   obj = this.navParams.get("obj");
@@ -72,7 +74,6 @@ export class ViewPage implements OnInit{
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
 
-
   this.Retrivecomments();
   }
   ionViewDidEnter() {
@@ -80,12 +81,23 @@ export class ViewPage implements OnInit{
 
   }
   ngOnInit() {
+    console.log(this.name);
     // this.Retrivecomments();
-    this.currentUserId = this.art.returnUID();
+    this.currentName = this.art.returnUID().then((data:any)=>{
+      console.log(data.name);
+
+      let temparr =data ;
+      console.log(temparr[0].name);
+      this.Buyer = temparr[0].name ;
+      console.log(this.Buyer);
+      
+      
+      
+    });
+    console.log(this.currentName);
   }
 
   scroll(event){
-    // console.log(event);
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
@@ -114,7 +126,7 @@ export class ViewPage implements OnInit{
         this.obj.url
       ],
       subject: "REF#" + this.obj.name1,
-      body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
+      body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.Buyer,
       isHtml: true
     };
     this.emailComposer.open(email);
@@ -130,8 +142,9 @@ export class ViewPage implements OnInit{
       }
       else {
         this.CommentArr.length = 0;
-        console.log(data)
+        // console.log(data)
         var keys1: any = Object.keys(data);
+        // console.log(keys1);
         for (var i = 0; i < keys1.length; i++) {
           var key = keys1[i];
           let obj = {
@@ -142,7 +155,7 @@ export class ViewPage implements OnInit{
             date: data[key].date
           }
           this.CommentArr.push(obj);
-          console.log(this.CommentArr);
+          // console.log(this.CommentArr);
         }
         this.commentsLeng = this.CommentArr.length
       }
