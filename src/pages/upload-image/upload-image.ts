@@ -44,21 +44,18 @@ export class UploadImagePage {
       console.log(reader.onload);
     }
   }
-  omit_special_char(event)
-  {   
-    // console.log(event.charCode)
-     var k;  
-     k = event.charCode;  //         k = event.keyCode;  (Both can be used)
-     return((k >= 48 && k <= 57)); 
+  omit_special_char(event) {
+    var k;
+    k = event.charCode;
+    return ((k >= 48 && k <= 57));
   }
   uploadPicture() {
-    if(this.url !="../../assets/default.jpg"){     
-   
-    if (this.category == undefined || this.category == null,
-      this.name == ""  || this.name == null ,
-      this.description == null || this.description == "",
-      this.location == "" ||this.location == null,
-      this.price == "" || this.price == null) {
+    if (this.category == undefined || this.category == null ,
+      this.name == undefined || this.name == null ,
+      this.description == undefined || this.description == null,
+      this.location == undefined || this.location == null,
+      this.price == undefined || this.price == null ,
+      this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
         subTitle: "Please make sure that all the fields are filled.",
@@ -71,26 +68,10 @@ export class UploadImagePage {
         ]
       });
       confirm.present();
-    }
-    else { 
-        this.art.uploadPic(this.url).then(data => {
-          this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-            this.navCtrl.setRoot(ProfilePage);
-          },
-            Error => {
-              console.log(Error)
-            })
-        }, Error => {
-          console.log(Error)
-        })
-      }
-    }
-    else{
-      
-      console.log('no image');
+    } else if (this.category == null || this.category ==undefined) {
       const confirm = this.alertCtrl.create({
-        title: "No Photo",
-        subTitle: "Please insert a photograph to continue.",
+        title: "category",
+        subTitle: "you did not select the category",
         buttons: [
           {
             text: 'Ok',
@@ -101,7 +82,89 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    
+    else if (this.price.length > 11 || this.price.length == "") {
+      const confirm = this.alertCtrl.create({
+        title: "price",
+        subTitle: "the price should not be more than 9999",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
+    }  else if (this.url == '../../assets/default.jpg') {
+      const confirm = this.alertCtrl.create({
+        title: "uploadImage",
+        subTitle: "please select a imagine to continue..",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
+    }
+    else if (this.location == null || this.location ==undefined) {
+      const confirm = this.alertCtrl.create({
+        title: "location",
+        subTitle: "please select a location to continue..",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
+    }
+    else if (this.name == null || this.location ==undefined) {
+      const confirm = this.alertCtrl.create({
+        title: "name",
+        subTitle: "please select a name to continue..",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
+    }
+    else if (this.description == null || this.description ==undefined) {
+      const confirm = this.alertCtrl.create({
+        title: "description",
+        subTitle: "please select a description to continue..",
+        buttons: [
+          {
+            text: 'Ok',
+            handler: () => {
+            }
+          },
+        ]
+      });
+      confirm.present();
+    }
+    else {
+      this.art.uploadPic(this.url).then(data => {
+        this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
+          this.navCtrl.setRoot(ProfilePage);
+        },
+          Error => {
+            console.log(Error)
+          })
+      }, Error => {
+        console.log(Error)
+      })
+
+    }
+
   }
 
 

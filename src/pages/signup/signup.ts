@@ -29,7 +29,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
   signUp() {
-    if (this.name == undefined || this.name == null,
+    if (this.name == undefined,
       this.email == undefined || this.email == null,
       this.password == undefined || this.password == null) {
       const alert = this.alertCtrl.create({

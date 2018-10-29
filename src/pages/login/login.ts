@@ -39,8 +39,8 @@ export class LoginPage {
     this.navCtrl.setRoot(EulaPage);
   }
   login() {
-    if (this.email == null || this.email == undefined,
-       this.password == null || this.password == undefined) {
+    if (this.email == undefined
+      || this.password == undefined) {
       const alert = this.alertCtrl.create({
         title: "Oh no! ",
         subTitle: "Please enter your email and password to login.",
@@ -48,7 +48,7 @@ export class LoginPage {
       });
       alert.present();
     }
-    else if (this.email == null || this.email == undefined || this.email == "") {
+    else if (this.email == "") {
       const alert = this.alertCtrl.create({
         title: "No Email",
         subTitle: "It looks like you didn't enter your email address.",
@@ -56,7 +56,7 @@ export class LoginPage {
       });
       alert.present();
     }
-    else if (this.password == null || this.password == undefined || this.email =="") {
+    else if (this.password == "") {
       const alert = this.alertCtrl.create({
         title: "No Password",
         subTitle: "You have not entered your password. Please enter your password",
@@ -65,7 +65,7 @@ export class LoginPage {
       alert.present();
     }
     else {
-      this.art.login(this.email,this.password).then(() => {
+      this.art.login(this.email, this.password).then(() => {
         this.presentLoading1();
         this.navCtrl.setRoot(CategoryPage);
       }, (error) => {

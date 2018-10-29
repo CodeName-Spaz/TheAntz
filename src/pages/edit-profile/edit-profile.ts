@@ -48,7 +48,6 @@ export class EditProfilePage implements OnInit {
       this.contact = details.contact
       this.downloadurl = details.downloadurl
       this.bio = details.bio
-      console.log(details);
     })
   }
   insertpic(event: any) {
@@ -58,7 +57,6 @@ export class EditProfilePage implements OnInit {
         this.downloadurl = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
-      console.log(reader.onload);
     }
 
   }
@@ -69,7 +67,6 @@ export class EditProfilePage implements OnInit {
         console.log('added to db');
         this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
           this.arr.push(data);
-          console.log(this.contact);
         })
         this.navCtrl.setRoot(ProfilePage);
       },
@@ -95,10 +92,6 @@ export class EditProfilePage implements OnInit {
     this.arr.length = 0;
     this.getUid1();
     this.art.viewPicGallery1().then(data => {
-      var loader = this.loadingCtrl.create({
-        content: "please wait...",
-        duration: 9000
-      });
       var keys: any = Object.keys(data);
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
@@ -107,10 +100,9 @@ export class EditProfilePage implements OnInit {
             downloadurl: data[k].downloadurl
           }
           this.arr.push(objt);
-
         }
       }
-      loader.dismiss();
+ 
     }, Error => {
       console.log(Error)
     });

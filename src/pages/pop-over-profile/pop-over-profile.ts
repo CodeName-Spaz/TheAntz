@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { LoginPage } from '../login/login';
-
+import { AlertController } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { LoadingController } from 'ionic-angular';
 
@@ -19,15 +19,15 @@ import { LoadingController } from 'ionic-angular';
   selector: 'page-pop-over-profile',
   templateUrl: 'pop-over-profile.html',
 })
-export class PopOverProfilePage{
-// obj;
-  constructor(public viewCrtl: ViewController,public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider,public loadingCtrl: LoadingController) {
+export class PopOverProfilePage {
+  // obj;
+  constructor(public viewCrtl: ViewController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PopOverProfilePage');
   }
-  nextpage(){
+  nextpage() {
     this.navCtrl.push(EditProfilePage);
     this.viewCrtl.dismiss();
   }
@@ -36,7 +36,14 @@ export class PopOverProfilePage{
       this.navCtrl.push(LoginPage);
     }, (error) => {
       console.log(error.message);
-     })
+    })
   }
+
+
+
+
+
+
+
 
 }
