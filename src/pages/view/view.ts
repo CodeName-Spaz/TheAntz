@@ -90,25 +90,22 @@ export class ViewPage implements OnInit{
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let waterMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+      
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
-        backBTN[0].style.transition = 0.5 + "s";
-        theContent[0].style.marginTop = 15 + "px";
-        waterMark[0].style.paddingLeft= "15%";
-        
+        backBTN[0].style.transition = 0.5 + "s";      
       }
       else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
-        waterMark[0].style.paddingLeft= "15%";
       }
       else if (event.scrollTop <= 30){
         backBTN[0].style.transform="translateY(0%)";
-        waterMark[0].style.paddingLeft= "15%";
       }
       waterMark[0].style.transform = "translateY(-" + event.scrollTop  + "px)";
-      // waterMark[0].style.transform= "translateX(15%)";
-      // page[0].style.marginTop = 150 + "px"
-    
+      // waterMark[0].style.transform = "translateX(10px)";
+
+      // this.Retrivecomments();
+
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {

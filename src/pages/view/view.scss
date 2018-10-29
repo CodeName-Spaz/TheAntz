@@ -4,9 +4,9 @@ page-view {
         top: 10%;
         z-index: 1;
         opacity: .3;
-        width: 80%;
+        // width: 80%;
         // transform: translateY(15%);
-        transform: translateX(15%)
+        // transform: translateX(15%)
         // transform:rotate(30deg);
 
     }
@@ -196,6 +196,8 @@ page-view {
     .postedIMG{
         width: 100%;
         z-index: -100000;
+        height: 250px;
+        object-fit: cover;
     }
     @media screen and (max-width: 320px){
         .postedIMG{
@@ -280,5 +282,10 @@ page-view {
         .centerIt{
             text-align: center;
         }
+        .postedIMG{
+            width: 100vw;
+            height: 750px;
+        }
+
     }
 }
