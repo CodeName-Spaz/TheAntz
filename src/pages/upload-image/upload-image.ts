@@ -4,6 +4,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { ProfilePage } from '../profile/profile';
 import { AlertController } from 'ionic-angular';
 import { CategoryPage } from '../category/category';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
  * Generated class for the UploadImagePage page.
  *
@@ -26,6 +27,8 @@ export class UploadImagePage {
   location;
   price;
   downloadurl;
+  photos:any;
+  camera;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController) {
   }
 
@@ -48,6 +51,40 @@ export class UploadImagePage {
     var k;
     k = event.charCode;
     return ((k >= 48 && k <= 57));
+  }
+  photo(){
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     
+     this.photos = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+    console.log(err);
+    
+    });
+  }
+  pick(){
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum:false
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     
+     this.photos = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+    console.log(err);
+    
+    });
+
   }
   uploadPicture() {
     if (this.category == undefined || this.category == null ,

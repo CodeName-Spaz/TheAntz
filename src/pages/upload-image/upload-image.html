@@ -19,15 +19,14 @@
             <ion-item>
               <ion-label>Notifications</ion-label>
               <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                <ion-option value="enable">camera</ion-option>
+                <ion-option value="enable" click="photo()">camera</ion-option>
                 <ion-option value="mute">gallery</ion-option>
                 <!-- <ion-option value="mute_week">Mute for a week</ion-option> -->
                 <!-- <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option> -->
               </ion-select>
             </ion-item>
-    
         </label>
-        <input type="file" id="insert" accept="image/*" (change)="insertvid($event)">
+        <input type="file"   id="insert" accept="image/*" (change)="insertvid($event)">
       </div>
       <img class="preview" [src]="url" alt="" imageViewer>
     </div>
