@@ -1,13 +1,21 @@
 page-upload-image {
+    .BTNs{
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+
+    }
 
     .options{
         
-        background: red;
+        background: rgb(255, 255, 255);
         width: 100%;
-        height: 250px;
+        height: 500px;
         box-shadow: 0 0 5px black;
         position: absolute;
-        top: 1400%;
+        top: 1500%;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px; 
     }
     // ion-col{
     //     text-align: center;
@@ -24,6 +32,7 @@ page-upload-image {
     #insert{
         display: none;
     }
+    
     .btn{
         width: 35px;
         height: 35px;
@@ -35,7 +44,7 @@ page-upload-image {
         margin-top: 145px;
         transition: 300ms;
         box-shadow: 0 3px 150px grey;
-        z-index: 1;
+        z-index: 100000000;
     }
     .btn:active{
         width: 35px;

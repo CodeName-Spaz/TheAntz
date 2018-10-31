@@ -74,8 +74,10 @@ export class ViewPage implements OnInit{
 
 
   this.Retrivecomments();
+
   }
-  
+
+ 
   ionViewDidEnter() {
   this.Retrivecomments();
 
@@ -124,6 +126,10 @@ export class ViewPage implements OnInit{
 
       // this.Retrivecomments();
 
+  }
+  scan(event){
+    console.log(event);
+    
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {

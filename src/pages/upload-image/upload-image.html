@@ -1,13 +1,34 @@
 <ion-header>
-  <button ion-button (click)="showAction($event)">Click</button>
-    <div class="options">
-        <ion-grid>
-          <ion-row>
-          <ion-col col-3><button ion-button><ion-icon name="camera"></ion-icon></button></ion-col>
-          <ion-col col-3><button ion-button><ion-icon name="images"></ion-icon></button></ion-col>
+  <div class="options" padding>
+
+    <div class="textspec" padding>
+      Upload Photo
+      <br>
+      <br>
+    </div>
+    <div>
+      <ion-grid>
+        <ion-row>
+
+          <ion-col col-4>
+            <button icon-only class="BTNs" ion-button (click)="takepic()">
+              <ion-icon name="camera"></ion-icon>
+            </button>
+          </ion-col>
+
+          <ion-col col-4>
+            <button icon-only class="BTNs" ion-button>
+              <label for="insert">
+                <ion-icon name="images"></ion-icon>
+              </label>
+              <input type="file" id="insert" accept="image/*" (change)="insertvid($event)">
+            </button>
+          </ion-col>
+
         </ion-row>
-        </ion-grid>
-      </div>
+      </ion-grid>
+    </div>
+  </div>
   <ion-toolbar color="secondary">
     <ion-title id="tit" align="center">Upload Artwork</ion-title>
     <ion-buttons left>
@@ -17,26 +38,16 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content (click)="decide($event)">
+<ion-content (click)="decide(res)">
   <div class="container">
   </div>
   <div class="body" padding>
     <div class="image">
-      <div class="btn">
-        <label for="insert" id="attach">
-          <ion-icon name="camera"></ion-icon>
-            <ion-item>
-              <ion-label></ion-label>
-              <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                <ion-option value="enable" click="photo()">camera</ion-option>
-                <ion-option value="enable"><input type="file"   id="inert" accept="image/*" (change)="insertvid($event)"></ion-option>
-                <!-- <ion-option value="mute_week">Mute for a week</ion-option> -->
-                <!-- <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option> -->
-              </ion-select>
-            </ion-item>
-        </label>
-        <input type="file"   id="insert" accept="image/*" (change)="insertvid($event)">
-      </div>
+
+      <button class="btn" ion-button (click)="showAction($event)">
+        <ion-icon name="camera"></ion-icon>
+      </button>
+
       <img class="preview" [src]="url" alt="" imageViewer>
     </div>
     <br>
@@ -58,7 +69,8 @@
         <br>
         <ion-input class="theItem" placeholder="Location" type="text" [(ngModel)]="location" maxlength="20" row="4"></ion-input>
         <br>
-        <ion-input class="theItem" placeholder="Price (R)" (keypress)="omit_special_char($event)" [(ngModel)]="price" type="number" max="2"></ion-input>
+        <ion-input class="theItem" placeholder="Price (R)" (keypress)="omit_special_char($event)" [(ngModel)]="price" type="number"
+          max="2"></ion-input>
         <br>
         <ion-textarea placeholder="Art Description (max 150)" [(ngModel)]="description" class="theItem" type="text" maxlength="150"
           row="4"></ion-textarea>
@@ -68,5 +80,4 @@
   </div>
 
 
-  </ion-content>
-  
+</ion-content>
