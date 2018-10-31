@@ -75,6 +75,7 @@ export class ViewPage implements OnInit{
 
   this.Retrivecomments();
   }
+  
   ionViewDidEnter() {
   this.Retrivecomments();
 
@@ -84,13 +85,19 @@ export class ViewPage implements OnInit{
     this.currentUserId = this.art.returnUID();
   }
 
+  imageSize(downloadurl){
+    
+    // var sizeOf = require('image-size');
+    
+  }
+
   scroll(event){
-    console.log(event.scrollTop);
+    console.log(event.directionY);
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let waterMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
-      
+      var toolbar = document.getElementsByClassName('secondary') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
         backBTN[0].style.transition = 0.5 + "s";      
@@ -100,6 +107,17 @@ export class ViewPage implements OnInit{
       }
       else if (event.scrollTop <= 30){
         backBTN[0].style.transform="translateY(0%)";
+      }
+      if (event.scrollTop != 0){
+        toolbar[0].style.backgroundColor = "rgb(1,17,39)";
+        toolbar[0].style.transition = 700 +"ms";
+      }
+      else if (event.scrollTop < 10){
+        toolbar[0].style.background = "linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0))"
+       
+      }
+      if (event.scrollTop < 10){
+        toolbar[0].style.transition = 700 +"ms";
       }
       waterMark[0].style.transform = "translateY(-" + event.scrollTop  + "px)";
       // waterMark[0].style.transform = "translateX(10px)";
