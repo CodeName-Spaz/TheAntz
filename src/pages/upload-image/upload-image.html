@@ -17,9 +17,9 @@
         <label for="insert" id="attach">
           <ion-icon name="camera"></ion-icon>
             <ion-item>
-              <ion-label>Notifications</ion-label>
-              <ion-select [(ngModel)]="notifications" interface="action-sheet">
-                <ion-option value="enable" click="photo()">camera</ion-option>
+              <ion-label>Options</ion-label>
+              <ion-select [(ngModel)]="camera" interface="action-sheet">
+                <ion-option value="enable">camera</ion-option>
                 <ion-option value="mute">gallery</ion-option>
                 <!-- <ion-option value="mute_week">Mute for a week</ion-option> -->
                 <!-- <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option> -->
@@ -29,6 +29,8 @@
         <input type="file"   id="insert" accept="image/*" (change)="insertvid($event)">
       </div>
       <img class="preview" [src]="url" alt="" imageViewer>
+      <!-- <p><img src="{{photos}}"></p> -->
+    <button ion-button  (click)="takepic()">take a pic</button>
     </div>
     <br>
     <ion-list no-lines>
