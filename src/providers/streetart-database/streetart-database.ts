@@ -66,7 +66,6 @@ export class StreetartzProvider {
         reject(error)
       });
     });
-
   }
   register(email, password, name) {
     return new Promise((resolve, reject) => {
@@ -120,7 +119,7 @@ export class StreetartzProvider {
             {
               text: 'ok',
               handler: data => {
-                console.log('Cancel clicked');
+                console.log('Cancel');
               }
             }
           ]
@@ -381,15 +380,6 @@ export class StreetartzProvider {
   }
   update(name, email, contact, bio, downloadurl) {
     this.arr.length = 0;
-    // let loading = this.loadingCtrl.create({
-    //   spinner: 'bubbles',
-    //   content: 'Please wait',
-    //   duration: 3000
-    // });
-    // const toast = this.toastCtrl.create({
-    //   message: 'data has been updated!',
-    //   duration: 3000
-    // });
     return new Promise((pass, fail) => {
       var user = firebase.auth().currentUser
       firebase.database().ref('profiles/' + user.uid).update({
@@ -399,8 +389,6 @@ export class StreetartzProvider {
         bio: bio,
         downloadurl: downloadurl,
       });
-      // loading.present();
-      // toast.present();
     })
   }
   push(obj: obj) {
@@ -648,13 +636,11 @@ export class StreetartzProvider {
       let user = firebase.auth().currentUser;
       firebase.database().ref("profiles/" + user.uid).on('value', (data: any) => {
         let details = data.val();
-        console.log(details)
         var keys = Object.keys(details);
         let obj = {
           name: name
         }
         this.returnCurrentUser.push(details);
-        console.log(this.returnCurrentUser)
         accpt(this.returnCurrentUser)
 
       })
