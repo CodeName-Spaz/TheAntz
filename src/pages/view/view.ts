@@ -58,8 +58,8 @@ export class ViewPage implements OnInit{
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
-    console.log("this is my index");
-    console.log(this.obj.email);
+    // console.log("this is my index");
+    // console.log(this.obj.email);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -81,20 +81,20 @@ export class ViewPage implements OnInit{
 
   }
   ngOnInit() {
-    console.log(this.name);
+    // console.log(this.name);
     // this.Retrivecomments();
     this.currentName = this.art.returnUID().then((data:any)=>{
-      console.log(data.name);
+      // console.log(data.name);
 
       let temparr =data ;
-      console.log(temparr[0].name);
+      // console.log(temparr[0].name);
       this.Buyer = temparr[0].name ;
-      console.log(this.Buyer);
+      // console.log(this.Buyer);
       
       
       
     });
-    console.log(this.currentName);
+    // console.log(this.currentName);
   }
 
   scroll(event){
