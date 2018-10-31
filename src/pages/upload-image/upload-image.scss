@@ -1,4 +1,17 @@
 page-upload-image {
+
+    .options{
+        
+        background: red;
+        width: 100%;
+        height: 250px;
+        box-shadow: 0 0 5px black;
+        position: absolute;
+        top: 1400%;
+    }
+    // ion-col{
+    //     text-align: center;
+    // }
     .image{
         // border: 2px solid red;
         text-align: center;
