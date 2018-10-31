@@ -28,8 +28,7 @@ export class UploadImagePage {
   price;
   downloadurl;
   photos:any;
-  camera;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -52,40 +51,38 @@ export class UploadImagePage {
     k = event.charCode;
     return ((k >= 48 && k <= 57));
   }
-  photo(){
+  takepic= function(){
     const options: CameraOptions = {
-      quality: 70,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-    
+   
     this.camera.getPicture(options).then((imageData) => {
-     
-     this.photos = 'data:image/jpeg;base64,' + imageData;
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+     this.url = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
-    console.log(err);
-    
+     // Handle error
     });
-  }
-  pick(){
-    const options: CameraOptions = {
-      quality: 70,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum:false
-    }
+   
+   }
+  // pick(){
+  //   const options: CameraOptions = {
+  //     quality: 70,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+  //     saveToPhotoAlbum:false
+  //   }
+  //   this.camera.getPicture(options).then((imageData) => {
+  //    this.photos = 'data:image/jpeg;base64,' + imageData;
+  //   }, (err) => {
+  //   console.log(err);
     
-    this.camera.getPicture(options).then((imageData) => {
-     
-     this.photos = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-    console.log(err);
-    
-    });
+  //   });
 
-  }
+  // }
   uploadPicture() {
     if (this.category == undefined || this.category == null ,
       this.name == undefined || this.name == null ,
