@@ -63,7 +63,7 @@ export class EditProfilePage implements OnInit {
   uploadPicture() {
     this.arr.length = 0;
     if (this.contact.length < 11) {
-      this.art.uploadProfilePic(this.downloadurl, this.name).then(data => {
+      this.art.uploadProfilePic(this.downloadurl,this.name).then(data => {
         console.log('added to db');
         this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
           this.arr.push(data);

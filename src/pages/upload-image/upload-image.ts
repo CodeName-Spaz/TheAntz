@@ -28,6 +28,7 @@ export class UploadImagePage {
   price;
   downloadurl;
   photos:any;
+  d=1;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
   }
 
@@ -68,21 +69,6 @@ export class UploadImagePage {
     });
    
    }
-  // pick(){
-  //   const options: CameraOptions = {
-  //     quality: 70,
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-  //     saveToPhotoAlbum:false
-  //   }
-  //   this.camera.getPicture(options).then((imageData) => {
-  //    this.photos = 'data:image/jpeg;base64,' + imageData;
-  //   }, (err) => {
-  //   console.log(err);
-    
-  //   });
-
-  // }
   uploadPicture() {
     if (this.category == undefined || this.category == null ,
       this.name == undefined || this.name == null ,
@@ -205,5 +191,32 @@ export class UploadImagePage {
   dismiss() {
     this.navCtrl.setRoot(CategoryPage);
   }
-}
 
+  showAction(event) {
+    this.d = 0;
+    console.log(event.type + " button");
+
+    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+    if(this.d == 0){
+      action[0].style.transform = "translateY(-90%)";
+    action[0].style.transition = 500 + "ms";
+    }
+
+    
+
+  }
+  decide(res) {
+    // console.log('clicked body');
+
+
+    res = this.d++;
+    console.log(res);
+
+    if (res > 0) {
+      let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+      dropAction[0].style.transform = "translateY(0%)";
+    }
+
+
+}
+}

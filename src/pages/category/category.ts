@@ -43,7 +43,7 @@ export class CategoryPage {
     this.navCtrl.push(ProfilePage);
   }
   ionViewDidEnter() {
- 
+    // this.retreivePics();
   
     }
   typeOfArt() {
