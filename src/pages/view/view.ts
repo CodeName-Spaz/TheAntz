@@ -135,7 +135,8 @@ export class ViewPage implements OnInit{
     console.log(event.path[0].attributes[1].ownerElement.height);
     var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf <HTMLElement>;
 
-    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 3) + "px";
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.transform = "TranslateY(-50px)"
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {
