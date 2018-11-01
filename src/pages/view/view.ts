@@ -74,27 +74,31 @@ export class ViewPage implements OnInit{
 
 
   this.Retrivecomments();
-
+  //  this.imageSize();
   }
 
  
   ionViewDidEnter() {
   this.Retrivecomments();
-
   }
   ngOnInit() {
     // this.Retrivecomments();
     this.currentUserId = this.art.returnUID();
   }
 
-  imageSize(downloadurl){
+  
+  imageSize(){
     
-    // var sizeOf = require('image-size');
+    setTimeout(() => {
+    this.scan(event);
+    console.log('(delay) : Done!');
     
+  }, 3000);
   }
 
   scroll(event){
     console.log(event.directionY);
+    // this.Retrivecomments();
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
@@ -121,15 +125,17 @@ export class ViewPage implements OnInit{
       if (event.scrollTop < 10){
         toolbar[0].style.transition = 700 +"ms";
       }
-      waterMark[0].style.transform = "translateY(-" + event.scrollTop  + "px)";
+      // waterMark[0].style.transform = "translateY(-" + event.scrollTop  + "px)";
       // waterMark[0].style.transform = "translateX(10px)";
 
       // this.Retrivecomments();
 
   }
   scan(event){
-    console.log(event);
-    
+    console.log(event.path[0].attributes[1].ownerElement.height);
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf <HTMLElement>;
+
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 3) + "px";
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {

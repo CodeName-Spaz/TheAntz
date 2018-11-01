@@ -30,7 +30,7 @@
 
     <div class="theImage">
       <img class="watermark" src="../../assets/imgs/Watermark/WaterMark.png" alt="">
-      <img class="postedIMG" (click)="scan($event)" src="{{downloadurl}}" />
+      <img class="postedIMG" (load)="scan($event)" src="{{downloadurl}}" />
     </div>
 
     <ion-grid>
