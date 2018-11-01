@@ -29,6 +29,7 @@ export class StreetartzProvider {
   countComment;
   name;
   url;
+  downloadurl;
   username;
   selectCategoryArr = [];
   emailComposer;
@@ -240,13 +241,19 @@ export class StreetartzProvider {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var DisplayData = data.val();
         var keys = Object.keys(DisplayData);
-        this.storeImgur(DisplayData[keys[0]].downloadurl);
+        if (DisplayData !== null) {
+        }
+        for (var i = 0; i < keys.length; i++) {
+          this.storeImgDownloadurl(DisplayData[keys[i]].downloadurl);
+          console.log(DisplayData[keys[i]].downloadurl);
+        }
         accpt(DisplayData);
       }, Error => {
         rejc(Error.message)
       })
     })
   }
+
   getUserID() {
     return new Promise((accpt, rejc) => {
       var user = firebase.auth().currentUser
@@ -274,6 +281,7 @@ export class StreetartzProvider {
       toast.present();
       firebase.storage().ref(name).putString(pic, 'data_url').then(() => {
         accpt(name);
+        console.log(name);
       }, Error => {
         rejc(Error.message)
       })
@@ -297,12 +305,6 @@ export class StreetartzProvider {
         console.log(Error.message);
       });
     })
-  }
-  storeImgur(url) {
-    this.url = url;
-  }
-  storeName(name) {
-    this.obj.name = name;
   }
   viewPicGallery1() {
     return new Promise((accpt, rejc) => {
@@ -334,6 +336,18 @@ export class StreetartzProvider {
       })
     })
   }
+  storeImgur(url) {
+    this.url = url;
+    // console.log(url);
+  }
+  storeImgDownloadurl(downloadurl){
+    this.downloadurl =downloadurl;
+    console.log(downloadurl);
+  }
+  storeName(name) {
+    this.obj.name = name;
+  }
+ 
   selectCategory(category) {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
