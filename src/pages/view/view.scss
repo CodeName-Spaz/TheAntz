@@ -1,13 +1,13 @@
 page-view {
     .watermark{
         position: absolute;
-        top: 15%;
-        // transform: rotate(45deg);
+        top: 13%;
+        transform: rotate(25deg);
         display: block;
         z-index: 1;
-        opacity: .3;
+        opacity: .2;
         width: 90%;
-        transform: translateX(5%)
+        // transform: translateX(5%)
     }
     .price{
         color: white;
@@ -64,6 +64,7 @@ page-view {
         width: 100%;
         // max-width: 500px;
         text-align: center;
+        
     }
     .statements{
         padding-left: 10px;

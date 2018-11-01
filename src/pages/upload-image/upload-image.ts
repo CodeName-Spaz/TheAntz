@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { ProfilePage } from '../profile/profile';
@@ -27,8 +27,10 @@ export class UploadImagePage {
   location;
   price;
   downloadurl;
-  photos:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
+  photos: any;
+  camera;
+  d = 1;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -54,7 +56,7 @@ export class UploadImagePage {
   takepic= function(){
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.DATA_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
@@ -68,27 +70,12 @@ export class UploadImagePage {
     });
    
    }
-  // pick(){
-  //   const options: CameraOptions = {
-  //     quality: 70,
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-  //     saveToPhotoAlbum:false
-  //   }
-  //   this.camera.getPicture(options).then((imageData) => {
-  //    this.photos = 'data:image/jpeg;base64,' + imageData;
-  //   }, (err) => {
-  //   console.log(err);
-    
-  //   });
-
-  // }
   uploadPicture() {
-    if (this.category == undefined || this.category == null ,
-      this.name == undefined || this.name == null ,
+    if (this.category == undefined || this.category == null,
+      this.name == undefined || this.name == null,
       this.description == undefined || this.description == null,
       this.location == undefined || this.location == null,
-      this.price == undefined || this.price == null ,
+      this.price == undefined || this.price == null,
       this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
@@ -102,7 +89,7 @@ export class UploadImagePage {
         ]
       });
       confirm.present();
-    } else if (this.category == null || this.category ==undefined) {
+    } else if (this.category == null || this.category == undefined) {
       const confirm = this.alertCtrl.create({
         title: "category",
         subTitle: "you did not select the category",
@@ -129,7 +116,7 @@ export class UploadImagePage {
         ]
       });
       confirm.present();
-    }  else if (this.url == '../../assets/default.jpg') {
+    } else if (this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "uploadImage",
         subTitle: "please select a imagine to continue..",
@@ -143,7 +130,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.location == null || this.location ==undefined) {
+    else if (this.location == null || this.location == undefined) {
       const confirm = this.alertCtrl.create({
         title: "location",
         subTitle: "please select a location to continue..",
@@ -157,7 +144,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.name == null || this.location ==undefined) {
+    else if (this.name == null || this.location == undefined) {
       const confirm = this.alertCtrl.create({
         title: "name",
         subTitle: "please select a name to continue..",
@@ -171,7 +158,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.description == null || this.description ==undefined) {
+    else if (this.description == null || this.description == undefined) {
       const confirm = this.alertCtrl.create({
         title: "description",
         subTitle: "please select a description to continue..",
@@ -205,5 +192,30 @@ export class UploadImagePage {
   dismiss() {
     this.navCtrl.setRoot(CategoryPage);
   }
-}
+  showAction(event) {
+    this.d = 0;
+    console.log(event.type + " button");
 
+    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+    if(this.d == 0){
+      action[0].style.transform = "translateY(-90%)";
+    action[0].style.transition = 500 + "ms";
+    }
+
+    
+
+  }
+  decide(res) {
+    // console.log('clicked body');
+
+
+    res = this.d++;
+    console.log(res);
+
+    if (res > 0) {
+      let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+      dropAction[0].style.transform = "translateY(0%)";
+    }
+
+  }
+}

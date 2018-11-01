@@ -103,7 +103,11 @@ page-category {
     }
     .CatBar{
         padding-right: 10px;
+      
         width: 100%;
+    }
+    .animation{
+        animation: 1.2s slideInDown;
     }
     #start{
         transition: 700ms;
