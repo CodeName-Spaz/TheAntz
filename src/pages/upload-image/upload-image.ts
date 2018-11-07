@@ -190,7 +190,7 @@ export class UploadImagePage {
 
 
   dismiss() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.setRoot(ProfilePage);
   }
   showAction(event) {
     this.d = 0;
