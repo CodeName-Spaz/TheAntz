@@ -108,11 +108,12 @@ export class StreetartzProvider {
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
         content: 'Sign In....',
-        duration: 4000
+        duration: 4000000
       });
       loading.present();
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
+        loading.dismiss();
       }).catch((error) => {
         const alert = this.alertCtrl.create({
           subTitle: error.message,
