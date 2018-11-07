@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
@@ -54,7 +54,7 @@ export class ViewPage implements OnInit{
   likeArr = [];
   CommentArr = [];
   obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public modalCtrl: ModalController) {
     this.obj = this.navParams.get("obj");
 
     this.username = this.obj.username;
