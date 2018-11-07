@@ -82,7 +82,6 @@ export class ViewPage implements OnInit{
     this.currentUserId = this.art.returnUID();
   }
 
-  
   imageSize(){
     setTimeout(() => {
     this.scan(event);
@@ -140,7 +139,8 @@ export class ViewPage implements OnInit{
       body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
       isHtml: true
     };
-    this.emailComposer.open(email);
+    // this.emailComposer.open(email);
+    this.email.addAlias('gmail', 'com.google.android.gm');
   }
 
   GoBackToCategory() {

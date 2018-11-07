@@ -34,7 +34,7 @@ export class CategoryPage{
   username;
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public appCtrl: App) {
-
+    // this.retreivePics();
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
@@ -55,12 +55,12 @@ export class CategoryPage{
         console.log('empty')
       }
       else if (this.category == 'All') {
-        this.art.viewPicMain(this.name,this.username).then((data: any) => {
-        // this.categoryArr = [];
-        this.categoryArr = data;
-        this.categoryArr.reverse();
-        });
-  
+        firebase.database().ref("uploads").on("value", (data: any) => {
+         let details = data.val();
+        //  this.categoryArr.push(details);
+         console.log(details)
+
+        })
      }
       else {
         this.categoryArr.length = 0;
