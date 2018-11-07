@@ -21,6 +21,7 @@ import { ViewPage } from '../pages/view/view';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { PopOverProfilePage } from '../pages/pop-over-profile/pop-over-profile';
 import { EmailComposer } from '@ionic-native/email-composer';
+import { ChatsPage } from '../pages/chats/chats';
 
 import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
@@ -50,7 +51,8 @@ firebase.initializeApp({
    EditProfilePage,
    PopOverProfilePage,
    ForgotPasswordPage,
-   EulaPage
+   EulaPage,
+   ChatsPage
 
 
  ],
@@ -72,7 +74,8 @@ firebase.initializeApp({
    EditProfilePage,
    PopOverProfilePage,
    ForgotPasswordPage,
-   EulaPage
+   EulaPage,
+   ChatsPage
 
  ],
  providers: [

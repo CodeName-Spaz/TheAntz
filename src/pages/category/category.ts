@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { ChatsPage } from '../chats/chats';
 
 
 /**
@@ -35,6 +36,9 @@ export class CategoryPage{
   comments;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public appCtrl: App) {
     // this.retreivePics();
+  }
+  chats(){
+    this.navCtrl.push(ChatsPage)
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
