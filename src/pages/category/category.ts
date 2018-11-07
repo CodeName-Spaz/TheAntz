@@ -9,6 +9,8 @@ import { AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
+import { App } from 'ionic-angular';
+
 
 /**
  * Generated class for the CategoryPage page.
@@ -22,7 +24,7 @@ import { ToastController } from 'ionic-angular';
   selector: 'page-category',
   templateUrl: 'category.html',
 })
-export class CategoryPage {
+export class CategoryPage{
   obj = {} as obj
   category: any;
   categoryArr = [];
@@ -31,25 +33,38 @@ export class CategoryPage {
   name;
   username;
   comments;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController) {
-  this.retreivePics();
-  this.typeOfArt();
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public appCtrl: App) {
+    // this.retreivePics();
   }
-  // ionViewDidLoad() {
-  //   this.retreivePics();
-  //   this.typeOfArt();
-  // }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-
+  ngAfterViewInit() {
+    this.retreivePics();
+  }
+    reload(){
+      this.categoryArr.length = 0;
+      this.art.viewPicMain(this.name,this.username).then((data: any) => {
+        this.categoryArr = [];
+        this.categoryArr = data;
+      });
+    }
   typeOfArt() {
-    this.categoryArr.length = 0;
     this.art.selectCategory(this.category).then((data) => {
       if (data == undefined || data == null) {
         console.log('empty')
       }
+      else if (this.category == 'All') {
+        firebase.database().ref("uploads").on("value", (data: any) => {
+         let details = data.val();
+        //  this.categoryArr.push(details);
+         console.log(details)
+
+        })
+     }
       else {
+        this.categoryArr.length = 0;
+        this.categoryArr = [];
         var keys: any = Object.keys(data);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
@@ -68,21 +83,20 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
-            console.log(this.categoryArr);
+     
           }
         }
       }
-      if (this.category == 'All') {
-        this.retreivePics()
-      }
+   
     })
 
   }
   retreivePics() {
-    this.categoryArr.length = 0;
-    this.art.viewPicMain(this.name,this.username).then((data: any) => {
-    this.categoryArr = data;
-
+      this.categoryArr.length = 0;
+      this.art.viewPicMain(this.name,this.username).then((data: any) => {
+      this.categoryArr = [];
+      this.categoryArr = data;
+      this.categoryArr.reverse();
     });
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes,name1) {

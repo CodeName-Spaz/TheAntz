@@ -56,8 +56,6 @@ export class ViewPage implements OnInit{
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
-    console.log("this is my index");
-    console.log(this.obj.email);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -82,7 +80,6 @@ export class ViewPage implements OnInit{
   this.Retrivecomments();
   }
   ngOnInit() {
-    // this.Retrivecomments();
     this.currentUserId = this.art.returnUID();
   }
 
@@ -133,15 +130,17 @@ export class ViewPage implements OnInit{
   }
   scan(event){
     console.log(event.path[0].attributes[1].ownerElement.height);
+    console.log('half '+(event.path[0].attributes[1].ownerElement.height* 0.5 - 50));
+    
     var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf <HTMLElement>;
 
-    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height* 0.5 - 50) + "px";
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {
       if (available) {
-        console.log(available);
+
       }
     });
     let email = {
@@ -154,7 +153,8 @@ export class ViewPage implements OnInit{
       body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
       isHtml: true
     };
-    this.emailComposer.open(email);
+    // this.emailComposer.open(email);
+    this.email.addAlias('gmail', 'com.google.android.gm');
   }
 
   GoBackToCategory() {
@@ -167,7 +167,7 @@ export class ViewPage implements OnInit{
       }
       else {
         this.CommentArr.length = 0;
-        console.log(data)
+      
         var keys1: any = Object.keys(data);
         for (var i = 0; i < keys1.length; i++) {
           var key = keys1[i];
@@ -179,7 +179,7 @@ export class ViewPage implements OnInit{
             date: data[key].date
           }
           this.CommentArr.push(obj);
-          console.log(this.CommentArr);
+         this.CommentArr.reverse();
         }
         this.commentsLeng = this.CommentArr.length
       }
@@ -189,7 +189,6 @@ export class ViewPage implements OnInit{
   }
   likePicture() {
     this.art.viewLikes(this.obj.key).then(data => {
-      console.log(data)
       if (data == "not found") {
         this.art.likePic(this.obj.key);
         this.art.addNumOfLikes(this.obj.key, this.numlikes);

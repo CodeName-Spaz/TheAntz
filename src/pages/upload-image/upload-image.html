@@ -1,21 +1,19 @@
+
 <ion-header>
   <div class="options" padding>
-
     <div class="textspec" padding>
-      Upload Photo
+      Upload
       <br>
       <br>
     </div>
     <div>
       <ion-grid>
         <ion-row>
-
           <ion-col col-4>
             <button icon-only class="BTNs" ion-button (click)="takepic()">
               <ion-icon name="camera"></ion-icon>
             </button>
           </ion-col>
-
           <ion-col col-4>
             <button icon-only class="BTNs" ion-button>
               <label for="insert">
@@ -24,7 +22,6 @@
               <input type="file" id="insert" accept="image/*" (change)="insertvid($event)">
             </button>
           </ion-col>
-
         </ion-row>
       </ion-grid>
     </div>
@@ -43,11 +40,9 @@
   </div>
   <div class="body" padding>
     <div class="image">
-
       <button class="btn" ion-button (click)="showAction($event)">
         <ion-icon name="camera"></ion-icon>
       </button>
-
       <img class="preview" [src]="url" alt="" imageViewer>
     </div>
     <br>
@@ -78,6 +73,4 @@
     </ion-list>
     <button class="uploadBtn" ion-button full color="primary" (click)="uploadPicture()">Upload Artwork</button>
   </div>
-
-
 </ion-content>

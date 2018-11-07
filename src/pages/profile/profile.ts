@@ -13,7 +13,7 @@ import { LoginPage } from '../login/login';
 
 import { EditProfilePage } from '../edit-profile/edit-profile';
 import { AlertController } from 'ionic-angular';
-;
+
 import firebase from 'firebase';
 
 /**
@@ -45,9 +45,6 @@ export class ProfilePage {
       let details = data.val();
       this.arr.push(details);
     })
-  }
-  ionViewDidLoad() {
-
   }
   EditProfile() {
     this.navCtrl.push(EditProfilePage);
@@ -93,8 +90,7 @@ export class ProfilePage {
               key: k
             }
             this.list.push(obj);
-            console.log(this.list);
-
+            this.list.reverse();
           }
         }
       }
