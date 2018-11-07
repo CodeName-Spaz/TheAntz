@@ -7,15 +7,15 @@
 </ion-header>
 
 
-<ion-content padding class="body">
+<ion-content padding class="body" (ionScroll)="scroll($event)">
   <!-- if there are no messages yet -->
-  <!-- <div class="scrollContent">
+  <div class="scrollContent">
     <div class="no-data">
       <p class="emptycontent">It looks like there are no messages yet...</p>
 
       <img src="../../assets/empty.png">
     </div>
-  </div> -->
+  </div>
   <div class="not-empty">
     <ion-item class="client" (click)="showDetails()"> <!-- use ngFor on the ion-item -->
       <ion-avatar item-start>
