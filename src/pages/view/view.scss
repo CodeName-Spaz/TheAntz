@@ -1,13 +1,19 @@
 page-view {
     .watermark{
         position: absolute;
-        top: 13%;
-        transform: rotate(25deg);
-        display: block;
+    
         z-index: 1;
-        opacity: .2;
-        width: 90%;
-        // transform: translateX(5%)
+        opacity: .3;
+        // width: 80%;
+        // transform: translateY(15%);
+        // transform: translateX(15%)
+        // transform:rotate(30deg);
+    }
+    .theGrid{
+        z-index: 1000;
+        background: red;
+        display: block;
+        float: center
     }
     .price{
         color: white;
@@ -39,7 +45,8 @@ page-view {
         // border: 2px solid red;
     }
     .theImage{
-        display: block;
+        display: inline-block;
+        width: 100%;
         // z-index: 1;
         // background: url('../../assets/imgs/Watermark/WaterMark.png');
         // z-index: 10000000;
@@ -64,7 +71,7 @@ page-view {
         width: 100%;
         // max-width: 500px;
         text-align: center;
-        
+        object-fit: scale-down;
     }
     .statements{
         padding-left: 10px;
@@ -190,6 +197,9 @@ page-view {
     .postedIMG{
         width: 100%;
         z-index: -100000;
+        max-height: 650px;
+        object-fit: cover;
+        display: inline-block;
     }
     @media screen and (max-width: 320px){
         .postedIMG{
@@ -273,6 +283,10 @@ page-view {
         }
         .centerIt{
             text-align: center;
+        }
+        .postedIMG{
+            width: 100vw;
+            height: 750px;
         }
     }
 }

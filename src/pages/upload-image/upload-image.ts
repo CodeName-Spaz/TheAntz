@@ -187,11 +187,9 @@ export class UploadImagePage {
 
   }
 
-
   dismiss() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.setRoot(ProfilePage);
   }
-
   showAction(event) {
     this.d = 0;
     console.log(event.type + " button");
@@ -207,11 +205,8 @@ export class UploadImagePage {
   }
   decide(res) {
     // console.log('clicked body');
-
-
     res = this.d++;
     console.log(res);
-
     if (res > 0) {
       let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
       dropAction[0].style.transform = "translateY(0%)";

@@ -90,6 +90,7 @@ export class ProfilePage {
               key: k
             }
             this.list.push(obj);
+            this.list.reverse();
           }
         }
       }
