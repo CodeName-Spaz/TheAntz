@@ -4,7 +4,7 @@ import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
-import firebase from 'firebase';
+
 
 /**
  * Generated class for the ViewPage page.
@@ -51,15 +51,11 @@ export class ViewPage implements OnInit{
   price;
   name1;
   currentUserId;
-  currentName;
-  Buyer;
   likeArr = [];
   CommentArr = [];
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
-    // console.log("this is my index");
-    // console.log(this.obj.email);
 
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -74,36 +70,34 @@ export class ViewPage implements OnInit{
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
 
+
   this.Retrivecomments();
   }
+
+ 
   ionViewDidEnter() {
   this.Retrivecomments();
-
   }
   ngOnInit() {
-    // console.log(this.name);
-    // this.Retrivecomments();
-    this.currentName = this.art.returnUID().then((data:any)=>{
-      // console.log(data.name);
+    this.currentUserId = this.art.returnUID();
+  }
 
-      let temparr =data ;
-      // console.log(temparr[0].name);
-      this.Buyer = temparr[0].name ;
-      // console.log(this.Buyer);
-      
-      
-      
-    });
-    // console.log(this.currentName);
+  
+  imageSize(){
+    setTimeout(() => {
+    this.scan(event);
+  }, 3000);
   }
 
   scroll(event){
+    let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
       let theContent = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
+      let waterMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+      var toolbar = document.getElementsByClassName('secondary') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
-        backBTN[0].style.transition = 0.5 + "s";
-        theContent[0].style.marginTop = 15 + "px"
+        backBTN[0].style.transition = 0.5 + "s";      
       }
       else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
@@ -111,12 +105,29 @@ export class ViewPage implements OnInit{
       else if (event.scrollTop <= 30){
         backBTN[0].style.transform="translateY(0%)";
       }
-    
+      if (event.scrollTop != 0){
+        toolbar[0].style.backgroundColor = "rgb(1,17,39)";
+        toolbar[0].style.transition = 700 +"ms";
+      }
+      else if (event.scrollTop < 10){
+        toolbar[0].style.background = "linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0))"
+       
+      }
+      if (event.scrollTop < 10){
+        toolbar[0].style.transition = 700 +"ms";
+      }
+
+
+  }
+  scan(event){
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf <HTMLElement>;
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.transform = "TranslateY(-50px)"
   }
   BuyArt() {
     this.emailComposer.isAvailable().then((available: boolean) => {
       if (available) {
-        console.log(available);
+
       }
     });
     let email = {
@@ -126,7 +137,7 @@ export class ViewPage implements OnInit{
         this.obj.url
       ],
       subject: "REF#" + this.obj.name1,
-      body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.Buyer,
+      body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
       isHtml: true
     };
     this.emailComposer.open(email);
@@ -142,9 +153,8 @@ export class ViewPage implements OnInit{
       }
       else {
         this.CommentArr.length = 0;
-        // console.log(data)
+      
         var keys1: any = Object.keys(data);
-        // console.log(keys1);
         for (var i = 0; i < keys1.length; i++) {
           var key = keys1[i];
           let obj = {
@@ -155,7 +165,7 @@ export class ViewPage implements OnInit{
             date: data[key].date
           }
           this.CommentArr.push(obj);
-          // console.log(this.CommentArr);
+         this.CommentArr.reverse();
         }
         this.commentsLeng = this.CommentArr.length
       }
@@ -165,7 +175,6 @@ export class ViewPage implements OnInit{
   }
   likePicture() {
     this.art.viewLikes(this.obj.key).then(data => {
-      console.log(data)
       if (data == "not found") {
         this.art.likePic(this.obj.key);
         this.art.addNumOfLikes(this.obj.key, this.numlikes);

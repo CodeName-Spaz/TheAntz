@@ -245,7 +245,7 @@ export class StreetartzProvider {
         }
         for (var i = 0; i < keys.length; i++) {
           this.storeImgDownloadurl(DisplayData[keys[i]].downloadurl);
-          console.log(DisplayData[keys[i]].downloadurl);
+          // console.log(DisplayData[keys[i]].downloadurl);
         }
         accpt(DisplayData);
       }, Error => {
@@ -315,7 +315,7 @@ export class StreetartzProvider {
         if (b !== null) {
         }
         this.storeImgur(b[keys[0]].downloadurl);
-        console.log(b[keys[0]].downloadurl);
+        // console.log(b[keys[0]].downloadurl);
         accpt(b);
       }, Error => {
         rejc(Error.message)
@@ -342,7 +342,7 @@ export class StreetartzProvider {
   }
   storeImgDownloadurl(downloadurl){
     this.downloadurl =downloadurl;
-    console.log(downloadurl);
+    // console.log(downloadurl);
   }
   storeName(name) {
     this.obj.name = name;

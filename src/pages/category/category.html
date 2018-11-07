@@ -25,13 +25,16 @@
   <div class="scrollContent" *ngIf="categoryArr.length == 0 || categoryArr.length == undefined">
     <div class="no-data">
       <p class="emptycontent">There are no uploads yet...</p>
-      <p class="emoji"><ion-icon md="md-sad" ios="ios-sad-outline"></ion-icon></p>
+      <p class="emoji">
+        <ion-icon md="md-sad" ios="ios-sad-outline"></ion-icon>
+      </p>
       <img src="../../assets/empty.png">
+      <!-- <button ion-button (click)="reload()">Reload</button> -->
     </div>
   </div>
   <ion-grid no-padding>
     <ion-row no-padding>
-      <ion-col class="col"  class="animation" col-6 *ngFor="let a of categoryArr" (click)="pushArtistDetails(a.downloadurl,a.username,a.key,a.url,a.comments,a.email,a.name,a.description,a.location,a.price,a.likes,a.name1)">
+      <ion-col class="col" class="animation" col-6 *ngFor="let a of categoryArr" (click)="pushArtistDetails(a.downloadurl,a.username,a.key,a.url,a.comments,a.email,a.name,a.description,a.location,a.price,a.likes,a.name1)">
         <img class="theImg" [src]="a.downloadurl">
         <br>
         <div class="detail">
