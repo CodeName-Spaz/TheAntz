@@ -1,3 +1,60 @@
 page-order {
+    .message{
+        display: none;
+    }
+    .data{
+        // display: none;
+    }
+    .watermark{
+        position: absolute;
+    
+        z-index: 1;
+        opacity: .3;
+        width: 80%;
+        // transform: translateY(15%);
+        // transform: translateX(15%);
+        // transform:rotate(30deg);
+    }
+    .theImage{
+        display: inline-block;
+        width: 100%;
+        // z-index: 1;
+        // background: url('../../assets/imgs/Watermark/WaterMark.png');
+        // z-index: 10000000;
+    }
+    .sendBtn{
+        width: 40px;
+        height: 40px;
+        border-radius: 50px;
+        font-size: 12px;
+        margin-top: 0px;
+    }
+    #commentTXT{
+        border: 1px solid rgb(194, 194, 194);
+        // height: 40px;
+        // padding-top: -10px;
+        border-radius: 40px;
+        width: 100%;
+        padding-left: 10px;
+    }
+    .postedIMG{
+        box-shadow: 0 0 1px grey;
+        width: 100%;
+        // max-width: 500px;
+        text-align: center;
+        object-fit: scale-down;
+    }
+    @media screen and (max-width: 320px){
+
+    }
+    @media screen and (min-width: 500px){
+        .sendBtn{
+            text-align: center;
+            margin: 0 auto;
+        }
+        .centerIt{
+            text-align: center;
+        }
+    }
 
 }

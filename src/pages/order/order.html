@@ -7,19 +7,44 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <div class="message">
+    <div class="theImage">
+        <img class="watermark" src="../../assets/imgs/Watermark/WaterMark.png" alt="">
+        <img class="postedIMG" (load)="scan($event)" src="{{downloadurl}}" />
+      </div>
     <ion-card>
-      <img src="img/nin-live.png" />
       <ion-card-content>
         <ion-card-title>
           Nine Inch Nails Live
         </ion-card-title>
         <p>
-          The most popular industrial group ever, and largely responsible for bringing the music to a mass audience.
+          {{message}}
         </p>
       </ion-card-content>
     </ion-card>
   </div>
 
 </ion-content>
+<ion-footer no-padding>
+    <ion-toolbar>
+      <div class="data">
+          <ion-item>
+              <ion-thumbnail item-start>
+                <img src="{{downloadurl}}">
+              </ion-thumbnail>
+              <h2>{{email}}</h2>
+            </ion-item>
+      </div>
+      <ion-row>
+        <ion-col col-10>
+          <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
+        </ion-col>
+        <ion-col col-2 class="centerIt">
+          <button ion-button class="sendBtn" item-end icon-only large (click)="sendRequest()">
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
