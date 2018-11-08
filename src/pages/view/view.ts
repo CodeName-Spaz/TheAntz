@@ -4,8 +4,8 @@ import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
-import { OrderModalPage } from '../order-modal/order-modal';
 import { OrderPage } from '../order/order';
+import firebase from 'firebase';
 
 
 /**
@@ -76,9 +76,14 @@ export class ViewPage implements OnInit{
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
-    this.uid = this.obj.uid
+    this.uid = this.obj.uid;
+    this.currentUserId =firebase.auth().currentUser.uid
 
   this.Retrivecomments();
+  console.log('this is the current user ' +this.currentUserId);
+  
+
+
   }
 
  
@@ -87,17 +92,34 @@ export class ViewPage implements OnInit{
   }
   ngOnInit() {
     this.art.returnUID().then((data)=>{
+      // this.userId = data[0].userId.uid;
       this.tempName =data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
+      // console.log(this.tempName);
       //  console.log(this.tempdownloadurl);
+      console.log(this.currentUserId);
+      this.ifOrderYes()
     })
   }
 
   imageSize(){
     setTimeout(() => {
     this.scan(event);
+
   }, 3000);
+  }
+
+  ifOrderYes(){
+    console.log(this.currentUserId);
+    console.log('===================');
+    
+    console.log(this.uid);
+    if(this.currentUserId == this.uid){
+      let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
+      btnOrder[0].style.display = "none";
+    }
+    
+    
   }
 
   scroll(event){
@@ -153,6 +175,8 @@ export class ViewPage implements OnInit{
         uid:uid,
       }
       this.navCtrl.push(OrderPage, { obj: obj });
+      // console.log("person posted " + uid + " | " + "person viewing " + this.userId);
+      
 
   }
 

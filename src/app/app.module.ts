@@ -27,7 +27,6 @@ import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
 import { Camera } from '@ionic-native/camera';
-import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { OrderPage } from '../pages/order/order' 
 
 firebase.initializeApp({
@@ -56,7 +55,6 @@ firebase.initializeApp({
    EulaPage,
    ChatsPage,
    OrderPage,
-   OrderModalPage
 
 
  ],
@@ -81,7 +79,6 @@ firebase.initializeApp({
    EulaPage,
    ChatsPage,
    OrderPage,
-   OrderModalPage
 
  ],
  providers: [

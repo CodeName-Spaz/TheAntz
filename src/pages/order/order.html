@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="secondary">
     <ion-title>Order</ion-title>
   </ion-navbar>
 
@@ -28,6 +28,44 @@
   </div>
   <br> -->
 
+  <ion-card>
+
+      <ion-item>
+        <ion-avatar item-start>
+          <img src="{{tempdownloadurl}}">
+        </ion-avatar>
+        <h2 class="client">{{tempName}}</h2>
+        <p>November 5, 1955</p>
+      </ion-item>
+    
+      <img src="{{downloadurl}}">
+    
+      <ion-card-content>
+        <p>{{message}}</p>
+      </ion-card-content>
+    
+      <ion-row>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>12 Likes</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button ion-button icon-start clear small>
+            <ion-icon name="text"></ion-icon>
+            <div>4 Comments</div>
+          </button>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            11h ago
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    
+    </ion-card>
+
 </ion-content>
 <ion-footer no-padding>
     <ion-toolbar>
@@ -38,7 +76,7 @@
               </ion-thumbnail>
               <h2>{{email}}</h2>
               <p>{{name1}}</p>
-              <p>{{tempName}}</p>
+              <p class="client">{{tempName}}</p>
             </ion-item>
       </div>
       <ion-row>

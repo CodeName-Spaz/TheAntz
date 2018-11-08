@@ -29,7 +29,7 @@ export class OrderPage {
   location;
   numlikes;
   numComments;
-  message = "greetings, I would like to purchase this artwork from you. Please reach me on my email "
+  message = "Greetings, I would like to purchase this artwork from you. Please reach me on my email "
   downloadurls;
   emails;
   arr = [];
@@ -42,40 +42,40 @@ export class OrderPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider,public toastCtrl: ToastController) {
-    // this.obj = this.navParams.get("obj");
+    this.obj = this.navParams.get("obj");
 
 
-    // console.log(this.obj.email);
-    // console.log(this.obj.uid);
-    // this.username = this.obj.username;
-    // this.downloadurl = this.obj.pic;
-    // this.keys2 = this.obj.key;
-    // this.downloadurl1 = this.obj.url
-    // this.numComments = this.obj.comments;
-    // this.email = this.obj.email;
-    // this.name = this.obj.name;
-    // this.description = this.obj.description;
-    // this.location = this.obj.location;
-    // this.price = this.obj.price;
-    // this.numlikes = this.obj.likes;
-    // this.name1 = this.obj.name1;
-    // this.uid = this.obj.uid
+    console.log(this.obj.email);
+    console.log(this.obj.uid);
+    this.username = this.obj.username;
+    this.downloadurl = this.obj.pic;
+    this.keys2 = this.obj.key;
+    this.downloadurl1 = this.obj.url
+    this.numComments = this.obj.comments;
+    this.email = this.obj.email;
+    this.name = this.obj.name;
+    this.description = this.obj.description;
+    this.location = this.obj.location;
+    this.price = this.obj.price;
+    this.numlikes = this.obj.likes;
+    this.name1 = this.obj.name1;
+    this.uid = this.obj.uid
 
-    // let userID = firebase.auth().currentUser;
-    //   firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
-    //   this.arr.length = 0
-    //   let details = data.val();
-    //   this.arr.push(details);
-    //   console.log(this.arr);
-    // })
+    let userID = firebase.auth().currentUser;
+      firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
+      this.arr.length = 0
+      let details = data.val();
+      this.arr.push(details);
+      console.log(this.arr);
+    })
 
-    // this.art.returnUID().then((data)=>{
-    //   this.tempName = data[0].name;
-    //   this.tempdownloadurl = data[0].downloadurl;
-    //   console.log(this.tempName);
-    //   //  console.log(this.tempdownloadurl);
-    // })
-    // this.imageSize()
+    this.art.returnUID().then((data)=>{
+      this.tempName = data[0].name;
+      this.tempdownloadurl = data[0].downloadurl;
+      console.log(this.tempName);
+      //  console.log(this.tempdownloadurl);
+    })
+    this.imageSize()
   }
 
   ionViewDidLoad() {

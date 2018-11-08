@@ -128,7 +128,7 @@ export class CategoryPage {
 
   }
   chats(){
-    this.navCtrl.setRoot(ChatsPage)
+    this.navCtrl.push(ChatsPage)
 }
 
 
