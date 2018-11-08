@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar color="secondary">
+    <ion-title>Orders</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="body" (ionScroll)="scroll($event)">
+  <!-- if there are no messages yet -->
+  <!-- <div class="no-data">
+      <p class="emptycontent">It looks like there are no messages yet...</p>
+      <img src="../../assets/empty.png">
+    </div>
+  </div>  -->
+  <div class="not-empty">
+    <ion-item class="client" (click)="showDetails()">
+      <ion-avatar item-start>
+        <img src="{{tempdownloadurl}}">
+      </ion-avatar>
+      <h2>{{tempName}}</h2>
+      <p>Ugh. As if.</p>
+    </ion-item>
+  </div>
+</ion-content>

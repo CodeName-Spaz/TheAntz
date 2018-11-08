@@ -102,16 +102,6 @@ export class OrderModalPage implements OnInit {
   retrieveINformation(){
     firebase.database().ref('Orders/'+ this.obj.uid).on("value",(data:any)=>{
       data = data.val();
-      // let keys = Object.keys(data)
-       
-      // let obj ={
-      //   tempName:this.tempName,
-      //   tempdownloadurl:this.tempdownloadurl,
-      //   email:this.tempemail,
-      //   name1:this.obj.name1,
-      //   price:this.obj.price,
-      //   downloadurl : this.obj.pic,
-      // }
       this.retriveCustomerDetails.push(data);
       console.log(this.retriveCustomerDetails);
     })

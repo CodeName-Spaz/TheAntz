@@ -27,6 +27,7 @@ import { EulaPage } from '../pages/eula/eula';
 
 import { Camera } from '@ionic-native/camera';
 import { OrderModalPage } from '../pages/order-modal/order-modal';
+import { ChatsPage } from '../pages/chats/chats';
 
 firebase.initializeApp({
  apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
@@ -51,7 +52,8 @@ firebase.initializeApp({
    PopOverProfilePage,
    ForgotPasswordPage,
    EulaPage,
-   OrderModalPage
+   OrderModalPage,
+   ChatsPage
 
 
  ],
@@ -74,7 +76,8 @@ firebase.initializeApp({
    PopOverProfilePage,
    ForgotPasswordPage,
    EulaPage,
-   OrderModalPage
+   OrderModalPage,
+   ChatsPage
 
  ],
  providers: [

@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { ChatsPage } from '../chats/chats';
 
 
 /**
@@ -36,12 +37,12 @@ export class CategoryPage {
   userId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
     this.retreivePics();
-    firebase.database().ref("uploads").on('value', (data: any) => {
-      this.categoryArr.length = 0
-      let details = data.val();
-      this.categoryArr.push(details);
-      console.log(this.categoryArr);
-    })
+    // firebase.database().ref("uploads").on('value', (data: any) => {
+    //   this.categoryArr.length = 0
+    //   let details = data.val();
+    //   this.categoryArr.push(details);
+    //   console.log(this.categoryArr);
+    // })
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
@@ -107,7 +108,7 @@ export class CategoryPage {
       this.categoryArr.reverse();
     });
   }
-  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
+  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {
     let obj = {
       name: name,
       pic: pic,
@@ -121,11 +122,13 @@ export class CategoryPage {
       price: price,
       likes: likes,
       name1: name1,
-      uid:uid,
+      uid: uid,
     }
     this.navCtrl.push(ViewPage, { obj: obj });
 
   }
-
+  chats() {
+    this.navCtrl.setRoot(ChatsPage)
+  }
 
 }

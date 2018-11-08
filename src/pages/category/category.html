@@ -22,6 +22,11 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="card-background-page" on-scroll="getScrollPosition()">
+  <ion-fab bottom right>
+    <button ion-fab mini icon-only (click)="chats()">
+      <ion-icon ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>
+    </button>
+  </ion-fab>
   <div class="scrollContent" *ngIf="categoryArr.length == 0 || categoryArr.length == undefined">
     <div class="no-data">
       <p class="emptycontent">There are no uploads yet...</p>
