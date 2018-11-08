@@ -54,12 +54,15 @@ export class ViewPage implements OnInit{
   currentUserId;
   likeArr = [];
   CommentArr = [];
+  tempName ;
+  tempdownloadurl;
+  userId;
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController) {
     this.obj = this.navParams.get("obj");
 
     console.log(this.obj.email);
-    console.log(this.obj);
+    console.log(this.obj.uid);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -72,7 +75,7 @@ export class ViewPage implements OnInit{
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
-
+    this.uid = this.obj.uid
 
   this.Retrivecomments();
   }
@@ -82,7 +85,12 @@ export class ViewPage implements OnInit{
   this.Retrivecomments();
   }
   ngOnInit() {
-    this.currentUserId = this.art.returnUID();
+    this.art.returnUID().then((data)=>{
+      this.tempName =data[0].name;
+      this.tempdownloadurl = data[0].downloadurl;
+      console.log(this.tempName);
+      //  console.log(this.tempdownloadurl);
+    })
   }
 
   imageSize(){
@@ -126,28 +134,8 @@ export class ViewPage implements OnInit{
     wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
     wMark[0].style.transform = "TranslateY(-50px)"
   }
-  // BuyArt() {
-  //   this.emailComposer.isAvailable().then((available: boolean) => {
-  //     if (available) {
-
-  //     }
-  //   });
-  //   let email = {
-  //     to: this.obj.email,
-  //     cc: 'theantz39@gmail.com',
-  //     attachments: [
-  //       this.obj.url
-  //     ],
-  //     subject: "REF#" + this.obj.name1,
-  //     body: "Greetings, <br> I would like to place an order for this image: <br> <br> <a href='" + this.obj.pic + "'>" +  this.obj.pic +"</a> <br><br><br>Kind Regards<br>" + this.obj.username,
-  //     isHtml: true
-  //   };
-  //   // this.emailComposer.open(email);
-  //   this.email.addAlias('gmail', 'com.google.android.gm');
-  // }
-
-
-    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1) {
+  
+    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
       let obj = {
         name: name,
         pic: pic,
@@ -160,7 +148,8 @@ export class ViewPage implements OnInit{
         location: location,
         price: price,
         likes: likes,
-        name1: name1
+        name1: name1,
+        uid:uid,
       }
       this.navCtrl.push(OrderModalPage, { obj: obj });
 
