@@ -429,6 +429,7 @@ export class StreetartzProvider {
                     name: uploads[k].name,
                     name1: uploads[k].name1,
                     key: keys2,
+                    uid: data[k].uid,
                     downloadurl: uploads[k].downloadurl,
                     url: uploads[k].downloadurl,
                     comments: uploads[k].comments,
@@ -495,6 +496,7 @@ export class StreetartzProvider {
               });
               accpt(this.DisplayArrUploads);
               this.storeImgur(data[keys1[0]].downloadurl);
+              console.log(this.DisplayArrUploads);
             }
           }
         }
@@ -656,6 +658,7 @@ export class StreetartzProvider {
           name: name
         }
         this.returnCurrentUser.push(details);
+        console.log(this.returnCurrentUser);
         accpt(this.returnCurrentUser)
 
       })
