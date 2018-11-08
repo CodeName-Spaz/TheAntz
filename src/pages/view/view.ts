@@ -110,10 +110,10 @@ export class ViewPage implements OnInit{
   }
 
   ifOrderYes(){
-    console.log(this.currentUserId);
-    console.log('===================');
+    // console.log(this.currentUserId);
+    // console.log('===================');
     
-    console.log(this.uid);
+    // console.log(this.uid);
     if(this.currentUserId == this.uid){
       let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
       btnOrder[0].style.display = "none";
