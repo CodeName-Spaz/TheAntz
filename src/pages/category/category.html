@@ -3,7 +3,7 @@
     <div class="head">
       <ion-item class="CatBar" color="secondary">
         <ion-label>Select</ion-label>
-        <ion-select class="animation" [(ngModel)]="category" (ionChange)="typeOfArt()">
+        <ion-select class="animation" [(ngModel)]="category"  (ionChange)="typeOfArt()">
           <ion-option value="All">All</ion-option>
           <ion-option value="Photography">Photography</ion-option>
           <ion-option value="Sculpting">Sculpting</ion-option>
@@ -22,11 +22,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content class="card-background-page" on-scroll="getScrollPosition()">
-  <ion-fab bottom right>
-    <button ion-fab mini icon-only (click)="chats()">
-      <ion-icon ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>
-    </button>
-  </ion-fab>
   <div class="scrollContent" *ngIf="categoryArr.length == 0 || categoryArr.length == undefined">
     <div class="no-data">
       <p class="emptycontent">There are no uploads yet...</p>
@@ -39,7 +34,7 @@
   </div>
   <ion-grid no-padding>
     <ion-row no-padding>
-      <ion-col class="col" class="animation" col-6 *ngFor="let a of categoryArr" (click)="pushArtistDetails(a.downloadurl,a.username,a.key,a.url,a.comments,a.email,a.name,a.description,a.location,a.price,a.likes,a.name1)">
+      <ion-col class="col" class="animation" col-6 *ngFor="let a of categoryArr" (click)="pushArtistDetails(a.downloadurl,a.username,a.key,a.url,a.comments,a.email,a.name,a.description,a.location,a.price,a.likes,a.name1,a.uid)">
         <img class="theImg" [src]="a.downloadurl">
         <br>
         <div class="detail">

@@ -26,7 +26,7 @@ export class OrderPage {
   location;
   numlikes;
   numComments;
-  message="greetings, I would like to purchase this artwork from you. Please reach me on my email"
+  message = "greetings, I would like to purchase this artwork from you. Please reach me on my email"
   obj = this.navParams.get("obj");
   downloadurls;
   emails;
@@ -36,7 +36,7 @@ export class OrderPage {
 
     console.log(this.obj.email);
     console.log(this.obj);
-  
+
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -54,26 +54,26 @@ export class OrderPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderPage');
   }
-  scan(event){
+  scan(event) {
     console.log(event.path[0].attributes[1].ownerElement.height);
-    console.log('half '+(event.path[0].attributes[1].ownerElement.height* 0.5 - 50));
-    
-    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf <HTMLElement>;
+    console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
 
-    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height* 0.5 - 50) + "px";
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height * 0.5 - 50) + "px";
     wMark[0].style.transform = "TranslateY(-50px)"
   }
-  sendRequest(){
-    this.message = '';
-    var sentMessage = document.getElementsByClassName('message') as HTMLCollectionOf <HTMLElement>;
+  sendRequest() {
 
-    let info = document.getElementsByClassName('data') as HTMLCollectionOf <HTMLElement>;
+    var sentMessage = document.getElementsByClassName('message') as HTMLCollectionOf<HTMLElement>;
+
+    let info = document.getElementsByClassName('data') as HTMLCollectionOf<HTMLElement>;
     info[0].style.transform = "translateX(120%)";
     info[0].style.height = 0 + "px";
     sentMessage[0].style.display = "block";
 
     this.downloadurls = this.obj.pic;
-   
+    this.message = '';
   }
 
 
