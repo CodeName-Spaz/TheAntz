@@ -5,6 +5,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
 import { OrderModalPage } from '../order-modal/order-modal';
+import { OrderPage } from '../order/order';
 
 
 /**
@@ -151,7 +152,7 @@ export class ViewPage implements OnInit{
         name1: name1,
         uid:uid,
       }
-      this.navCtrl.push(OrderModalPage, { obj: obj });
+      this.navCtrl.push(OrderPage, { obj: obj });
 
   }
 

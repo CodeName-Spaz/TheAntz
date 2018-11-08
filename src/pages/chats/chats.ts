@@ -27,8 +27,7 @@ export class ChatsPage {
     
   }
   showDetails(){
-    const modal = this.modalCtrl.create(OrderPage);
-    modal.present();
+ this.navCtrl.push(OrderPage)
   
     
   }

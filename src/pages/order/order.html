@@ -8,8 +8,10 @@
 
 
 <ion-content>
-  <div class="message">
-    <div class="theImage">
+ 
+  <!-- <div class="message"> -->
+    <!-- use ngFor to loop all sent messages -->
+    <!-- <div class="theImage">
         <img class="watermark" src="../../assets/imgs/Watermark/WaterMark.png" alt="">
         <img class="postedIMG" (load)="scan($event)" src="{{downloadurl}}" />
       </div>
@@ -24,16 +26,19 @@
       </ion-card-content>
     </ion-card>
   </div>
+  <br> -->
 
 </ion-content>
 <ion-footer no-padding>
     <ion-toolbar>
       <div class="data">
-          <ion-item>
+          <ion-item class="data">
               <ion-thumbnail item-start>
                 <img src="{{downloadurl}}">
               </ion-thumbnail>
               <h2>{{email}}</h2>
+              <p>{{name1}}</p>
+              <p>{{tempName}}</p>
             </ion-item>
       </div>
       <ion-row>
@@ -41,7 +46,7 @@
           <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
         </ion-col>
         <ion-col col-2 class="centerIt">
-          <button ion-button class="sendBtn" item-end icon-only large (click)="sendRequest()">
+          <button ion-button class="sendBtn" item-end icon-only large (click)="sendInformation()">
             <ion-icon name="send"></ion-icon>
           </button>
         </ion-col>
