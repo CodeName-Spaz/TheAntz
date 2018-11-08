@@ -39,8 +39,6 @@ export class OrderModalPage implements OnInit {
     this.obj = this.navParams.get("obj");
 
 
-    console.log(this.obj.email);
-    console.log(this.obj.uid);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -103,7 +101,7 @@ export class OrderModalPage implements OnInit {
     firebase.database().ref('Orders/'+ this.obj.uid).on("value",(data:any)=>{
       data = data.val();
       this.retriveCustomerDetails.push(data);
-      console.log(this.retriveCustomerDetails);
+      console.log( this.obj.uid);
     })
   }
 }

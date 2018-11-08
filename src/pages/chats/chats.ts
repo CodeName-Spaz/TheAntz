@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
+import { OrderModalPage } from '../order-modal/order-modal';
 /**
  * Generated class for the ChatsPage page.
  *
@@ -28,9 +29,10 @@ export class ChatsPage {
   numComments;
   arr = [];
   tempName;
-  uid:any;
+  uid: any;
   tempdownloadurl;
   tempemail;
+  key;
   retriveCustomerDetails = [];
   // obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -57,19 +59,54 @@ export class ChatsPage {
 
 
 
+    var currentUser = firebase.auth().currentUser.uid;
+    console.log(currentUser);
 
 
-    firebase.database().ref('Orders/').on("value",(data:any)=>{
+    firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
       let infor = data.val();
-      this.retriveCustomerDetails.push(infor);
-      console.log(this.retriveCustomerDetails);
+      console.log(infor);
+      let keys = Object.keys(infor);
+      for (var i = 0; i < keys.length; i++) {
+        firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+          let inforKey = data2.val();
+          let keys2 = Object.keys(inforKey);
+          // for(var i =0; i< keys.length;i++){
+          var k = keys2[i];
+          let obj = {
+            tempName: inforKey[k].tempName,
+            tempdownloadurl: inforKey[k].tempdownloadurl,
+          }
+          this.retriveCustomerDetails.push(obj)
+          console.log(this.retriveCustomerDetails);
+          // }
+        })
+      }
     })
-  
-    
+
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatsPage');
   }
+  scroll(event) {
+    console.log(event);
 
+  }
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email) {
+    let obj = {
+      downloadurl: downloadurl,
+      tempName: tempName,
+      tempdownloadurl: tempdownloadurl,
+      price: price,
+      name1: name1,
+      email: email
+    }
+    this.retriveCustomerDetails.push(obj);
+    console.log(this.retriveCustomerDetails)
+    this.navCtrl.push(OrderModalPage, { obj: obj });
+
+
+  }
 }

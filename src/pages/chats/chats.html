@@ -9,17 +9,17 @@
 
 <ion-content padding class="body" (ionScroll)="scroll($event)">
   <!-- if there are no messages yet -->
-  <!-- <div class="no-data">
+  <!-- <div class="no-data" *ngIf="this.retriveCustomerDetails.length == 0 || this.retriveCustomerDetails.length == undefined">
       <p class="emptycontent">It looks like there are no messages yet...</p>
       <img src="../../assets/empty.png">
     </div>
   </div>  -->
   <div class="not-empty">
-    <ion-item class="client" (click)="showDetails()">
+    <ion-item class="client" (click)="showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email)" *ngFor="let a of retriveCustomerDetails">
       <ion-avatar item-start>
-        <img src="{{tempdownloadurl}}">
+        <img src="{{a.tempdownloadurl}}">
       </ion-avatar>
-      <h2>{{tempName}}</h2>
+      <h2>{{a.tempName}}</h2>
       <p>Ugh. As if.</p>
     </ion-item>
   </div>
