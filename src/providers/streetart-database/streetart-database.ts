@@ -216,14 +216,15 @@ export class StreetartzProvider {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait',
-      duration: 3000
+      duration: 7000
     });
     const toast = this.toastCtrl.create({
       message: 'your imagine had been uploaded!',
       duration: 3000
     });
+    loading.present();
     return new Promise((accpt, rejc) => {
-      loading.present();
+      
       firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
         toast.present();
         accpt(name);
