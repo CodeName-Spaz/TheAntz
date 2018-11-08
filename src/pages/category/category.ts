@@ -37,12 +37,12 @@ export class CategoryPage {
   userId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
     this.retreivePics();
-    firebase.database().ref("uploads").on('value', (data: any) => {
-      this.categoryArr.length = 0
-      let details = data.val();
-      this.categoryArr.push(details);
-      console.log(this.categoryArr);
-    })
+    // firebase.database().ref("uploads").on('value', (data: any) => {
+    //   this.categoryArr.length = 0
+    //   let details = data.val();
+    //   this.categoryArr.push(details);
+    //   console.log(this.categoryArr);
+    // })
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
