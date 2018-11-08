@@ -8,13 +8,16 @@ page-chats {
         background: whitesmoke;
     }
     .client{
-        box-shadow: 0 2px 12px rgb(1,17,39);
-        border-radius: 5px;
+        box-shadow: 0 5px 5px rgba(1, 17, 39, 0.24);
+        border-radius: 10px;
     }
     .secondary{
         background: linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0));
         background-size: 100%;
         width: 100vw;
         margin-left: -10px;
+    }
+    .caps{
+        text-transform: capitalize;
     }
 }

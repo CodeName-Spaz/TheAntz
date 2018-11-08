@@ -37,12 +37,12 @@ export class CategoryPage {
   userId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
     this.retreivePics();
-    // firebase.database().ref("uploads").on('value', (data: any) => {
-    //   this.categoryArr.length = 0
-    //   let details = data.val();
-    //   this.categoryArr.push(details);
-    //   console.log(this.categoryArr);
-    // })
+    firebase.database().ref("uploads").on('value', (data: any) => {
+      this.categoryArr.length = 0
+      let details = data.val();
+      this.categoryArr.push(details);
+      console.log(this.categoryArr);
+    })
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
@@ -61,7 +61,7 @@ export class CategoryPage {
         console.log('empty')
       }
       else if (this.category == 'All') {
-        // this.categoryArr.length = 0;
+        this.categoryArr.length = 0;
         this.art.viewPicMain(this.name, this.username).then((data: any) => {
           this.categoryArr = [];
           this.categoryArr = data;
@@ -128,7 +128,7 @@ export class CategoryPage {
 
   }
   chats() {
-    this.navCtrl.setRoot(ChatsPage)
+    this.navCtrl.push(ChatsPage)
   }
 
 }

@@ -65,8 +65,9 @@ export class LoginPage {
       alert.present();
     }
     else {
+ 
       this.art.login(this.email, this.password).then(() => {
-        this.presentLoading1();
+        // this.presentLoading1();
         this.navCtrl.setRoot(CategoryPage);
       }, (error) => {
         console.log(error.message);
@@ -74,11 +75,7 @@ export class LoginPage {
     }
   }
   presentLoading1() {
-    const loader = this.loadingCtrl.create({
-      content: "loading....",
-      duration: 7000
-    });
-    loader.present();
+
   }
   forgotpassword() {
     this.navCtrl.push(ForgotPasswordPage)

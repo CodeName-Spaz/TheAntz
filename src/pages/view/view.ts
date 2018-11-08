@@ -5,6 +5,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
 import { OrderModalPage } from '../order-modal/order-modal';
+import firebase from 'firebase';
 
 
 /**
@@ -37,6 +38,7 @@ export class ViewPage implements OnInit{
   url;
   num;
   numComments;
+  message = "Greetings, I would like to purchase this artwork from you. Please reach me on my email "
   Comments = [];
   email;
   comments;
@@ -77,6 +79,7 @@ export class ViewPage implements OnInit{
     this.name1 = this.obj.name1;
     this.uid = this.obj.uid
 
+    this.currentUserId =firebase.auth().currentUser.uid
   this.Retrivecomments();
   }
 
@@ -90,6 +93,7 @@ export class ViewPage implements OnInit{
       this.tempdownloadurl = data[0].downloadurl;
       console.log(this.tempName);
       //  console.log(this.tempdownloadurl);
+      this.ifOrderYes();
     })
   }
 
@@ -98,7 +102,18 @@ export class ViewPage implements OnInit{
     this.scan(event);
   }, 3000);
   }
-
+  ifOrderYes(){
+    // console.log(this.currentUserId);
+    // console.log('===================');
+  
+    // console.log(this.uid);
+    if(this.currentUserId == this.uid){
+      let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
+      btnOrder[0].style.display = "none";
+    }
+  
+  
+  }
   scroll(event){
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;

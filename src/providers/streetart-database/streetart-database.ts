@@ -73,7 +73,7 @@ export class StreetartzProvider {
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
         content: 'Sign in....',
-        duration: 4000
+        duration: 4000000
       });
       loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
@@ -86,7 +86,9 @@ export class StreetartzProvider {
           bio: "You have not yet inserted a description about your skills and abilities, update profile to get started.",
         })
         resolve();
+        loading.dismiss();
       }).catch((error) => {
+        loading.dismiss();
         const alert = this.alertCtrl.create({
           subTitle: error.message,
           buttons: [
@@ -104,31 +106,52 @@ export class StreetartzProvider {
     })
   }
   login(email, password) {
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Sign In....',
+      duration: 4000000
+    });
+    loading.present();
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Sign In....',
-        duration: 4000000
-      });
-      loading.present();
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
         loading.dismiss();
       }).catch((error) => {
-        const alert = this.alertCtrl.create({
-          subTitle: error.message,
-          buttons: [
-            {
-              text: 'ok',
-              handler: data => {
-                console.log('Cancel');
+        loading.dismiss();
+        if (error.message == "There is no user record corresponding to this identifier. The user may have been deleted.") {
+          const alert = this.alertCtrl.create({
+            subTitle: "It seems like you have not registered to use StreetArt, please check your login information or sign up to get started",
+            buttons: [
+              {
+                text: 'ok',
+                handler: data => {
+                  console.log('Cancel');
+                }
               }
-            }
-          ]
-        });
-        alert.present();
+            ]
+          });
+          alert.present();
+        }
+        else {
+          const alert = this.alertCtrl.create({
+
+
+            subTitle: error.message,
+            buttons: [
+              {
+                text: 'ok',
+                handler: data => {
+                  console.log('Cancel');
+                }
+              }
+            ]
+          });
+          alert.present();
+        }
+
       })
     })
+
   }
   retrieve() {
     let userID = firebase.auth().currentUser;
@@ -341,14 +364,14 @@ export class StreetartzProvider {
     this.url = url;
     // console.log(url);
   }
-  storeImgDownloadurl(downloadurl){
-    this.downloadurl =downloadurl;
+  storeImgDownloadurl(downloadurl) {
+    this.downloadurl = downloadurl;
     // console.log(downloadurl);
   }
   storeName(name) {
     this.obj.name = name;
   }
- 
+
   selectCategory(category) {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
@@ -457,6 +480,12 @@ export class StreetartzProvider {
     })
   }
   viewPicMain(name, username) {
+    let loader = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Loading...',
+      duration: 4000000000000000000
+    });
+    loader.present();
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
         var data = data.val();
@@ -497,11 +526,15 @@ export class StreetartzProvider {
               accpt(this.DisplayArrUploads);
               this.storeImgur(data[keys1[0]].downloadurl);
               console.log(this.DisplayArrUploads);
+             
             }
           }
+          // loader.dismiss();
         }
+      
       }, Error => {
-        rejc(Error.message)
+        rejc(Error.message);
+        // loader.dismiss();
       })
     })
   }

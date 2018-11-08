@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { OrderModalPage } from '../order-modal/order-modal';
+import { ViewInforPage } from '../view-infor/view-infor';
 /**
  * Generated class for the ChatsPage page.
  *
@@ -33,6 +34,7 @@ export class ChatsPage {
   tempdownloadurl;
   tempemail;
   key;
+  list = [];
   retriveCustomerDetails = [];
   // obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -65,10 +67,10 @@ export class ChatsPage {
 
     firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
       let infor = data.val();
-      console.log(infor);
       let keys = Object.keys(infor);
       for (var i = 0; i < keys.length; i++) {
         firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+
           let inforKey = data2.val();
           let keys2 = Object.keys(inforKey);
           // for(var i =0; i< keys.length;i++){
@@ -76,15 +78,19 @@ export class ChatsPage {
           let obj = {
             tempName: inforKey[k].tempName,
             tempdownloadurl: inforKey[k].tempdownloadurl,
+            name1: inforKey[k].name1,
+            price: infor[k].price,
+            email: infor[k].email,
+            downloadurl: inforKey[k].downloadurl,
+            message: inforKey[k].message
           }
           this.retriveCustomerDetails.push(obj)
           console.log(this.retriveCustomerDetails);
           // }
         })
       }
+
     })
-
-
   }
 
   ionViewDidLoad() {
@@ -94,18 +100,19 @@ export class ChatsPage {
     console.log(event);
 
   }
-  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email) {
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message) {
     let obj = {
       downloadurl: downloadurl,
       tempName: tempName,
       tempdownloadurl: tempdownloadurl,
       price: price,
       name1: name1,
-      email: email
+      email: email,
+      message: message
     }
-    this.retriveCustomerDetails.push(obj);
+    this.retriveCustomerDetails.push(obj)
     console.log(this.retriveCustomerDetails)
-    this.navCtrl.push(OrderModalPage, { obj: obj });
+    this.navCtrl.push(ViewInforPage, { obj: obj });
 
 
   }

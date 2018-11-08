@@ -24,10 +24,11 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
-
 import { Camera } from '@ionic-native/camera';
-import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { ChatsPage } from '../pages/chats/chats';
+import { OrderModalPage } from '../pages/order-modal/order-modal';
+import { ViewInforPage } from '../pages/view-infor/view-infor';
+
 
 firebase.initializeApp({
  apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
@@ -52,8 +53,12 @@ firebase.initializeApp({
    PopOverProfilePage,
    ForgotPasswordPage,
    EulaPage,
+   ChatsPage,
    OrderModalPage,
-   ChatsPage
+   ViewInforPage
+
+
+   
 
 
  ],
@@ -76,8 +81,10 @@ firebase.initializeApp({
    PopOverProfilePage,
    ForgotPasswordPage,
    EulaPage,
+   ChatsPage,
    OrderModalPage,
-   ChatsPage
+   ViewInforPage
+
 
  ],
  providers: [
