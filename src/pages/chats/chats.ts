@@ -66,11 +66,12 @@ export class ChatsPage {
 
 
     firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
+      this.retriveCustomerDetails.length =0;
       let infor = data.val();
       let keys = Object.keys(infor);
       for (var i = 0; i < keys.length; i++) {
         firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
-
+      
           let inforKey = data2.val();
           let keys2 = Object.keys(inforKey);
           // for(var i =0; i< keys.length;i++){
@@ -110,8 +111,7 @@ export class ChatsPage {
       email: email,
       message: message
     }
-    this.retriveCustomerDetails.push(obj)
-    console.log(this.retriveCustomerDetails)
+
     this.navCtrl.push(ViewInforPage, { obj: obj });
 
 
