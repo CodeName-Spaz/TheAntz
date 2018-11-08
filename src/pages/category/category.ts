@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { ChatsPage } from '../chats/chats';
 
 
 /**
@@ -126,6 +127,9 @@ export class CategoryPage {
     this.navCtrl.push(ViewPage, { obj: obj });
 
   }
+  chats(){
+    this.navCtrl.setRoot(ChatsPage)
+}
 
 
 }

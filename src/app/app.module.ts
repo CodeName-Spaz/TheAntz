@@ -26,10 +26,9 @@ import { ChatsPage } from '../pages/chats/chats';
 import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
-
 import { Camera } from '@ionic-native/camera';
-import { OrderPage } from '../pages/order/order';
 import { OrderModalPage } from '../pages/order-modal/order-modal';
+import { OrderPage } from '../pages/order/order' 
 
 firebase.initializeApp({
  apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",

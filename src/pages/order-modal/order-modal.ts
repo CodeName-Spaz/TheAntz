@@ -116,4 +116,26 @@ export class OrderModalPage implements OnInit {
       console.log(this.retriveCustomerDetails);
     })
   }
+
+    // scan(event) {
+  //   console.log(event.path[0].attributes[1].ownerElement.height);
+  //   console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
+
+  //   var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+
+  //   wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height * 0.5 - 50) + "px";
+  //   wMark[0].style.transform = "TranslateY(-50px)"
+  // }
+  // sendRequest() {
+
+  //   var sentMessage = document.getElementsByClassName('message') as HTMLCollectionOf<HTMLElement>;
+
+  //   let info = document.getElementsByClassName('data') as HTMLCollectionOf<HTMLElement>;
+  //   info[0].style.transform = "translateX(120%)";
+  //   info[0].style.height = 0 + "px";
+  //   sentMessage[0].style.display = "block";
+
+  //   this.downloadurls = this.obj.pic;
+  //   this.message = '';
+  // }
 }

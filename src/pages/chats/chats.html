@@ -1,6 +1,9 @@
 <ion-header>
 
   <ion-navbar color="secondary">
+    <ion-buttons start>
+      
+    </ion-buttons>
     <ion-title>Orders</ion-title>
   </ion-navbar>
 
@@ -9,13 +12,13 @@
 
 <ion-content padding class="body" (ionScroll)="scroll($event)">
   <!-- if there are no messages yet -->
-  <!-- <div class="scrollContent">
+  <div class="scrollContent">
     <div class="no-data">
       <p class="emptycontent">It looks like there are no messages yet...</p>
 
       <img src="../../assets/empty.png">
     </div>
-  </div> -->
+  </div>
   <div class="not-empty">
     <ion-item class="client" (click)="showDetails()"> <!-- use ngFor on the ion-item -->
       <ion-avatar item-start>

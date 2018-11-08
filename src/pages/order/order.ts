@@ -27,9 +27,15 @@ export class OrderPage {
   numlikes;
   numComments;
   message = "greetings, I would like to purchase this artwork from you. Please reach me on my email"
-  obj = this.navParams.get("obj");
   downloadurls;
   emails;
+  arr = [];
+  tempName;
+  uid:any;
+  tempdownloadurl;
+  tempemail;
+  retriveCustomerDetails = [];
+  obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.obj = this.navParams.get("obj");
 
@@ -54,6 +60,9 @@ export class OrderPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderPage');
   }
+
+
+  
   scan(event) {
     console.log(event.path[0].attributes[1].ownerElement.height);
     console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
