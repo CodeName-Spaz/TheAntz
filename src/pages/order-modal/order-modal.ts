@@ -37,6 +37,7 @@ export class OrderModalPage implements OnInit {
   height;
   retriveCustomerDetails = [];
   display=[];
+  messageRead="message read"
   obj = this.navParams.get("obj");
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public toastCtrl: ToastController) {
@@ -128,11 +129,13 @@ export class OrderModalPage implements OnInit {
       name1: this.obj.name1,
       price: this.obj.price,
       downloadurl: this.obj.pic,
-      message:this.message
-
-    
+      messageRead :"message read",
+      message:this.message,
+ 
     })
      this.message=""
+    
+    
 
     const toast = this.toastCtrl.create({
       message: 'you have made ur booking!',

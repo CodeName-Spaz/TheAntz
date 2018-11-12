@@ -14,6 +14,9 @@
 
 
 <ion-content padding>
+        <ion-fab right bottom>
+          <button ion-fab mini (click)="repond()"><ion-icon ios="ios-undo" md="md-undo"></ion-icon></button>
+        </ion-fab>
     <ion-card>
         <ion-item>
           <ion-avatar item-start>
@@ -22,10 +25,13 @@
           <h2 class="client">{{tempName}}</h2>
           
         </ion-item>
-      
+      <div class="image">
         <img src="{{downloadurl}}">
+      </div>
+        
       
         <ion-card-content>
+          <br><br>
           <p>{{message}}
             <br>
             {{email}}</p>

@@ -44,6 +44,7 @@ export class StreetartzProvider {
   DisplayArrUploads = []
   removepic = [];
   returnCurrentUser = [];
+  retriveCustomerDetails =[];
   constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello StreetartzProvider Provider');
   }
@@ -270,7 +271,6 @@ export class StreetartzProvider {
         }
         for (var i = 0; i < keys.length; i++) {
           this.storeImgDownloadurl(DisplayData[keys[i]].downloadurl);
-          // console.log(DisplayData[keys[i]].downloadurl);
         }
         accpt(DisplayData);
       }, Error => {
@@ -398,13 +398,15 @@ export class StreetartzProvider {
                 username: "",
                 email: uploads[k].email
               }
-              this.selectCategoryArr.push(obj);
-              this.viewProfileMain(chckId).then((profileData: any) => {
+                this.selectCategoryArr.push(obj);
+                console.log(this.selectCategoryArr);
+                this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
                 obj.email = profileData.email
               });
             }
+       
             if (uploads[k].category == undefined || uploads[k].category == null) {
               console.log('nex');
             }
@@ -480,7 +482,7 @@ export class StreetartzProvider {
       })
     })
   }
-  viewPicMain(name, username) {
+  viewPicMain() {
     let loader = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Loading...',
@@ -488,56 +490,48 @@ export class StreetartzProvider {
     });
     loader.present();
     return new Promise((accpt, rejc) => {
-      firebase.database().ref("uploads").on("value", (data: any) => {
-        var data = data.val();
-        if (data == null || data == undefined && this.DisplayArrUploads == null || this.arr2 == undefined) {
+      firebase.database().ref("uploads").on("value", (data) => {
+        let uploads2 = data.val();
+        if (uploads2 == null || uploads2 == undefined && this.DisplayArrUploads.length == null || this.arr2 == undefined) {
           this.DisplayArrUploads = null;
         }
         else {
           this.DisplayArrUploads.length = 0;
-          var keys1: any = Object.keys(data);
-          for (var i = 0; i < keys1.length; i++) {
-            var keys1: any = Object.keys(data);
+            var keys1: any = Object.keys(uploads2);
+            console.log(keys1)
             for (var i = 0; i < keys1.length; i++) {
-              var keys1: any = Object.keys(data);
-              var k = keys1[i];
-              var chckId = data[k].uid;
+              let k = keys1[i];
+              let chckId = uploads2[k].uid;
               let obj = {
-                uid: data[k].uid,
-                category: data[k].category,
-                comments: data[k].comments,
-                downloadurl: data[k].downloadurl,
-                description: data[k].description,
-                location: data[k].location,
-                price: data[k].price,
-                likes: data[k].likes,
-                name: data[k].name,
-                name1: data[k].name1,
+                uid: uploads2[k].uid,
+                category: uploads2[k].category,
+                comments: uploads2[k].comments,
+                downloadurl: uploads2[k].downloadurl,
+                description: uploads2[k].description,
+                location: uploads2[k].location,
+                price: uploads2[k].price,
+                likes: uploads2[k].likes,
+                name: uploads2[k].name,
+                name1: uploads2[k].name1,
                 username: "",
                 email: "",
                 key: k,
                 url: this.url,
               }
-              this.DisplayArrUploads.push(obj);
-              this.viewProfileMain(chckId).then((profileData: any) => {
+                this.DisplayArrUploads.push(obj);
+                this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.email = profileData.email
                 obj.url = profileData.downloadurl
               });
-              accpt(this.DisplayArrUploads);
-              this.storeImgur(data[keys1[0]].downloadurl);
-              console.log(this.DisplayArrUploads);
              
-            }
+              this.storeImgur(uploads2[keys1[0]].downloadurl);
+              console.log(this.DisplayArrUploads);
           }
-          // loader.dismiss();
-        }
-      
-      }, Error => {
-        rejc(Error.message);
-        // loader.dismiss();
-      })
+        }    
+      }),accpt(this.DisplayArrUploads); 
     })
+   
   }
   viewProfileMain(userid: string) {
     return new Promise((accpt, rejc) => {
@@ -698,5 +692,58 @@ export class StreetartzProvider {
       })
     })
   }
+
+
+
+//   readMessage(message, key){
+//     return new Promise((accpt, rej) => {
+//       let user = firebase.auth().currentUser;
+//     firebase.database().ref('OrdersMessage/' +key).push({
+//       message:message
+
+//     })
+//     accpt(message);
+//   })
+
+// }
+getinfor(){
+  return new Promise((accpt, rej) => {
+  var currentUser = firebase.auth().currentUser.uid;
+  console.log(currentUser);
+  firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
+    // this.retriveCustomerDetails.length =0;
+    let infor = data.val();
+    if(data.val() !=null || data.val() !=undefined){
+      let keys = Object.keys(infor);
+      for (var i = 0; i < keys.length; i++) {
+        firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+      
+          let inforKey = data2.val();
+          let keys2 = Object.keys(inforKey);
+          // for(var i =0; i< keys.length;i++){
+          var k = keys2[i];
+          let obj = {
+            tempName: inforKey[k].tempName,
+            tempdownloadurl: inforKey[k].tempdownloadurl,
+            name1: inforKey[k].name1,
+            price: infor[k].price,
+            email: infor[k].email,
+            downloadurl: inforKey[k].downloadurl,
+            message: inforKey[k].message,
+            key:k
+  
+          }
+          this.retriveCustomerDetails.push(obj)
+          console.log(this.retriveCustomerDetails);
+          // }
+        })
+      }
+    }
+    accpt(this.retriveCustomerDetails);
+  })
+
+  })
+
+}
 
 }
