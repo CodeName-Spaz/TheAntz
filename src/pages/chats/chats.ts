@@ -1,7 +1,15 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { OrderPage } from '../order/order';
 
+=======
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import firebase from 'firebase';
+import { OrderModalPage } from '../order-modal/order-modal';
+import { ViewInforPage } from '../view-infor/view-infor';
+import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 /**
  * Generated class for the ChatsPage page.
  *
@@ -15,6 +23,7 @@ import { OrderPage } from '../order/order';
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
+<<<<<<< HEAD
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
   }
@@ -33,6 +42,119 @@ export class ChatsPage {
   }
   goBack(){
     this.navCtrl.pop();
+=======
+  private buttonColor: string = "primary"
+  username;
+  downloadurl;
+  keys2;
+  downloadurl1;
+  email;
+  name;
+  name1;
+  description;
+  price;
+  location;
+  numlikes;
+  numComments;
+  arr = [];
+  tempName;
+  uid: any;
+  tempdownloadurl;
+  tempemail;
+  key;
+  list = [];
+  retriveCustomerDetails = [];
+  xxx ;
+  // obj = this.navParams.get("obj");
+  constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
+    // this.obj = this.navParams.get("obj");
+    // console.log(this.obj)
+
+
+
+    // console.log(this.obj.email);
+    // console.log(this.obj.uid);
+    // this.username = this.obj.username;
+    // this.downloadurl = this.obj.pic;
+    // this.keys2 = this.obj.key;
+    // this.downloadurl1 = this.obj.url
+    // this.numComments = this.obj.comments;
+    // this.email = this.obj.email;
+    // this.name = this.obj.name;
+    // this.description = this.obj.description;
+    // this.location = this.obj.location;
+    // this.price = this.obj.price;
+    // this.numlikes = this.obj.likes;
+    // this.name1 = this.obj.name1;
+    // this.uid = this.obj.uid
+
+
+
+    var currentUser = firebase.auth().currentUser.uid;
+    console.log(currentUser);
+
+
+    firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
+      this.retriveCustomerDetails.length =0;
+      let infor = data.val();
+      if(data.val() !=null || data.val() !=undefined){
+        let keys = Object.keys(infor);
+        for (var i = 0; i < keys.length; i++) {
+          firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+        
+            let inforKey = data2.val();
+            let keys2 = Object.keys(inforKey);
+            // for(var i =0; i< keys.length;i++){
+            var k = keys2[i];
+            let obj = {
+              tempName: inforKey[k].tempName,
+              tempdownloadurl: inforKey[k].tempdownloadurl,
+              name1: inforKey[k].name1,
+              price: infor[k].price,
+              email: infor[k].email,
+              downloadurl: inforKey[k].downloadurl,
+              message: inforKey[k].message,
+              messageRead:infor[k].messageRead,
+              key:k
+
+            }
+            this.retriveCustomerDetails.push(obj)
+            console.log(this.retriveCustomerDetails);
+
+            
+            // }
+          })
+        }
+      }
+    })
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ChatsPage');
+  }
+  scroll(event) {
+    console.log(event);
+
+  }
+
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message,key) {
+    let obj = {
+      downloadurl: downloadurl,
+      tempName: tempName,
+      tempdownloadurl: tempdownloadurl,
+      price: price,
+      name1: name1,
+      email: email,
+      message: message,
+      key:key
+    }
+
+    this.navCtrl.push(ViewInforPage, { obj: obj });
+
+    
+    // document.getElementById("chats").style.backgroundColor="blue"
+  
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   }
 
 

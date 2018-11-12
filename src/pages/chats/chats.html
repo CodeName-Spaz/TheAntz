@@ -1,9 +1,12 @@
 <ion-header>
 
   <ion-navbar color="secondary">
+<<<<<<< HEAD
     <!-- <ion-buttons start>
       <button ion-button icon-only (click)="goBack()"><ion-icon name="arrow-back"></ion-icon></button>
     </ion-buttons> -->
+=======
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
     <ion-title>Orders</ion-title>
   </ion-navbar>
 
@@ -12,6 +15,7 @@
 
 <ion-content padding class="body" (ionScroll)="scroll($event)">
   <!-- if there are no messages yet -->
+<<<<<<< HEAD
   <div class="scrollContent">
     <div class="no-data">
       <p class="emptycontent">It looks like there are no messages yet...</p>
@@ -39,3 +43,26 @@
 
   </div>
 </ion-content>
+=======
+  <div class="no-data" *ngIf="retriveCustomerDetails.length == 0 || retriveCustomerDetails.length == undefined">
+      <p class="emptycontent">It looks like there are no messages yet...</p>
+      <img src="../../assets/empty.png">
+    </div>
+  <div class="not-empty">
+    <div *ngFor="let a of retriveCustomerDetails"      >
+         <ion-item class="client"(click)="showDetails(a.downloadurl, a.tempName, a.tempdownloadurl, a.price, a.name1, a.email,a.message,a.key)" id="chats">
+      <ion-avatar item-start>
+        <img src="{{a.tempdownloadurl}}">
+      </ion-avatar>
+      <h2 class="caps">{{a.tempName}}</h2>
+      <p>{{a.message}}</p>
+      
+    
+    </ion-item>
+    <br>
+    </div>
+ 
+
+  </div>
+</ion-content>
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d

@@ -27,7 +27,14 @@ import firebase from 'firebase';
 import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
 import { Camera } from '@ionic-native/camera';
+<<<<<<< HEAD
 import { OrderPage } from '../pages/order/order' 
+=======
+import { ChatsPage } from '../pages/chats/chats';
+import { OrderModalPage } from '../pages/order-modal/order-modal';
+import { ViewInforPage } from '../pages/view-infor/view-infor';
+
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 
 firebase.initializeApp({
  apiKey: "AIzaSyBJn72d9p4tVhdWkWsmecmKF4QjTHRXIj0",
@@ -54,7 +61,15 @@ firebase.initializeApp({
    ForgotPasswordPage,
    EulaPage,
    ChatsPage,
+<<<<<<< HEAD
    OrderPage,
+=======
+   OrderModalPage,
+   ViewInforPage
+
+
+   
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 
 
  ],
@@ -78,7 +93,13 @@ firebase.initializeApp({
    ForgotPasswordPage,
    EulaPage,
    ChatsPage,
+<<<<<<< HEAD
    OrderPage,
+=======
+   OrderModalPage,
+   ViewInforPage
+
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 
  ],
  providers: [

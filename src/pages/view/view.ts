@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, style } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
+<<<<<<< HEAD
 import { OrderPage } from '../order/order';
+=======
+import { OrderModalPage } from '../order-modal/order-modal';
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 import firebase from 'firebase';
 
 
@@ -38,6 +42,7 @@ export class ViewPage implements OnInit{
   url;
   num;
   numComments;
+  message = "Greetings, I would like to purchase this artwork from you. Please reach me on my email "
   Comments = [];
   email;
   comments;
@@ -63,7 +68,7 @@ export class ViewPage implements OnInit{
     this.obj = this.navParams.get("obj");
 
     console.log(this.obj.email);
-    console.log(this.obj.uid);
+    console.log(this.obj.name1);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -79,17 +84,30 @@ export class ViewPage implements OnInit{
     this.uid = this.obj.uid;
     this.currentUserId =firebase.auth().currentUser.uid
 
+    this.currentUserId =firebase.auth().currentUser.uid
   this.Retrivecomments();
+<<<<<<< HEAD
   console.log('this is the current user ' +this.currentUserId);
   
 
 
+=======
+
+
+  this.art.returnUID().then((data)=>{
+    this.tempName =data[0].name;
+    this.tempdownloadurl = data[0].downloadurl;
+    console.log(this.tempName);
+    //  console.log(this.tempdownloadurl);
+    this.ifOrderYes();
+  })
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   }
 
  
-  ionViewDidEnter() {
-  this.Retrivecomments();
-  }
+  // ionViewDidEnter() {
+  // this.Retrivecomments();
+  // }
   ngOnInit() {
     this.art.returnUID().then((data)=>{
       // this.userId = data[0].userId.uid;
@@ -97,8 +115,12 @@ export class ViewPage implements OnInit{
       this.tempdownloadurl = data[0].downloadurl;
       // console.log(this.tempName);
       //  console.log(this.tempdownloadurl);
+<<<<<<< HEAD
       console.log(this.currentUserId);
       this.ifOrderYes()
+=======
+      this.ifOrderYes();
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
     })
   }
 
@@ -108,7 +130,9 @@ export class ViewPage implements OnInit{
 
   }, 3000);
   }
+  ifOrderYes(){
 
+<<<<<<< HEAD
   ifOrderYes(){
     // console.log(this.currentUserId);
     // console.log('===================');
@@ -122,6 +146,14 @@ export class ViewPage implements OnInit{
     
   }
 
+=======
+      if(this.currentUserId == this.uid){
+        let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
+        btnOrder[0].style.display = "none";
+      }
+     
+  }
+>>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   scroll(event){
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
