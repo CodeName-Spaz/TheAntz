@@ -10,6 +10,7 @@ import { LoadingController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
+import { ChatsPage } from '../chats/chats';
 
 
 /**
@@ -60,7 +61,7 @@ export class CategoryPage {
         console.log('empty')
       }
       else if (this.category == 'All') {
-        // this.categoryArr.length = 0;
+        this.categoryArr.length = 0;
         this.art.viewPicMain(this.name, this.username).then((data: any) => {
           this.categoryArr = [];
           this.categoryArr = data;
@@ -107,7 +108,7 @@ export class CategoryPage {
       this.categoryArr.reverse();
     });
   }
-  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
+  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {
     let obj = {
       name: name,
       pic: pic,
@@ -121,11 +122,13 @@ export class CategoryPage {
       price: price,
       likes: likes,
       name1: name1,
-      uid:uid,
+      uid: uid,
     }
     this.navCtrl.push(ViewPage, { obj: obj });
 
   }
-
+  chats() {
+    this.navCtrl.push(ChatsPage)
+  }
 
 }

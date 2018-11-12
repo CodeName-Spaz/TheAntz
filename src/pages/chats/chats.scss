@@ -1,0 +1,23 @@
+page-chats {
+    .scrollContent{
+        padding-top: 50%;
+        transform: translateY(-25%);
+        text-align: center;
+    }
+    .body{
+        background: whitesmoke;
+    }
+    .client{
+        box-shadow: 0 5px 5px rgba(1, 17, 39, 0.24);
+        border-radius: 10px;
+    }
+    .secondary{
+        background: linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0));
+        background-size: 100%;
+        width: 100vw;
+        margin-left: -10px;
+    }
+    .caps{
+        text-transform: capitalize;
+    }
+}
