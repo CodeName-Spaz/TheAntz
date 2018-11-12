@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, style } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
@@ -64,7 +64,7 @@ export class ViewPage implements OnInit{
     this.obj = this.navParams.get("obj");
 
     console.log(this.obj.email);
-    console.log(this.obj.uid);
+    console.log(this.obj.name1);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -81,12 +81,21 @@ export class ViewPage implements OnInit{
 
     this.currentUserId =firebase.auth().currentUser.uid
   this.Retrivecomments();
+
+
+  this.art.returnUID().then((data)=>{
+    this.tempName =data[0].name;
+    this.tempdownloadurl = data[0].downloadurl;
+    console.log(this.tempName);
+    //  console.log(this.tempdownloadurl);
+    this.ifOrderYes();
+  })
   }
 
  
-  ionViewDidEnter() {
-  this.Retrivecomments();
-  }
+  // ionViewDidEnter() {
+  // this.Retrivecomments();
+  // }
   ngOnInit() {
     this.art.returnUID().then((data)=>{
       this.tempName =data[0].name;
@@ -103,16 +112,12 @@ export class ViewPage implements OnInit{
   }, 3000);
   }
   ifOrderYes(){
-    // console.log(this.currentUserId);
-    // console.log('===================');
-  
-    // console.log(this.uid);
-    if(this.currentUserId == this.uid){
-      let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
-      btnOrder[0].style.display = "none";
-    }
-  
-  
+
+      if(this.currentUserId == this.uid){
+        let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
+        btnOrder[0].style.display = "none";
+      }
+     
   }
   scroll(event){
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;

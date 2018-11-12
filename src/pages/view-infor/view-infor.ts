@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import { EmailComposer } from '@ionic-native/email-composer';
 /**
  * Generated class for the ViewInforPage page.
  *
@@ -23,7 +23,7 @@ export class ViewInforPage {
   tempdownloadurl;
   list = [];
   obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private emailComposer: EmailComposer) {
     this.obj = this.navParams.get("obj");
 
     console.log(this.obj.tempName);
@@ -40,6 +40,20 @@ export class ViewInforPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewInforPage');
+  }
+  repond(){
+    let email = {
+      to: this.obj.email,
+      cc: '',
+      bcc: ['john@doe.com', 'jane@doe.com'],
+      attachments: [
+       
+      ],
+      subject: 'Cordova Icons',
+      body: 'Greetings'+ this.obj.tempName + 'i have received ur request',
+      isHtml: true
+    };
+    this.emailComposer.open(email);
   }
 
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { OrderModalPage } from '../order-modal/order-modal';
 import { ViewInforPage } from '../view-infor/view-infor';
+import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 /**
  * Generated class for the ChatsPage page.
  *
@@ -16,6 +17,7 @@ import { ViewInforPage } from '../view-infor/view-infor';
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
+  private buttonColor: string = "primary"
   username;
   downloadurl;
   keys2;
@@ -36,8 +38,9 @@ export class ChatsPage {
   key;
   list = [];
   retriveCustomerDetails = [];
+  xxx ;
   // obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
     // this.obj = this.navParams.get("obj");
     // console.log(this.obj)
 
@@ -68,29 +71,35 @@ export class ChatsPage {
     firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
       this.retriveCustomerDetails.length =0;
       let infor = data.val();
-      let keys = Object.keys(infor);
-      for (var i = 0; i < keys.length; i++) {
-        firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
-      
-          let inforKey = data2.val();
-          let keys2 = Object.keys(inforKey);
-          // for(var i =0; i< keys.length;i++){
-          var k = keys2[i];
-          let obj = {
-            tempName: inforKey[k].tempName,
-            tempdownloadurl: inforKey[k].tempdownloadurl,
-            name1: inforKey[k].name1,
-            price: infor[k].price,
-            email: infor[k].email,
-            downloadurl: inforKey[k].downloadurl,
-            message: inforKey[k].message
-          }
-          this.retriveCustomerDetails.push(obj)
-          console.log(this.retriveCustomerDetails);
-          // }
-        })
-      }
+      if(data.val() !=null || data.val() !=undefined){
+        let keys = Object.keys(infor);
+        for (var i = 0; i < keys.length; i++) {
+          firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+        
+            let inforKey = data2.val();
+            let keys2 = Object.keys(inforKey);
+            // for(var i =0; i< keys.length;i++){
+            var k = keys2[i];
+            let obj = {
+              tempName: inforKey[k].tempName,
+              tempdownloadurl: inforKey[k].tempdownloadurl,
+              name1: inforKey[k].name1,
+              price: infor[k].price,
+              email: infor[k].email,
+              downloadurl: inforKey[k].downloadurl,
+              message: inforKey[k].message,
+              messageRead:infor[k].messageRead,
+              key:k
 
+            }
+            this.retriveCustomerDetails.push(obj)
+            console.log(this.retriveCustomerDetails);
+
+            
+            // }
+          })
+        }
+      }
     })
   }
 
@@ -101,7 +110,8 @@ export class ChatsPage {
     console.log(event);
 
   }
-  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message) {
+
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message,key) {
     let obj = {
       downloadurl: downloadurl,
       tempName: tempName,
@@ -109,11 +119,16 @@ export class ChatsPage {
       price: price,
       name1: name1,
       email: email,
-      message: message
+      message: message,
+      key:key
     }
 
     this.navCtrl.push(ViewInforPage, { obj: obj });
 
-
+    
+    // document.getElementById("chats").style.backgroundColor="blue"
+  
   }
+
+
 }
