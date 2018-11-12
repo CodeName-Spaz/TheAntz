@@ -115,6 +115,7 @@ export class StreetartzProvider {
         resolve();
         loading.dismiss();
       }).catch((error) => {
+        
         const alert = this.alertCtrl.create({
           subTitle: error.message,
           buttons: [

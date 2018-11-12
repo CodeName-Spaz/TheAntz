@@ -3,8 +3,8 @@
     <div class="head">
       <ion-item class="CatBar" color="secondary">
         <ion-label>Select</ion-label>
-        <ion-select class="animation" [(ngModel)]="category"  (ionChange)="typeOfArt()">
-          <ion-option value="All">All</ion-option>
+        <ion-select class="animation" [(ngModel)]="category" interface="popover" (ionChange)="typeOfArt()">
+          <ion-option value="All" (ionSelect)="retreivePics()">All</ion-option>
           <ion-option value="Photography">Photography</ion-option>
           <ion-option value="Sculpting">Sculpting</ion-option>
           <ion-option value="Painting">Painting</ion-option>
@@ -21,7 +21,7 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content class="card-background-page" on-scroll="getScrollPosition()">
+<ion-content (click)="content($event)" class="card-background-page" on-scroll="getScrollPosition()">
   <ion-fab bottom right>
     <button ion-fab mini icon-only (click)="chats()">
       <ion-icon ios="ios-chatbubbles" md="md-chatbubbles"></ion-icon>

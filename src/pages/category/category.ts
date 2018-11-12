@@ -55,20 +55,31 @@ export class CategoryPage {
   //   this.retreivePics();
   //   }
 
+  Reset(){
+    
+  }
+  hasCancelled(){
+    console.log('has cancelled');
+    
+  }
+  content(event){
+    console.log(event.buttons);
+    
+  }
   typeOfArt() {
     this.art.selectCategory(this.category).then((data) => {
       if (data == undefined || data == null) {
         console.log('empty')
       }
-      else if (this.category == 'All') {
-        // this.categoryArr.length = 0;
-        this.art.viewPicMain(this.name, this.username).then((data: any) => {
-          this.categoryArr = [];
-          this.categoryArr = data;
-          this.navCtrl.setRoot(this.navCtrl.getActive().component);
-          this.categoryArr.reverse();
-        });
-      }
+      // else if (this.category == 'All') {
+      //   // this.categoryArr.length = 0;
+      //   this.art.viewPicMain(this.name, this.username).then((data: any) => {
+      //     this.categoryArr = [];
+      //     this.categoryArr = data;
+      //     this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      //     this.categoryArr.reverse();
+      //   });
+      // }
       else {
         this.categoryArr.length = 0;
         this.categoryArr = [];
