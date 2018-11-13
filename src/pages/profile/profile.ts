@@ -77,6 +77,7 @@ export class ProfilePage {
       }
       else {
         var keys: any = Object.keys(data);
+        console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           if (this.uid == data[k].uid) {
@@ -109,6 +110,7 @@ export class ProfilePage {
     this.getUid1();
     this.art.viewPicGallery1().then(data => {
       var keys: any = Object.keys(data);
+     
       for (var i = 0; i < keys.length; i++) {
         var k = keys[i];
         if (this.uid == data[k].uid) {

@@ -80,28 +80,27 @@ export class ViewPage implements OnInit{
     this.uid = this.obj.uid
 
     this.currentUserId =firebase.auth().currentUser.uid
-  this.Retrivecomments();
 
+  this.Retrivecomments();
+  console.log(this.currentUserId);
+  console.log(this.uid);
+  console.log(this.obj.uid)
 
   this.art.returnUID().then((data)=>{
     this.tempName =data[0].name;
     this.tempdownloadurl = data[0].downloadurl;
     console.log(this.tempName);
-    //  console.log(this.tempdownloadurl);
     this.ifOrderYes();
   })
   }
 
  
-  // ionViewDidEnter() {
-  // this.Retrivecomments();
-  // }
+
   ngOnInit() {
     this.art.returnUID().then((data)=>{
       this.tempName =data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       console.log(this.tempName);
-      //  console.log(this.tempdownloadurl);
       this.ifOrderYes();
     })
   }
@@ -155,7 +154,7 @@ export class ViewPage implements OnInit{
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   
-    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
+    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid,currentUserId) {
       let obj = {
         name: name,
         pic: pic,
@@ -170,6 +169,7 @@ export class ViewPage implements OnInit{
         likes: likes,
         name1: name1,
         uid:uid,
+        currentUserId:currentUserId
       }
       this.navCtrl.push(OrderModalPage, { obj: obj });
 

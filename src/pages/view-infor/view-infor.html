@@ -14,9 +14,6 @@
 
 
 <ion-content padding>
-        <ion-fab right bottom>
-          <button ion-fab mini (click)="repond()"><ion-icon ios="ios-undo" md="md-undo"></ion-icon></button>
-        </ion-fab>
     <ion-card>
         <ion-item>
           <ion-avatar item-start>
@@ -32,11 +29,29 @@
       
         <ion-card-content>
           <br><br>
-          <p>{{message}}
+          <p>
             <br>
             {{email}}</p>
   
             <p>reference Number : {{name1}}</p>
         </ion-card-content>
       </ion-card>
+      <ion-list *ngFor="let a of arrMsg">
+        <p>{{a.message}}</p>
+        <p>{{a.time}}</p>
+      </ion-list>
 </ion-content>
+<ion-footer no-padding>
+    <ion-toolbar>
+      <ion-row>
+        <ion-col col-10>
+          <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
+        </ion-col>
+        <ion-col col-2 class="centerIt">
+          <button ion-button class="sendBtn" item-end icon-only large (click)="send()">
+            <ion-icon name="send"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>

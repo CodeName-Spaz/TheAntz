@@ -37,8 +37,6 @@ export class CategoryPage {
   userId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
     this.retreivePics();
-
-
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
@@ -95,10 +93,10 @@ export class CategoryPage {
       }
       if (this.category == "All") {
         this.art.viewPicMain().then((data: any) => {
-        var keys: any = Object.keys(data);
-        console.log(keys);
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
+          var keys: any = Object.keys(data);
+          console.log(keys);
+          for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
             let obj = {
               category: data[k].category,
               downloadurl: data[k].downloadurl,
@@ -123,11 +121,33 @@ export class CategoryPage {
     })
   }
   retreivePics() {
-    this.art.viewPicMain().then((data: any) => {
-      this.categoryArr = data;
-      this.categoryArr.reverse();
-      
-    });
+    this.art.viewPicMain().then((data:any) => {
+      // let keys:any = Object.keys(data);
+      // console.log(keys);
+      // for (var i = 0; i < keys.length; i++) {
+      //   let k = keys[i];
+      //   console.log(k);
+      //   let obj = {
+      //     category: data[k].category,
+      //     downloadurl: data[k].downloadurl,
+      //     name: data[k].name,
+      //     key: k,
+      //     url: data[k].url,
+      //     uid: data[k].uid,
+      //     comments: data[k].comments,
+      //     username: data[k].username,
+      //     likes: data[k].likes,
+      //     email: data[k].email,
+      //     location: data[k].location,
+      //     price: data[k].price,
+      //   }
+      //   console.log(this.obj);
+      //   this.categoryArr.push(obj);
+      //   console.log(this.categoryArr);
+      //   this.categoryArr.reverse();
+      // }
+this.categoryArr = data;
+    })
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {
     let obj = {
