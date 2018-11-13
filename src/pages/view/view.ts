@@ -78,20 +78,19 @@ export class ViewPage implements OnInit{
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
-    this.uid = this.obj.uid;
-    this.currentUserId =firebase.auth().currentUser.uid
+    this.uid = this.obj.uid
+    this.currentUserId =this.obj.currentUserId;
+
 
     this.currentUserId =firebase.auth().currentUser.uid
 
   this.Retrivecomments();
   console.log(this.currentUserId);
-  console.log(this.uid);
   console.log(this.obj.uid)
 
   this.art.returnUID().then((data)=>{
     this.tempName =data[0].name;
     this.tempdownloadurl = data[0].downloadurl;
-    console.log(this.tempName);
     this.ifOrderYes();
   })
   }
@@ -115,7 +114,6 @@ export class ViewPage implements OnInit{
   }, 3000);
   }
   ifOrderYes(){
-
       if(this.currentUserId == this.uid){
         let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
         btnOrder[0].style.display = "none";

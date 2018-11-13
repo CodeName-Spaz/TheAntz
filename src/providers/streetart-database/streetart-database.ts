@@ -686,30 +686,13 @@ export class StreetartzProvider {
       firebase.database().ref("profiles/" + user.uid).on('value', (data: any) => {
         let details = data.val();
         var keys = Object.keys(details);
-        let obj = {
-          name: name
-        }
-        this.returnCurrentUser.push(details);
-        console.log(this.returnCurrentUser);
-        accpt(this.returnCurrentUser)
-
-      })
+          this.returnCurrentUser.push(details);
+          console.log(this.returnCurrentUser);
+          accpt(this.returnCurrentUser)
+        })     
     })
   }
 
-
-
-  //   readMessage(message, key){
-  //     return new Promise((accpt, rej) => {
-  //       let user = firebase.auth().currentUser;
-  //     firebase.database().ref('OrdersMessage/' +key).push({
-  //       message:message
-
-  //     })
-  //     accpt(message);
-  //   })
-
-  // }
   getinfor() {
     return new Promise((accpt, rej) => {
       var currentUser = firebase.auth().currentUser.uid;
@@ -760,6 +743,10 @@ export class StreetartzProvider {
       console.log("message user id");
       console.log(currentUser)
       console.log(artkey)
+
+      alert("client id " + artkey);
+      alert("art id "+ currentUser);
+
       firebase.database().ref('messages/' + artkey).child(currentUser).push({
         message: message,
         uid: currentUser,
@@ -769,16 +756,20 @@ export class StreetartzProvider {
     })
   }
   retrieveChats(currentUser, artkey, message) {
-    // this.arrMssg.length =0;
     return new Promise((accpt, rej) => {
+      // this.arrMssg.length = 0;
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
+        // this.arrMssg.length = 0;
         let infor1 = data.val();
-        let keys = Object.keys(infor1);
+        if(data.val() != null || data.val() !=undefined){
+          let keys = Object.keys(infor1);
+        }
         firebase.database().ref('messages/' + artkey).child(currentUser).on('value', data2 => {
+          // this.arrMssg.length = 0;
           let infor2 = data2.val();
-          if(data2.val() != null || data2.val() !=undefined){
-            this.arrMssg.length =0;
+          if (data2.val() != null || data2.val() != undefined) {
+            // this.arrMssg.length =0;
             let keys2 = Object.keys(infor2);
             for (var i = 0; i < keys2.length; i++) {
               let k = keys2[i]
@@ -792,9 +783,10 @@ export class StreetartzProvider {
             }
           }
 
-          firebase.database().ref('messages/' + artkey).child(artkey).on('value', data3 => {
+          firebase.database().ref('messages/' + currentUser).child(artkey).on('value', data3 => {
+            // this.arrMssg.length = 0;
             let infor3 = data3.val();
-            if(data3.val() != null || data3.val() !=undefined){
+            if (data3.val() != null || data3.val() != undefined) {
               // this.arrMssg.length =0;
               let keys3 = Object.keys(infor3);
               for (var i = 0; i < keys3.length; i++) {
@@ -813,6 +805,6 @@ export class StreetartzProvider {
       })
       accpt(this.arrMssg);
     })
-   
+
   }
 }
