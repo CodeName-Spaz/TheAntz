@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { OrderPage } from '../order/order';
-
-=======
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { OrderModalPage } from '../order-modal/order-modal';
 import { ViewInforPage } from '../view-infor/view-infor';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 /**
  * Generated class for the ChatsPage page.
  *
@@ -23,26 +17,6 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
   templateUrl: 'chats.html',
 })
 export class ChatsPage {
-<<<<<<< HEAD
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController) {
-  }
-
-  ionViewDidLoad() {
-    console.log('this is the portal used by the artist to check his/her orders');
-  }
-  scroll(event){
-    console.log(event);
-    
-  }
-  showDetails(){
- this.navCtrl.push(OrderPage)
-  
-    
-  }
-  goBack(){
-    this.navCtrl.pop();
-=======
   private buttonColor: string = "primary"
   username;
   downloadurl;
@@ -154,7 +128,6 @@ export class ChatsPage {
     
     // document.getElementById("chats").style.backgroundColor="blue"
   
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   }
 
 

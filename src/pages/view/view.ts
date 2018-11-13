@@ -4,11 +4,8 @@ import { obj } from '../../app/class';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { EmailComposer } from '@ionic-native/email-composer';
 import { CategoryPage } from '../category/category';
-<<<<<<< HEAD
 import { OrderPage } from '../order/order';
-=======
 import { OrderModalPage } from '../order-modal/order-modal';
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
 import firebase from 'firebase';
 
 
@@ -86,12 +83,6 @@ export class ViewPage implements OnInit{
 
     this.currentUserId =firebase.auth().currentUser.uid
   this.Retrivecomments();
-<<<<<<< HEAD
-  console.log('this is the current user ' +this.currentUserId);
-  
-
-
-=======
 
 
   this.art.returnUID().then((data)=>{
@@ -101,7 +92,6 @@ export class ViewPage implements OnInit{
     //  console.log(this.tempdownloadurl);
     this.ifOrderYes();
   })
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   }
 
  
@@ -115,12 +105,7 @@ export class ViewPage implements OnInit{
       this.tempdownloadurl = data[0].downloadurl;
       // console.log(this.tempName);
       //  console.log(this.tempdownloadurl);
-<<<<<<< HEAD
-      console.log(this.currentUserId);
-      this.ifOrderYes()
-=======
       this.ifOrderYes();
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
     })
   }
 
@@ -132,28 +117,12 @@ export class ViewPage implements OnInit{
   }
   ifOrderYes(){
 
-<<<<<<< HEAD
-  ifOrderYes(){
-    // console.log(this.currentUserId);
-    // console.log('===================');
-    
-    // console.log(this.uid);
-    if(this.currentUserId == this.uid){
-      let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
-      btnOrder[0].style.display = "none";
-    }
-    
-    
-  }
-
-=======
       if(this.currentUserId == this.uid){
         let btnOrder = document.getElementsByClassName('theStatements') as HTMLCollectionOf <HTMLElement>
         btnOrder[0].style.display = "none";
       }
      
   }
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
   scroll(event){
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
       let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
@@ -162,7 +131,9 @@ export class ViewPage implements OnInit{
       var toolbar = document.getElementsByClassName('secondary') as HTMLCollectionOf<HTMLElement>;
       if(event.scrollTop>60 && event.directionY == "down"){
         backBTN[0].style.transform = "translateY(-100%)";
-        backBTN[0].style.transition = 0.5 + "s";      
+        backBTN[0].style.transition = 0.5 + "s";   
+        // toolbar[0].style.background = "linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0))"
+   
       }
       else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
@@ -174,7 +145,7 @@ export class ViewPage implements OnInit{
         toolbar[0].style.backgroundColor = "rgb(1,17,39)";
         toolbar[0].style.transition = 700 +"ms";
       }
-      else if (event.scrollTop < 10){
+      else if (event.scrollTop < 2){
         toolbar[0].style.background = "linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0))"
        
       }

@@ -44,7 +44,6 @@ export class StreetartzProvider {
   DisplayArrUploads = []
   removepic = [];
   returnCurrentUser = [];
-  retriveCustomerDetails =[];
   constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello StreetartzProvider Provider');
   }
@@ -74,7 +73,7 @@ export class StreetartzProvider {
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
         content: 'Sign in....',
-        duration: 4000000
+        duration: 4000
       });
       loading.present();
       return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
@@ -87,9 +86,7 @@ export class StreetartzProvider {
           bio: "You have not yet inserted a description about your skills and abilities, update profile to get started.",
         })
         resolve();
-        loading.dismiss();
       }).catch((error) => {
-        loading.dismiss();
         const alert = this.alertCtrl.create({
           subTitle: error.message,
           buttons: [
@@ -107,19 +104,17 @@ export class StreetartzProvider {
     })
   }
   login(email, password) {
-    let loading = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'Sign In....',
-      duration: 4000000
-    });
-    loading.present();
     return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'Sign In....',
+        duration: 4000000
+      });
+      loading.present();
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
         loading.dismiss();
       }).catch((error) => {
-<<<<<<< HEAD
-        
         const alert = this.alertCtrl.create({
           subTitle: error.message,
           buttons: [
@@ -127,43 +122,13 @@ export class StreetartzProvider {
               text: 'ok',
               handler: data => {
                 console.log('Cancel');
-=======
-        loading.dismiss();
-        if (error.message == "There is no user record corresponding to this identifier. The user may have been deleted.") {
-          const alert = this.alertCtrl.create({
-            subTitle: "It seems like you have not registered to use StreetArt, please check your login information or sign up to get started",
-            buttons: [
-              {
-                text: 'ok',
-                handler: data => {
-                  console.log('Cancel');
-                }
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
               }
-            ]
-          });
-          alert.present();
-        }
-        else {
-          const alert = this.alertCtrl.create({
-
-
-            subTitle: error.message,
-            buttons: [
-              {
-                text: 'ok',
-                handler: data => {
-                  console.log('Cancel');
-                }
-              }
-            ]
-          });
-          alert.present();
-        }
-
+            }
+          ]
+        });
+        alert.present();
       })
     })
-
   }
   retrieve() {
     let userID = firebase.auth().currentUser;
@@ -228,15 +193,14 @@ export class StreetartzProvider {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait',
-      duration: 7000
+      duration: 3000
     });
     const toast = this.toastCtrl.create({
       message: 'your imagine had been uploaded!',
       duration: 3000
     });
-    loading.present();
     return new Promise((accpt, rejc) => {
-      
+      loading.present();
       firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
         toast.present();
         accpt(name);
@@ -282,6 +246,7 @@ export class StreetartzProvider {
         }
         for (var i = 0; i < keys.length; i++) {
           this.storeImgDownloadurl(DisplayData[keys[i]].downloadurl);
+          // console.log(DisplayData[keys[i]].downloadurl);
         }
         accpt(DisplayData);
       }, Error => {
@@ -376,14 +341,14 @@ export class StreetartzProvider {
     this.url = url;
     // console.log(url);
   }
-  storeImgDownloadurl(downloadurl) {
-    this.downloadurl = downloadurl;
+  storeImgDownloadurl(downloadurl){
+    this.downloadurl =downloadurl;
     // console.log(downloadurl);
   }
   storeName(name) {
     this.obj.name = name;
   }
-
+ 
   selectCategory(category) {
     return new Promise((pass, fail) => {
       firebase.database().ref("uploads").on('value', (data: any) => {
@@ -409,15 +374,13 @@ export class StreetartzProvider {
                 username: "",
                 email: uploads[k].email
               }
-                this.selectCategoryArr.push(obj);
-                console.log(this.selectCategoryArr);
-                this.viewProfileMain(chckId).then((profileData: any) => {
+              this.selectCategoryArr.push(obj);
+              this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
                 obj.email = profileData.email
               });
             }
-       
             if (uploads[k].category == undefined || uploads[k].category == null) {
               console.log('nex');
             }
@@ -493,56 +456,54 @@ export class StreetartzProvider {
       })
     })
   }
-  viewPicMain() {
-    let loader = this.loadingCtrl.create({
-      spinner: 'bubbles',
-      content: 'Loading...',
-      duration: 4000000000000000000
-    });
-    loader.present();
+  viewPicMain(name, username) {
     return new Promise((accpt, rejc) => {
-      firebase.database().ref("uploads").on("value", (data) => {
-        let uploads2 = data.val();
-        if (uploads2 == null || uploads2 == undefined && this.DisplayArrUploads.length == null || this.arr2 == undefined) {
+      firebase.database().ref("uploads").on("value", (data: any) => {
+        var data = data.val();
+        if (data == null || data == undefined && this.DisplayArrUploads == null || this.arr2 == undefined) {
           this.DisplayArrUploads = null;
         }
         else {
           this.DisplayArrUploads.length = 0;
-            var keys1: any = Object.keys(uploads2);
-            console.log(keys1)
+          var keys1: any = Object.keys(data);
+          for (var i = 0; i < keys1.length; i++) {
+            var keys1: any = Object.keys(data);
             for (var i = 0; i < keys1.length; i++) {
-              let k = keys1[i];
-              let chckId = uploads2[k].uid;
+              var keys1: any = Object.keys(data);
+              var k = keys1[i];
+              var chckId = data[k].uid;
               let obj = {
-                uid: uploads2[k].uid,
-                category: uploads2[k].category,
-                comments: uploads2[k].comments,
-                downloadurl: uploads2[k].downloadurl,
-                description: uploads2[k].description,
-                location: uploads2[k].location,
-                price: uploads2[k].price,
-                likes: uploads2[k].likes,
-                name: uploads2[k].name,
-                name1: uploads2[k].name1,
+                uid: data[k].uid,
+                category: data[k].category,
+                comments: data[k].comments,
+                downloadurl: data[k].downloadurl,
+                description: data[k].description,
+                location: data[k].location,
+                price: data[k].price,
+                likes: data[k].likes,
+                name: data[k].name,
+                name1: data[k].name1,
                 username: "",
                 email: "",
                 key: k,
                 url: this.url,
               }
-                this.DisplayArrUploads.push(obj);
-                this.viewProfileMain(chckId).then((profileData: any) => {
+              this.DisplayArrUploads.push(obj);
+              this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.email = profileData.email
                 obj.url = profileData.downloadurl
               });
-             
-              this.storeImgur(uploads2[keys1[0]].downloadurl);
+              accpt(this.DisplayArrUploads);
+              this.storeImgur(data[keys1[0]].downloadurl);
               console.log(this.DisplayArrUploads);
+            }
           }
-        }    
-      }),accpt(this.DisplayArrUploads); 
+        }
+      }, Error => {
+        rejc(Error.message)
+      })
     })
-   
   }
   viewProfileMain(userid: string) {
     return new Promise((accpt, rejc) => {
@@ -703,58 +664,5 @@ export class StreetartzProvider {
       })
     })
   }
-
-
-
-//   readMessage(message, key){
-//     return new Promise((accpt, rej) => {
-//       let user = firebase.auth().currentUser;
-//     firebase.database().ref('OrdersMessage/' +key).push({
-//       message:message
-
-//     })
-//     accpt(message);
-//   })
-
-// }
-getinfor(){
-  return new Promise((accpt, rej) => {
-  var currentUser = firebase.auth().currentUser.uid;
-  console.log(currentUser);
-  firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
-    // this.retriveCustomerDetails.length =0;
-    let infor = data.val();
-    if(data.val() !=null || data.val() !=undefined){
-      let keys = Object.keys(infor);
-      for (var i = 0; i < keys.length; i++) {
-        firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
-      
-          let inforKey = data2.val();
-          let keys2 = Object.keys(inforKey);
-          // for(var i =0; i< keys.length;i++){
-          var k = keys2[i];
-          let obj = {
-            tempName: inforKey[k].tempName,
-            tempdownloadurl: inforKey[k].tempdownloadurl,
-            name1: inforKey[k].name1,
-            price: infor[k].price,
-            email: infor[k].email,
-            downloadurl: inforKey[k].downloadurl,
-            message: inforKey[k].message,
-            key:k
-  
-          }
-          this.retriveCustomerDetails.push(obj)
-          console.log(this.retriveCustomerDetails);
-          // }
-        })
-      }
-    }
-    accpt(this.retriveCustomerDetails);
-  })
-
-  })
-
-}
 
 }

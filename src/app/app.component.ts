@@ -15,6 +15,7 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { viewParentEl } from '@angular/core/src/view/util';
 
 import { UploadImagePage } from '../pages/upload-image/upload-image';
+import { OrderPage } from '../pages/order/order';
 
 
 @Component({

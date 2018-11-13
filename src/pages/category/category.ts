@@ -11,6 +11,7 @@ import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
 import { ChatsPage } from '../chats/chats';
+import { OrderPage } from '../order/order';
 
 
 /**
@@ -37,23 +38,17 @@ export class CategoryPage {
   userId;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
     this.retreivePics();
-
-
+    firebase.database().ref("uploads").on('value', (data: any) => {
+      this.categoryArr.length = 0
+      let details = data.val();
+      this.categoryArr.push(details);
+      console.log(this.categoryArr);
+    })
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-  // ionViewDidLoad() {
-  //   this.art.viewPicMain().then((data:any) => {
-  //     this.categoryArr = data;
-  //     this.categoryArr.reverse();
-  //   })
-  // }
   // ngAfterViewInit() {
-  //   this.retreivePics();
-  // }
-
-  // ngOnInit() {
   //   this.retreivePics();
   // }
 
@@ -77,22 +72,19 @@ export class CategoryPage {
       if (data == undefined || data == null) {
         console.log('empty')
       }
-<<<<<<< HEAD
-      // else if (this.category == 'All') {
-      //   // this.categoryArr.length = 0;
-      //   this.art.viewPicMain(this.name, this.username).then((data: any) => {
-      //     this.categoryArr = [];
-      //     this.categoryArr = data;
-      //     this.navCtrl.setRoot(this.navCtrl.getActive().component);
-      //     this.categoryArr.reverse();
-      //   });
-      // }
-=======
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
+      else if (this.category == 'All') {
+        // this.categoryArr.length = 0;
+        this.art.viewPicMain(this.name, this.username).then((data: any) => {
+          this.categoryArr = [];
+          this.categoryArr = data;
+          this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          this.categoryArr.reverse();
+        });
+      }
       else {
         this.categoryArr.length = 0;
+        this.categoryArr = [];
         var keys: any = Object.keys(data);
-        console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           if (this.category == data[k].category) {
@@ -111,48 +103,24 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
-            console.log(this.categoryArr);
-            this.categoryArr.reverse();
+            console.log(data[k].uid)
+
           }
         }
       }
-      if (this.category == "All") {
-        this.art.viewPicMain().then((data: any) => {
-        var keys: any = Object.keys(data);
-        console.log(keys);
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
-            let obj = {
-              category: data[k].category,
-              downloadurl: data[k].downloadurl,
-              name: data[k].name,
-              key: k,
-              url: data[k].url,
-              uid: data[k].uid,
-              comments: data[k].comments,
-              username: data[k].username,
-              likes: data[k].likes,
-              email: data[k].email,
-              location: data[k].location,
-              price: data[k].price,
-            }
-            this.categoryArr.push(obj);
-            console.log(this.categoryArr);
-            this.categoryArr.reverse();
-          }
-          this.categoryArr = data;
-        })
-      }
+
     })
+
   }
   retreivePics() {
-    this.art.viewPicMain().then((data: any) => {
+    this.categoryArr.length = 0;
+    this.art.viewPicMain(this.name, this.username).then((data: any) => {
+      this.categoryArr = [];
       this.categoryArr = data;
       this.categoryArr.reverse();
-      
     });
   }
-  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {
+  pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
     let obj = {
       name: name,
       pic: pic,
@@ -166,20 +134,17 @@ export class CategoryPage {
       price: price,
       likes: likes,
       name1: name1,
-      uid: uid,
+      uid:uid,
     }
     this.navCtrl.push(ViewPage, { obj: obj });
 
   }
-<<<<<<< HEAD
   chats(){
-    this.navCtrl.push(ChatsPage)
+    this.navCtrl.push(OrderPage)
 }
-
-=======
-  chats() {
-    this.navCtrl.push(ChatsPage)
-  }
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
+readyStuff(){
+  console.log('ready stuff');
+  
+}
 
 }

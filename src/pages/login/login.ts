@@ -65,12 +65,8 @@ export class LoginPage {
       alert.present();
     }
     else {
- 
       this.art.login(this.email, this.password).then(() => {
-<<<<<<< HEAD
-=======
-        // this.presentLoading1();
->>>>>>> a44a7194bfb63fb7d0c14bfd35a387c6fe62545d
+        this.presentLoading1();
         this.navCtrl.setRoot(CategoryPage);
       }, (error) => {
         console.log(error.message);
@@ -78,7 +74,11 @@ export class LoginPage {
     }
   }
   presentLoading1() {
-
+    const loader = this.loadingCtrl.create({
+      content: "loading....",
+      duration: 7000
+    });
+    loader.present();
   }
   forgotpassword() {
     this.navCtrl.push(ForgotPasswordPage)

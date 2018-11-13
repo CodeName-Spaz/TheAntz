@@ -7,87 +7,77 @@
 </ion-header>
 
 
-<ion-content>
- 
-  <!-- <div class="message"> -->
-    <!-- use ngFor to loop all sent messages -->
-    <!-- <div class="theImage">
-        <img class="watermark" src="../../assets/imgs/Watermark/WaterMark.png" alt="">
-        <img class="postedIMG" (load)="scan($event)" src="{{downloadurl}}" />
-      </div>
-    <ion-card>
-      <ion-card-content>
-        <ion-card-title>
-          Nine Inch Nails Live
-        </ion-card-title>
-        <p>
-          {{message}}
+<ion-content class="body">
+  <div padding>
+    <div class="seperator"></div>
+    <!-- <div class="empty">
+    There are no new messages
+  </div> -->
+
+      <div class="received">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem quaerat perspiciatis provident delectus
+          cum. Enim modi similique, dolore sit porro temporibus, soluta cumque dolorum ratione doloribus corporis vitae optio
+          saepe?
         </p>
-      </ion-card-content>
-    </ion-card>
+
+        <p class="time">just now</p>
+      </div>
+      <br>
+      <div class="sent">
+        <div class="padder">
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem quaerat perspiciatis provident delectus
+            cum.
+          </p>
+          <p class="time">just now</p>
+        </div>
+      </div>
+      <br>
+      <div class="sent">
+        <ion-item no-lines class="dat" no-padding>
+          <ion-thumbnail item-start>
+            <img src="../../assets/default.jpg">
+          </ion-thumbnail>
+          <h2>Fly On The Wall</h2>
+          <p class="client">R900</p>
+        </ion-item>
+        <div class="padder">
+          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Exercitationem quaerat perspiciatis provident delectus
+            cum.
+          </p>
+          <p class="time">just now</p>
+
+        </div>
+
+      </div>
+
+
   </div>
-  <br> -->
 
-  <ion-card>
 
-      <ion-item>
-        <ion-avatar item-start>
-          <img src="{{tempdownloadurl}}">
-        </ion-avatar>
-        <h2 class="client">{{tempName}}</h2>
-        <p>November 5, 1955</p>
-      </ion-item>
-    
-      <img src="{{downloadurl}}">
-    
-      <ion-card-content>
-        <p>{{message}}</p>
-      </ion-card-content>
-    
-      <ion-row>
-        <ion-col>
-          <button ion-button icon-start clear small>
-            <ion-icon name="thumbs-up"></ion-icon>
-            <div>12 Likes</div>
-          </button>
-        </ion-col>
-        <ion-col>
-          <button ion-button icon-start clear small>
-            <ion-icon name="text"></ion-icon>
-            <div>4 Comments</div>
-          </button>
-        </ion-col>
-        <ion-col center text-center>
-          <ion-note>
-            11h ago
-          </ion-note>
-        </ion-col>
-      </ion-row>
-    
-    </ion-card>
+
 
 </ion-content>
 <ion-footer no-padding>
-    <ion-toolbar>
-      <div class="data">
-          <ion-item class="data">
-              <ion-thumbnail item-start>
-                <img src="{{downloadurl}}">
-              </ion-thumbnail>
-              <h2>{{email}}</h2>
-              <p>{{name1}}</p>
-              <p class="client">{{tempName}}</p>
-            </ion-item>
-      </div>
-      <ion-row>
-        <ion-col col-10>
-          <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
-        </ion-col>
-        <ion-col col-2 class="centerIt">
-          <button ion-button class="sendBtn" item-end icon-only large (click)="sendInformation()">
-            <ion-icon name="send"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-  </ion-footer>
+  <ion-toolbar>
+    <!-- <div class="data">
+      <ion-item class="data">
+        <ion-thumbnail item-start>
+          <img src="../../assets/default.jpg">
+        </ion-thumbnail>
+        <h2>Fly On The Wall</h2>
+        <p>{{name1}}</p>
+        <p class="client">R900</p>
+      </ion-item>
+    </div> -->
+    <ion-row>
+      <ion-col col-10>
+        <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
+      </ion-col>
+      <ion-col col-2 class="centerIt">
+        <button ion-button class="sendBtn" item-end icon-only large (click)="sendInformation()">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
