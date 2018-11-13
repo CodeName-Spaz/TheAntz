@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
+import { ViewInforPage } from '../view-infor/view-infor';
 /**
  * Generated class for the OrderModalPage page.
  *
@@ -57,13 +58,14 @@ export class OrderModalPage implements OnInit {
     this.price = this.obj.price;
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
-    this.uid = this.obj.uid
+    this.uid = this.obj.uid;
+    this.currentUserId = this.obj.currentUserId;
 
+    console.log(this.obj.currentUserId);
     console.log(this.obj.uid);
+    
 
 
-    this.currentUserId =firebase.auth().currentUser.uid
-    console.log(this.currentUserId);
 
     let userID = firebase.auth().currentUser;
     console.log(userID);
@@ -77,8 +79,6 @@ export class OrderModalPage implements OnInit {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      // console.log(this.tempName);
-      //  console.log(this.tempdownloadurl);
     })
   }
 
@@ -90,9 +90,8 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      // console.log(this.tempemail);
       this.imageSize()
-      //  console.log(this.tempdownloadurl);
+  
     })
   }
   scanner(event) {
@@ -115,7 +114,7 @@ export class OrderModalPage implements OnInit {
       // this.scanner(event);
     }, 3000);
   }
-  sendRequest() {
+  sendRequest(currentUserId) {
 
     let sentMessage = document.getElementsByClassName('message') as HTMLCollectionOf<HTMLElement>;
     let info = document.getElementsByClassName('data') as HTMLCollectionOf<HTMLElement>;
@@ -164,7 +163,27 @@ export class OrderModalPage implements OnInit {
       duration: 3000
     });
     toast.present();
+    this.BuyArt(this.obj.pic, name, this.obj.key, this.obj.url,this.obj.email,this.obj.username,this.obj.price,this.obj.name1,this.obj.uid,this.currentUserId,this.tempdownloadurl,this.tempName  );
   }
+  BuyArt(pic, name, key, url, email, username, price, name1,uid,currentUserId,tempdownloadurl,tempName) {
+    let obj = {
+      name: name,
+      pic: pic,
+      key: key,
+      url: url,
+      email: email,
+      username: username,
+      location: location,
+      price: price,
+      name1: name1,
+      uid:uid,
+      currentUserId:currentUserId,
+      tempdownloadurl:tempdownloadurl,
+      tempName:tempName
+    }
+    this.navCtrl.push(ViewInforPage, { obj: obj });
+
+}
   retrieveINformation() {
     firebase.database().ref('Orders/' + this.obj.uid).on("value", (data: any) => {
       data = data.val();

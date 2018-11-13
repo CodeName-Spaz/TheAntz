@@ -40,51 +40,48 @@ export class ChatsPage {
   retriveCustomerDetails = [];
   xxx ;
   currentUserId;
+  artId;
   // obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
     // this.obj = this.navParams.get("obj");
-    // console.log(this.obj)
 
-
-
-    // console.log(this.obj.email);
-    // console.log(this.obj.uid);
-    // this.username = this.obj.username;
-    // this.downloadurl = this.obj.pic;
-    // this.keys2 = this.obj.key;
-    // this.downloadurl1 = this.obj.url
-    // this.numComments = this.obj.comments;
+    // console.log(this.obj.tempName);
+    // console.log(this.obj.downloadurl);
+    // this.downloadurl = this.obj.downloadurl;
     // this.email = this.obj.email;
-    // this.name = this.obj.name;
-    // this.description = this.obj.description;
-    // this.location = this.obj.location;
     // this.price = this.obj.price;
-    // this.numlikes = this.obj.likes;
     // this.name1 = this.obj.name1;
-    // this.uid = this.obj.uid
+    // this.tempdownloadurl = this.obj.tempdownloadurl
+    // this.tempName = this.obj.tempName;
+    // this.currentUserId = this.obj.currentUserId;
+    // this.currentUser =this.obj.currentUser 
+ 
 
 
 
-    var currentUser = firebase.auth().currentUser.uid;
+
+
+
+
+    let currentUser = firebase.auth().currentUser.uid;
     console.log(currentUser);
    
 
+    this.artId = firebase.auth().currentUser.uid;
+  console.log(this.artId);
 
-    this.currentUserId =firebase.auth().currentUser.uid
-  //  console.log(this.currentUserId);
+
+    let currentUserId =firebase.auth().currentUser.uid
     firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
       this.retriveCustomerDetails.length =0;
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
         let keys = Object.keys(infor);
-        // console.log(keys);
-        for (var i = 0; i < keys.length; i++) {
           firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
-        
             let inforKey = data2.val();
             let keys2 = Object.keys(inforKey);
             // console.log(keys2);
-            // for(var i =0; i< keys.length;i++){
+            for(var i =0; i< keys.length;i++){
             var k = keys2[i];
             let obj = {
               tempName: inforKey[k].tempName,
@@ -100,14 +97,10 @@ export class ChatsPage {
 
             }
             this.retriveCustomerDetails.push(obj)
-            // console.log(this.retriveCustomerDetails);
-         
-
-            
-            // }
+            // console.log(this.retriveCustomerDetails);  
+            }
           })
         }
-      }
     })
   }
 
