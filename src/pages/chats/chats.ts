@@ -39,6 +39,7 @@ export class ChatsPage {
   list = [];
   retriveCustomerDetails = [];
   xxx ;
+  currentUserId;
   // obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
     // this.obj = this.navParams.get("obj");
@@ -66,18 +67,23 @@ export class ChatsPage {
 
     var currentUser = firebase.auth().currentUser.uid;
     console.log(currentUser);
+   
 
 
+    this.currentUserId =firebase.auth().currentUser.uid
+  //  console.log(this.currentUserId);
     firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
       this.retriveCustomerDetails.length =0;
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
         let keys = Object.keys(infor);
+        // console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
         
             let inforKey = data2.val();
             let keys2 = Object.keys(inforKey);
+            // console.log(keys2);
             // for(var i =0; i< keys.length;i++){
             var k = keys2[i];
             let obj = {
@@ -89,11 +95,13 @@ export class ChatsPage {
               downloadurl: inforKey[k].downloadurl,
               message: inforKey[k].message,
               messageRead:infor[k].messageRead,
+              currentUserId:infor[k].currentUserId,
               key:k
 
             }
             this.retriveCustomerDetails.push(obj)
-            console.log(this.retriveCustomerDetails);
+            // console.log(this.retriveCustomerDetails);
+         
 
             
             // }
@@ -107,11 +115,11 @@ export class ChatsPage {
     console.log('ionViewDidLoad ChatsPage');
   }
   scroll(event) {
-    console.log(event);
+    // console.log(event);
 
   }
 
-  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message,key) {
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message,key,currentUserId,currentUser) {
     let obj = {
       downloadurl: downloadurl,
       tempName: tempName,
@@ -120,7 +128,9 @@ export class ChatsPage {
       name1: name1,
       email: email,
       message: message,
-      key:key
+      key:key,
+      currentUserId:currentUserId,
+      currentUser:currentUser
     }
 
     this.navCtrl.push(ViewInforPage, { obj: obj });

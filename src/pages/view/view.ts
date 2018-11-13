@@ -82,29 +82,28 @@ export class ViewPage implements OnInit{
     this.currentUserId =firebase.auth().currentUser.uid
 
     this.currentUserId =firebase.auth().currentUser.uid
-  this.Retrivecomments();
 
+  this.Retrivecomments();
+  console.log(this.currentUserId);
+  console.log(this.uid);
+  console.log(this.obj.uid)
 
   this.art.returnUID().then((data)=>{
     this.tempName =data[0].name;
     this.tempdownloadurl = data[0].downloadurl;
     console.log(this.tempName);
-    //  console.log(this.tempdownloadurl);
     this.ifOrderYes();
   })
   }
 
  
-  // ionViewDidEnter() {
-  // this.Retrivecomments();
-  // }
+
   ngOnInit() {
     this.art.returnUID().then((data)=>{
       // this.userId = data[0].userId.uid;
       this.tempName =data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      // console.log(this.tempName);
-      //  console.log(this.tempdownloadurl);
+      console.log(this.tempName);
       this.ifOrderYes();
     })
   }
@@ -161,7 +160,7 @@ export class ViewPage implements OnInit{
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   
-    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {
+    BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid,currentUserId) {
       let obj = {
         name: name,
         pic: pic,
@@ -176,6 +175,7 @@ export class ViewPage implements OnInit{
         likes: likes,
         name1: name1,
         uid:uid,
+        currentUserId:currentUserId
       }
       this.navCtrl.push(OrderPage, { obj: obj });
       // console.log("person posted " + uid + " | " + "person viewing " + this.userId);

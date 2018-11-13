@@ -7,5 +7,21 @@ page-chats {
     .emptycontent{
         font-weight: bolder;
     }
-   
+    #commentTXT{
+        border: 1px solid rgb(194, 194, 194);
+        // height: 40px;
+        // padding-top: -10px;
+        border-radius: 40px;
+        width: 100%;
+        padding-left: 10px;
+    }
+    @media screen and (min-width: 500px){
+        .sendBtn{
+            text-align: center;
+            margin: 0 auto;
+        }
+        .centerIt{
+            text-align: center;
+        }
+    }
 }
