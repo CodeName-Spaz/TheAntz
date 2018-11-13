@@ -59,7 +59,7 @@ export class ViewInforPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewInforPage');
-    this.getData();
+
   }
   repond() {
     let email = {
@@ -81,7 +81,6 @@ export class ViewInforPage {
     })
   }
   getData() {
-
     this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data:any) => {
       this.arrMsg.length =0;
       this.arrMsg=[];

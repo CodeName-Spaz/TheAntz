@@ -769,37 +769,44 @@ export class StreetartzProvider {
     })
   }
   retrieveChats(currentUser, artkey, message) {
+    // this.arrMssg.length =0;
     return new Promise((accpt, rej) => {
-      this.arrMssg.length =0;
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
         let infor1 = data.val();
         let keys = Object.keys(infor1);
         firebase.database().ref('messages/' + artkey).child(currentUser).on('value', data2 => {
           let infor2 = data2.val();
-          let keys2 = Object.keys(infor2);
-          for (var i = 0; i < keys2.length; i++) {
-            let k = keys2[i]
-            let obj = {
-              message: infor2[k].message,
-              time: infor2[k].time,
-              uid: infor2[k].uid
-            }
-            this.arrMssg.push(obj);
-            console.log(this.arrMssg);
-          }
-          firebase.database().ref('messages/' + artkey).child(artkey).on('value', data3 => {
-            let infor3 = data3.val();
-            let keys3 = Object.keys(infor3);
-            for (var i = 0; i < keys3.length; i++) {
-              let k = keys3[i]
+          if(data2.val() != null || data2.val() !=undefined){
+            this.arrMssg.length =0;
+            let keys2 = Object.keys(infor2);
+            for (var i = 0; i < keys2.length; i++) {
+              let k = keys2[i]
               let obj = {
-                message: infor3[k].message,
-                time: infor3[k].time,
-                uid: infor3[k].uid
+                message: infor2[k].message,
+                time: infor2[k].time,
+                uid: infor2[k].uid
               }
               this.arrMssg.push(obj);
               console.log(this.arrMssg);
+            }
+          }
+
+          firebase.database().ref('messages/' + artkey).child(artkey).on('value', data3 => {
+            let infor3 = data3.val();
+            if(data3.val() != null || data3.val() !=undefined){
+              // this.arrMssg.length =0;
+              let keys3 = Object.keys(infor3);
+              for (var i = 0; i < keys3.length; i++) {
+                let k = keys3[i]
+                let obj = {
+                  message: infor3[k].message,
+                  time: infor3[k].time,
+                  uid: infor3[k].uid
+                }
+                this.arrMssg.push(obj);
+                console.log(this.arrMssg);
+              }
             }
           })
         })
