@@ -15,7 +15,7 @@
     </div>
   <div class="not-empty">
     <div *ngFor="let a of retriveCustomerDetails"      >
-         <ion-item class="client"(click)="showDetails(a.downloadurl, a.tempName, a.tempdownloadurl, a.price, a.name1, a.email,a.message,a.key)" id="chats">
+         <ion-item class="client"(click)="showDetails(a.downloadurl, a.tempName, a.tempdownloadurl, a.price, a.name1, a.email,a.message,a.key,a.currentUserId,currentUser)" id="chats">
       <ion-avatar item-start>
         <img src="{{a.tempdownloadurl}}">
       </ion-avatar>

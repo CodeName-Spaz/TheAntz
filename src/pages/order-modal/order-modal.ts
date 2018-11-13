@@ -37,6 +37,7 @@ export class OrderModalPage implements OnInit {
   height;
   retriveCustomerDetails = [];
   display=[];
+  currentUserId;
   messageRead="message read"
   obj = this.navParams.get("obj");
 
@@ -58,9 +59,14 @@ export class OrderModalPage implements OnInit {
     this.name1 = this.obj.name1;
     this.uid = this.obj.uid
 
-    console.log(this.obj.name1);
+    console.log(this.obj.uid);
+
+
+    this.currentUserId =firebase.auth().currentUser.uid
+    console.log(this.currentUserId);
 
     let userID = firebase.auth().currentUser;
+    console.log(userID);
     firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
       this.arr.length = 0
       let details = data.val();
@@ -71,7 +77,7 @@ export class OrderModalPage implements OnInit {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
+      // console.log(this.tempName);
       //  console.log(this.tempdownloadurl);
     })
   }
@@ -84,7 +90,7 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      console.log(this.tempemail);
+      // console.log(this.tempemail);
       this.imageSize()
       //  console.log(this.tempdownloadurl);
     })
@@ -101,7 +107,7 @@ export class OrderModalPage implements OnInit {
     wMark[0].style.transform = "translateY(-50px)";
     wMark[0].style.width = 100 + "%";
     // wMark[0].style.transform = "TranslateY(500px)"
-    console.log(this.height);
+    // console.log(this.height);
     
   }
   imageSize() {
@@ -128,14 +134,30 @@ export class OrderModalPage implements OnInit {
       email: this.tempemail,
       name1: this.obj.name1,
       price: this.obj.price,
+      uid:this.obj.uid,
       downloadurl: this.obj.pic,
       messageRead :"message read",
       message:this.message,
+      currentUserId:this.currentUserId
+ 
+    })
+    firebase.database().ref('Orders/' + this.currentUserId).push({
+      tempName: this.tempName,
+      tempdownloadurl: this.tempdownloadurl,
+      email: this.tempemail,
+      name1: this.obj.name1,
+      price: this.obj.price,
+      uid:this.obj.uid,
+      downloadurl: this.obj.pic,
+      messageRead :"message read",
+      message:this.message,
+      currentUserId:this.currentUserId
  
     })
      this.message=""
     
-    
+    console.log(this.obj.uid);
+    console.log(this.currentUserId);
 
     const toast = this.toastCtrl.create({
       message: 'you have made ur booking!',
