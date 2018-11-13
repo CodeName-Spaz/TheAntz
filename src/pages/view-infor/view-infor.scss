@@ -2,5 +2,54 @@ page-view-infor {
     .image{
         display: block;
     }
+    #time{
+        text-align: right
+    }
+    .sent{
+        // border: 0.1px solid black;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        background: white;
+        width: 90%;
+        box-shadow: 0 2px 5px grey;
+        float: left;
+        display: block;
+        z-index: 0;
+    }
+    .received{
+        // border: 0.1px solid black;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        background: white;
+        width: 90%;
+        box-shadow: 0 2px 5px grey;
+        float: right;
+        display: block;
+        z-index: 0;
+    }
+    .padder{
+        padding-bottom: 5px;
+        // width: 90%;
+    }
+    .seperator{
+        // height: 15px;
+        // float: center;
+        // display: block;
+        color: red;
+        // opacity: 0;
+    }
 
+    .body{
+        background: whitesmoke;
+    }
 }

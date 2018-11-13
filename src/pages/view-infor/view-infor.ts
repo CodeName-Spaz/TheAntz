@@ -22,12 +22,14 @@ export class ViewInforPage {
   name1;
   email;
   message;
+  uid;
   tempdownloadurl;
   list = [];
   currentUserId;
   arrMsg = [];
   currentUser;
   // message;
+  side=["sent","received"];
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
@@ -41,24 +43,45 @@ export class ViewInforPage {
     this.tempdownloadurl = this.obj.tempdownloadurl
     this.tempName = this.obj.tempName;
     this.currentUserId = this.obj.currentUserId;
+    this.getData();
 
 
-
-    console.log(this.currentUserId);
 
 
 
     this.list.length = 0;
 
     let currentUser = firebase.auth().currentUser.uid
-    console.log(currentUser);
+    console.log('=======================');
+    // console.log(this.uid);
+    console.log(this.currentUserId);
+    console.log('=======================');
     //  this.currentUserId =firebase.auth().currentUser.uid
     //  console.log(this.currentUserId);
-    this.getData();
+    
+    // this.decideSide()
+
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewInforPage');
+
+  }
+
+  decideSide() {
+    let currentUser = firebase.auth().currentUser.uid
+    console.log('the current user is');
+
+    console.log(currentUser);
+    console.log('the other user is');
+    console.log(this.uid);
+    
+
+
+
+
+
 
   }
   repond() {
@@ -75,17 +98,20 @@ export class ViewInforPage {
     };
     this.emailComposer.open(email);
   }
+
   send() {
     this.art.BuyPicture(this.currentUser, this.currentUserId, this.message).then((data) => {
       console.log(data);
     })
   }
   getData() {
-    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data:any) => {
-      this.arrMsg.length =0;
-      this.arrMsg=[];
-      this.arrMsg =data;
-  })
+    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data: any) => {
+      this.arrMsg.length = 0;
+      this.arrMsg = [];
+      this.arrMsg = data;
+    })
+
+
   }
 
 }

@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="body">
     <ion-card>
         <ion-item>
           <ion-avatar item-start>
@@ -36,10 +36,23 @@
             <p>reference Number : {{name1}}</p>
         </ion-card-content>
       </ion-card>
-      <ion-list *ngFor="let a of arrMsg">
-        <p>{{a.message}}</p>
-        <p>{{a.time}}</p>
+      <ion-list>
       </ion-list>
+
+      <div *ngFor="let a of arrMsg" (click)="decideSide()">
+        <div class="padder">
+          <ion-card class={{side}}>
+          <p>{{a.message}}</p>
+        <p id="time">{{a.time}}</p>
+        <p>{{a.uid}}</p>
+
+        side={{side}}
+          </ion-card>
+        <div class="seperator">
+          ==========================
+        </div>
+        </div>
+      </div>
 </ion-content>
 <ion-footer no-padding>
     <ion-toolbar>

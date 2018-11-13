@@ -185,7 +185,6 @@ this.categoryArr = data;
 }
 readyStuff(){
   console.log('ready stuff');
-  
 }
 
 }
