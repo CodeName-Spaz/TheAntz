@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EmailComposer } from '@ionic-native/email-composer';
 import firebase from 'firebase';
@@ -15,7 +15,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
   selector: 'page-view-infor',
   templateUrl: 'view-infor.html',
 })
-export class ViewInforPage implements OnInit{
+export class ViewInforPage {
   downloadurl;
   tempName;
   price;
@@ -27,12 +27,8 @@ export class ViewInforPage implements OnInit{
   currentUserId;
   arrMsg = [];
   currentUser;
-  uid:any;
-  primaryKey;
-  foreignKey;
-
   // message;
-  side=["sent","received"];
+  side;
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
@@ -46,46 +42,61 @@ export class ViewInforPage implements OnInit{
     this.tempdownloadurl = this.obj.tempdownloadurl
     this.tempName = this.obj.tempName;
     this.currentUserId = this.obj.currentUserId;
-    this.uid = this.obj.uid;
- 
 
-    console.log('===========================');
-    
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    console.log('===========================');
+
+
     
 
-    // this.currentUser = firebase.auth().currentUser.uid
 
-    // alert("art currentuser" + this.currentUserId+ " client userid " + currentUser);
-
-    // if(this.currentUserId == currentUser){
-
-      
-
-    // }
     this.list.length = 0;
 
-    // console.log(currentUser);
+    let currentUser = firebase.auth().currentUser.uid
+    console.log('=======================');
+    console.log(currentUser);
+    console.log(this.currentUserId);
+    console.log('=======================');
     //  this.currentUserId =firebase.auth().currentUser.uid
     //  console.log(this.currentUserId);
-    
-    // this.decideSide()
-
-    
+    this.getData();
+    this.decideSide()
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewInforPage');
 
   }
-  ngOnInit() {
-    this.art.returnUID().then((data)=>{
-      this.tempName =data[0].name;
-      this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
-    })
+
+  decideSide(){
+    let currentUser = firebase.auth().currentUser.uid
+    console.log('the current user is');
+    
+    console.log(currentUser);
+    console.log('the other user is');
+    console.log(this.currentUserId);
+    if(currentUser != this.currentUserId){
+      this.side = "sent"
+    }
+    else{
+      this.side ="received"
+    }
+
+    
+    
+    
+  }
+  repond() {
+    let email = {
+      to: this.obj.email,
+      cc: '',
+      bcc: ['john@doe.com', 'jane@doe.com'],
+      attachments: [
+
+      ],
+      subject: 'Cordova Icons',
+      body: 'Greetings' + this.obj.tempName + 'i have received ur request',
+      isHtml: true
+    };
+    this.emailComposer.open(email);
   }
 
   send() {
@@ -96,10 +107,11 @@ export class ViewInforPage implements OnInit{
   getData() {
     this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data:any) => {
       this.arrMsg.length =0;
-      // this.arrMsg=[];
-      this.arrMsg =data;
-     
+      this.arrMsg=[];
+      this.arrMsg =data;    
   })
+  
+  
   }
 
 }

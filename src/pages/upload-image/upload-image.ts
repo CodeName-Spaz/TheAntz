@@ -37,6 +37,17 @@ export class UploadImagePage {
   }
 
   insertvid(event: any) {
+
+    this.d = 1;
+    console.log(event.type + " button");
+
+    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+    if(this.d == 1){
+      action[0].style.transform = "translateY(10%)";
+    action[0].style.transition = 500 + "ms";
+    }
+
+
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
 
@@ -53,6 +64,16 @@ export class UploadImagePage {
     return ((k >= 48 && k <= 57));
   }
   takepic= function(){
+
+    this.d = 1;
+    console.log(event.type + " button");
+
+    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+    if(this.d == 1){
+      action[0].style.transform = "translateY(10%)";
+    action[0].style.transition = 500 + "ms";
+    }
+
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -70,6 +91,7 @@ export class UploadImagePage {
    
    }
   uploadPicture() {
+    this.d = 1;
     if (this.category == undefined || this.category == null ,
       this.name == undefined || this.name == null ,
       this.description == undefined || this.description == null,

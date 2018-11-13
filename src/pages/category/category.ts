@@ -133,6 +133,11 @@ export class CategoryPage {
 
   }
   retreivePics() {
+    const loader = this.loadingCtrl.create({
+      content: "loading....",
+      duration: 7000
+    });
+    loader.present();
     this.art.viewPicMain().then((data:any) => {
       // let keys:any = Object.keys(data);
       // console.log(keys);
@@ -159,6 +164,7 @@ export class CategoryPage {
       //   this.categoryArr.reverse();
       // }
 this.categoryArr = data;
+loader.dismiss();
     })
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1,uid) {

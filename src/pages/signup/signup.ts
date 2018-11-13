@@ -64,11 +64,19 @@ export class SignupPage {
       alert.present();
     }
     else {
+      
+    const loader = this.loadingCtrl.create({
+      content: "loading....",
+      duration: 7000
+    });
+    loader.present();
       this.art.register(this.email, this.password, this.name).then(() => {
-        this.presentLoading1();
+        
         this.navCtrl.setRoot(CategoryPage);
+        loader.dismiss();
       }, (error) => {
         console.log(error.message);
+        loader.dismiss();
       })
     }
   }

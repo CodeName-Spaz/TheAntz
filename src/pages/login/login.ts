@@ -65,9 +65,11 @@ export class LoginPage {
       alert.present();
     }
     else {
+      
       this.art.login(this.email, this.password).then(() => {
-        this.presentLoading1();
+        
         this.navCtrl.setRoot(CategoryPage);
+        
       }, (error) => {
         console.log(error.message);
       })
