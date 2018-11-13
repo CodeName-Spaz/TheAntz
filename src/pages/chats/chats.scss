@@ -1,3 +1,11 @@
 page-chats {
-    
+    .no-data{
+        padding-top: 50%;
+        transform: translateY(-50px);
+        text-align: center;
+    }
+    .emptycontent{
+        font-weight: bolder;
+    }
+   
 }

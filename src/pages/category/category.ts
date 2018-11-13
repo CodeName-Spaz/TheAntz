@@ -140,7 +140,7 @@ export class CategoryPage {
 
   }
   chats(){
-    this.navCtrl.push(OrderPage)
+    this.navCtrl.push(ChatsPage)
 }
 readyStuff(){
   console.log('ready stuff');
