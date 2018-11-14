@@ -36,7 +36,13 @@
             <p>reference Number : {{name1}}</p>
         </ion-card-content>
       </ion-card>
-      <ion-list>
+      
+      <ion-list *ngFor="let a of arrMsg">
+        <ion-card>
+            <p>{{a.message}}</p>
+            <p>{{a.uid}}</p>
+            <p>{{a.time}}</p>
+        </ion-card>
       </ion-list>
 
       <div *ngFor="let a of arrMsg" (click)="decideSide()">

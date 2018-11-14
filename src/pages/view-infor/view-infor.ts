@@ -27,14 +27,17 @@ export class ViewInforPage {
   currentUserId;
   arrMsg = [];
   currentUser;
+  uid: any;
+  primaryKey;
+  foreignKey;
   // message;
   side;
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
 
-    console.log(this.obj.tempName);
-    console.log(this.obj.downloadurl);
+    // console.log(this.obj.tempName);
+    // console.log(this.obj.downloadurl);
     this.downloadurl = this.obj.downloadurl;
     this.email = this.obj.email;
     this.price = this.obj.price;
@@ -42,21 +45,24 @@ export class ViewInforPage {
     this.tempdownloadurl = this.obj.tempdownloadurl
     this.tempName = this.obj.tempName;
     this.currentUserId = this.obj.currentUserId;
+    this.uid = this.obj.uid;
+    this.currentUser = this.obj.currentUser
 
 
+    console.log(this.currentUserId);
+    // console.log(this.obj.uid);
+    // console.log(this.currentUser);
+
+    this.currentUser = firebase.auth().currentUser.uid
+      console.log(this.currentUser)
+    // alert("art currentuser" + this.currentUserId+ " client userid " + currentUser);
 
     
 
 
     this.list.length = 0;
 
-    let currentUser = firebase.auth().currentUser.uid
-    console.log('=======================');
-    console.log(currentUser);
-    console.log(this.currentUserId);
-    console.log('=======================');
-    //  this.currentUserId =firebase.auth().currentUser.uid
-    //  console.log(this.currentUserId);
+  
     this.getData();
     this.decideSide()
   }
@@ -66,52 +72,34 @@ export class ViewInforPage {
 
   }
 
-  decideSide(){
-    let currentUser = firebase.auth().currentUser.uid
-    console.log('the current user is');
-    
-    console.log(currentUser);
-    console.log('the other user is');
-    console.log(this.currentUserId);
-    if(currentUser != this.currentUserId){
-      this.side = "sent"
+  send(currentUserId) {
+    let a = this.obj.uid;
+    if (this.currentUser == this.currentUserId) {
+
     }
-    else{
-      this.side ="received"
-    }
-
-    
-    
-    
-  }
-  repond() {
-    let email = {
-      to: this.obj.email,
-      cc: '',
-      bcc: ['john@doe.com', 'jane@doe.com'],
-      attachments: [
-
-      ],
-      subject: 'Cordova Icons',
-      body: 'Greetings' + this.obj.tempName + 'i have received ur request',
-      isHtml: true
-    };
-    this.emailComposer.open(email);
-  }
-
-  send() {
     this.art.BuyPicture(this.currentUser, this.currentUserId, this.message).then((data) => {
       console.log(data);
     })
+    // this.showDetails(currentUserId);
+  }
+  
+  showDetails(currentUserId) {
+    let obj = {
+      currentUserId:currentUserId
+    }
+
+    this.navCtrl.push(ViewInforPage, { obj: obj });
+
+    
+    // document.getElementById("chats").style.backgroundColor="blue"
+  
   }
   getData() {
-    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data:any) => {
-      this.arrMsg.length =0;
-      this.arrMsg=[];
-      this.arrMsg =data;    
-  })
-  
-  
+    let a = this.obj.uid;
+    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data: any) => {
+      this.arrMsg.length = 0;
+      this.arrMsg = data;
+    })
   }
 
 }
