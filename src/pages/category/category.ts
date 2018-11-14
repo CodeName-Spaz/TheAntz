@@ -121,7 +121,7 @@ export class CategoryPage {
     })
   }
   retreivePics() {
-    this.art.viewPicMain().then((data:any) => {
+    this.art.viewPicMain().then((data: any) => {
       // let keys:any = Object.keys(data);
       // console.log(keys);
       // for (var i = 0; i < keys.length; i++) {
@@ -146,7 +146,8 @@ export class CategoryPage {
       //   console.log(this.categoryArr);
       //   this.categoryArr.reverse();
       // }
-this.categoryArr = data;
+      this.categoryArr = data;
+      this.categoryArr.reverse();
     })
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {

@@ -686,10 +686,10 @@ export class StreetartzProvider {
       firebase.database().ref("profiles/" + user.uid).on('value', (data: any) => {
         let details = data.val();
         var keys = Object.keys(details);
-          this.returnCurrentUser.push(details);
-          console.log(this.returnCurrentUser);
-          accpt(this.returnCurrentUser)
-        })     
+        this.returnCurrentUser.push(details);
+        // console.log(this.returnCurrentUser);
+        accpt(this.returnCurrentUser)
+      })
     })
   }
 
@@ -698,44 +698,36 @@ export class StreetartzProvider {
       var currentUser = firebase.auth().currentUser.uid;
       console.log(currentUser);
       firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
-        // this.retriveCustomerDetails.length =0;
-        let infor = data.val();
-        if (data.val() != null || data.val() != undefined) {
-          let keys = Object.keys(infor);
-          for (var i = 0; i < keys.length; i++) {
-            firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
-              let inforKey = data2.val();
-              let keys2 = Object.keys(inforKey);
-              // for(var i =0; i< keys.length;i++){
-              var k = keys2[i];
-              let obj = {
-                tempName: inforKey[k].tempName,
-                tempdownloadurl: inforKey[k].tempdownloadurl,
-                name1: inforKey[k].name1,
-                price: infor[k].price,
-                email: infor[k].email,
-                downloadurl: inforKey[k].downloadurl,
-                message: inforKey[k].message,
-                currentUserId: inforKey[k].currentUserId,
-                key: k
-
-              }
-              this.retriveCustomerDetails.push(obj)
-              console.log(this.retriveCustomerDetails);
-              // }
-            })
+        let inforKey = data.val();
+        if(data !=null || data!=undefined){
+          this.retriveCustomerDetails.length = 0;
+          let keys2 = Object.keys(inforKey);
+          for (var i = 0; i < inforKey.length; i++) {
+            var k = keys2[i];
+            let obj = {
+              tempName: inforKey[k].tempName,
+              tempdownloadurl: inforKey[k].tempdownloadurl,
+              name1: inforKey[k].name1,
+              price: inforKey[k].price,
+              email: inforKey[k].email,
+              downloadurl: inforKey[k].downloadurl,
+              message: inforKey[k].message,
+              currentUserId: inforKey[k].currentUserId,
+              key: k
+  
+            }
+            this.retriveCustomerDetails.push(obj)
+            console.log(this.retriveCustomerDetails);
           }
         }
-        accpt(this.retriveCustomerDetails);
       })
-
+      accpt(this.retriveCustomerDetails);
     })
-
   }
 
   BuyPicture(currentUser, artkey, message) {
     return new Promise((accpt, rej) => {
-      this.arrMssg.length = 0;
+      // this.arrMssg.length = 0;
       let dateObj = new Date
       let currentUser = firebase.auth().currentUser.uid;
       console.log(currentUser)
@@ -743,15 +735,12 @@ export class StreetartzProvider {
       console.log("message user id");
       console.log(currentUser)
       console.log(artkey)
-
-      alert("client id " + artkey);
-      alert("art id "+ currentUser);
-     
       firebase.database().ref('messages/' + artkey).child(currentUser).push({
         message: message,
         uid: currentUser,
         time: time
       })
+
 
     })
   }
@@ -760,16 +749,16 @@ export class StreetartzProvider {
       // this.arrMssg.length = 0;
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
-        // this.arrMssg.length = 0;
+        this.arrMssg.length = 0;
         let infor1 = data.val();
-        if(data.val() != null || data.val() !=undefined){
+        if (data.val() != null || data.val() != undefined) {
           let keys = Object.keys(infor1);
         }
         firebase.database().ref('messages/' + artkey).child(currentUser).on('value', data2 => {
           // this.arrMssg.length = 0;
           let infor2 = data2.val();
           if (data2.val() != null || data2.val() != undefined) {
-            // this.arrMssg.length =0;
+            this.arrMssg.length = 0;
             let keys2 = Object.keys(infor2);
             for (var i = 0; i < keys2.length; i++) {
               let k = keys2[i]
@@ -779,7 +768,7 @@ export class StreetartzProvider {
                 uid: infor2[k].uid
               }
               this.arrMssg.push(obj);
-              console.log(this.arrMssg);
+              // console.log(this.arrMssg);
             }
           }
           firebase.database().ref('messages/' + currentUser).child(artkey).on('value', data3 => {

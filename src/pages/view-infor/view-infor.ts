@@ -95,10 +95,10 @@ export class ViewInforPage {
   
   }
   getData() {
-    let a = this.obj.uid;
     this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data: any) => {
-      this.arrMsg.length = 0;
+      // this.arrMsg.length = 0;
       this.arrMsg = data;
+      this.arrMsg.reverse();
     })
   }
 

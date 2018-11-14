@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title>Order</ion-title>
+    <ion-title>{{name1}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -34,21 +34,18 @@
       <ion-avatar item-start>
         <img src="{{tempdownloadurl}}">
       </ion-avatar>
-      <h2 class="client">{{tempName}}</h2>
+      <h2 class="client">{{username}}</h2>
     </ion-item>
     <ion-card-content>
-      <p>
-        <br>
-        <br> {{email}}
-      </p>
-      <p>Reference Number : {{name1}}</p>
       <p>Price:{{price}}</p>
     </ion-card-content>
   </ion-card>
   <ion-list *ngFor="let a of arrMsg">
-    <p>{{a.message}}</p>
-    <p>{{a.uid}}</p>
-    <p>{{a.time}}</p>
+    <ion-card>
+        <p>{{a.message}}</p>
+        <p>{{a.uid}}</p>
+        <p>{{a.time}}</p>
+    </ion-card>
   </ion-list>
 </ion-content>
 <ion-footer no-padding>

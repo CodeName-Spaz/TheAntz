@@ -73,9 +73,9 @@ export class ChatsPage {
 
     let currentUserId =firebase.auth().currentUser.uid
     firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
-      this.retriveCustomerDetails.length =0;
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
+        this.retriveCustomerDetails.length =0;
         let keys = Object.keys(infor);
           firebase.database().ref('Orders/' + currentUserId).on("value", (data2: any) => {
             let inforKey = data2.val();
