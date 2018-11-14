@@ -62,22 +62,22 @@ export class ChatsPage {
 
 
 
-
+// This is my user ID as the peson logged in
     let currentUser = firebase.auth().currentUser.uid;
     console.log(currentUser);
    
 
-    this.artId = firebase.auth().currentUser.uid;
-  console.log(this.artId);
+  //   this.artId = firebase.auth().currentUser.uid;
+  // console.log(this.artId);
 
 
     let currentUserId =firebase.auth().currentUser.uid
-    firebase.database().ref('Orders/' + currentUser).on("value", (data: any) => {
+    firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
       this.retriveCustomerDetails.length =0;
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
         let keys = Object.keys(infor);
-          firebase.database().ref('Orders/' + currentUser).on("value", (data2: any) => {
+          firebase.database().ref('Orders/' + currentUserId).on("value", (data2: any) => {
             let inforKey = data2.val();
             let keys2 = Object.keys(inforKey);
             // console.log(keys2);
@@ -97,7 +97,7 @@ export class ChatsPage {
 
             }
             this.retriveCustomerDetails.push(obj)
-            // console.log(this.retriveCustomerDetails);  
+            console.log(this.retriveCustomerDetails);  
             }
           })
         }

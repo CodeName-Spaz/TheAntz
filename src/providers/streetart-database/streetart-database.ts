@@ -746,7 +746,7 @@ export class StreetartzProvider {
 
       alert("client id " + artkey);
       alert("art id "+ currentUser);
-
+     
       firebase.database().ref('messages/' + artkey).child(currentUser).push({
         message: message,
         uid: currentUser,
@@ -782,7 +782,6 @@ export class StreetartzProvider {
               console.log(this.arrMssg);
             }
           }
-
           firebase.database().ref('messages/' + currentUser).child(artkey).on('value', data3 => {
             // this.arrMssg.length = 0;
             let infor3 = data3.val();

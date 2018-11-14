@@ -29,7 +29,8 @@ export class OrderModalPage implements OnInit {
   location;
   numlikes;
   numComments;
-  message = "Greetings, I would like to purchase this artwork from you. Please reach me on my email "
+    message;
+
   arr = [];
   tempName;
   uid: any;
@@ -39,6 +40,7 @@ export class OrderModalPage implements OnInit {
   retriveCustomerDetails = [];
   display=[];
   currentUserId;
+  arrMsg=[];
   messageRead="message read"
   obj = this.navParams.get("obj");
 
@@ -63,35 +65,41 @@ export class OrderModalPage implements OnInit {
 
     console.log(this.obj.currentUserId);
     console.log(this.obj.uid);
-    
 
 
+    // this.currentUserId =firebase.auth().currentUser.uid
+    // console.log(this.currentUserId);
 
-    let userID = firebase.auth().currentUser;
-    console.log(userID);
-    firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
-      this.arr.length = 0
-      let details = data.val();
-      this.arr.push(details);
-      console.log(this.arr);
-    })
+    // let userID = firebase.auth().currentUser;
+    // console.log(userID);
+    // firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
+    //   this.arr.length = 0
+    //   let details = data.val();
+    //   this.arr.push(details);
+    //   console.log(this.arr);
+    // })
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
+      // console.log(this.tempName);
+      //  console.log(this.tempdownloadurl);
     })
+    this.getData();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderModalPage');
+    this.getData();
   }
   ngOnInit() {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
+      // console.log(this.tempemail);
       this.imageSize()
-  
+      //  console.log(this.tempdownloadurl);
     })
   }
   scanner(event) {
@@ -136,24 +144,24 @@ export class OrderModalPage implements OnInit {
       uid:this.obj.uid,
       downloadurl: this.obj.pic,
       messageRead :"message read",
-      message:this.message,
+      // message:this.message,
       currentUserId:this.currentUserId
  
     })
-    firebase.database().ref('Orders/' + this.currentUserId).push({
-      tempName: this.tempName,
-      tempdownloadurl: this.tempdownloadurl,
-      email: this.tempemail,
-      name1: this.obj.name1,
-      price: this.obj.price,
-      uid:this.obj.uid,
-      downloadurl: this.obj.pic,
-      messageRead :"message read",
-      message:this.message,
-      currentUserId:this.currentUserId
+    // firebase.database().ref('Orders/' + this.currentUserId).push({
+    //   tempName: this.tempName,
+    //   tempdownloadurl: this.tempdownloadurl,
+    //   email: this.tempemail,
+    //   name1: this.obj.name1,
+    //   price: this.obj.price,
+    //   uid:this.obj.uid,
+    //   downloadurl: this.obj.pic,
+    //   messageRead :"message read",
+    //   message:this.message,
+    //   currentUserId:this.currentUserId
  
-    })
-     this.message=""
+    // })
+    //  this.message=""
     
     console.log(this.obj.uid);
     console.log(this.currentUserId);
@@ -163,9 +171,10 @@ export class OrderModalPage implements OnInit {
       duration: 3000
     });
     toast.present();
-    this.BuyArt(this.obj.pic, name, this.obj.key, this.obj.url,this.obj.email,this.obj.username,this.obj.price,this.obj.name1,this.obj.uid,this.currentUserId,this.tempdownloadurl,this.tempName  );
+    // this.BuyArt(this.obj.pic, name, this.obj.key, this.obj.url,this.obj.email,this.obj.username,this.obj.price,this.obj.name1,this.obj.uid,this.currentUserId);
+    // this.sendMesssage();
   }
-  BuyArt(pic, name, key, url, email, username, price, name1,uid,currentUserId,tempdownloadurl,tempName) {
+  BuyArt(pic, name, key, url, email, username, price, name1,uid,currentUserId) {
     let obj = {
       name: name,
       pic: pic,
@@ -177,9 +186,7 @@ export class OrderModalPage implements OnInit {
       price: price,
       name1: name1,
       uid:uid,
-      currentUserId:currentUserId,
-      tempdownloadurl:tempdownloadurl,
-      tempName:tempName
+      currentUserId:currentUserId
     }
     this.navCtrl.push(ViewInforPage, { obj: obj });
 
@@ -189,6 +196,25 @@ export class OrderModalPage implements OnInit {
       data = data.val();
       this.retriveCustomerDetails.push(data);
       console.log(this.obj.uid);
+    })
+  }
+  
+  sendMesssage(){
+    // this.sendInformation();
+    let a = this.obj.uid;
+    if (this.obj.uid == this.currentUserId) {
+
+    }
+    this.art.BuyPicture(this.currentUserId,this.obj.uid,this.message).then((data) => {
+      console.log(data);
+    })
+  
+  }
+  getData() {
+    let a = this.obj.uid;
+    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message).then((data: any) => {
+      this.arrMsg.length = 0;
+      this.arrMsg = data;
     })
   }
 }
