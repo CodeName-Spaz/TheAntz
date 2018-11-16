@@ -79,12 +79,7 @@ export class ViewInforPage {
     console.log(currentUser);
     console.log('the other user is');
     console.log(this.currentUserId);
-    if(currentUser != this.currentUserId){
-      this.side = "sent"
-    }
-    else{
-      this.side ="received"
-    }
+
 
     
     
