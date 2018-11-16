@@ -63,14 +63,21 @@ export class EditProfilePage implements OnInit {
   uploadPicture() {
     this.arr.length = 0;
     if (this.contact.length < 11) {
+      const loader = this.loadingCtrl.create({
+        content: "Please wait...",
+        duration: 3000000000
+      });
+      loader.present();
       this.art.uploadProfilePic(this.downloadurl,this.name).then(data => {
         console.log('added to db');
         this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
           this.arr.push(data);
-        })
+        });
         this.navCtrl.setRoot(ProfilePage);
+        loader.dismiss();
       },
         Error => {
+          loader.dismiss();
           console.log(Error)
         })
     }

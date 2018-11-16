@@ -72,6 +72,39 @@ export class ViewInforPage {
 
   }
 
+  decideSide(){
+    let currentUser = firebase.auth().currentUser.uid
+    console.log('the current user is');
+    
+    console.log(currentUser);
+    console.log('the other user is');
+    console.log(this.currentUserId);
+    if(currentUser != this.currentUserId){
+      this.side = "sent"
+    }
+    else{
+      this.side ="received"
+    }
+
+    
+    
+    
+  }
+  repond() {
+    let email = {
+      to: this.obj.email,
+      cc: '',
+      bcc: ['john@doe.com', 'jane@doe.com'],
+      attachments: [
+
+      ],
+      subject: 'Cordova Icons',
+      body: 'Greetings' + this.obj.tempName + 'i have received ur request',
+      isHtml: true
+    };
+    this.emailComposer.open(email);
+  }
+
   send(currentUserId) {
     let a = this.obj.uid;
     if (this.currentUser == this.currentUserId) {
@@ -95,6 +128,13 @@ export class ViewInforPage {
   
   }
   getData() {
+    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data:any) => {
+      this.arrMsg.length =0;
+      this.arrMsg=[];
+      this.arrMsg =data;    
+  })
+  
+  
     let a = this.obj.uid;
     this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data: any) => {
       this.arrMsg.length = 0;

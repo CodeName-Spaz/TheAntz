@@ -71,7 +71,7 @@
             <button ion-button class="statements" clear>{{numComments}} Comments</button>
           </ion-col>
           <ion-col>
-            <button class="theStatements" block outline ion-button (click)="BuyArt(downloadurl,username,key,url,comments,email,name,description,location,price,likes,name1,uid,currentUserId)">
+            <button class="theStatements" block outline ion-button (click)="sendEmail()">
               <ion-icon ios="ios-pricetag" md="md-pricetag"></ion-icon> ORDER
             </button>
           </ion-col>
@@ -81,6 +81,7 @@
   </div>
   <div>
     <ion-list *ngFor="let a of CommentArr">
+      
       <ion-card>
         <ion-item>
           <ion-avatar item-start>

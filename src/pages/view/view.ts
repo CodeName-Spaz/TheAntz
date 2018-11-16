@@ -7,7 +7,8 @@ import { CategoryPage } from '../category/category';
 import { OrderPage } from '../order/order';
 import { OrderModalPage } from '../order-modal/order-modal';
 import firebase from 'firebase';
-
+import sgMail from '@sendgrid/mail';
+import async from 'async';
 
 /**
  * Generated class for the ViewPage page.
@@ -81,13 +82,14 @@ export class ViewPage implements OnInit{
     this.uid = this.obj.uid
    
 
-
+   
     this.currentUserId =firebase.auth().currentUser.uid
 
   this.Retrivecomments();
   console.log(this.currentUserId);
   // console.log(this.uid);
   console.log(this.obj.uid)
+  console.log(this.obj.email);
   // console.log(this.currentUserId);
 
   this.art.returnUID().then((data)=>{
@@ -97,11 +99,49 @@ export class ViewPage implements OnInit{
     // console.log(this.tempdownloadurl);
     this.ifOrderYes();
   })
+
+  sgMail.setApiKey("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");
+  console.log(sgMail);
+  console.log(this.obj.email)
+
+  // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
   }
+
+sendEmail(){
+  var helper = require('@sendgrid/mail').mail;
+  const async = require('async');
+  var fromEmail = new helper.Email('spazy65@gmail.com');
+
+  //et a = sgMail.send()
+  console.log(fromEmail);
+  
+  var toEmail = new helper.Email('janetzango@gmail.com');
+  var subject = 'Sending with SendGrid is Fun';
+  var content = new helper.Content('text/plain', 'and easy to do anywhere, even with Node.js');
+  var mail = new helper.Mail(fromEmail, subject, toEmail, content);
+   
+  var sg = require('@sendgrid/mail')("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");
+  var request = sg.emptyRequest({
+    method: 'POST',
+    path: '/v3/mail/send',
+    body: mail.toJSON()
+  });
+   
+  sg.API(request, function (error, response) {
+    if (error) {
+      console.log('Error response received');
+    }
+    console.log(response.statusCode);
+    console.log(response.body);
+    console.log(response.headers);
+  });
+}
 
  
 
-  ngOnInit() {
+  ngOnInit() { 
+
     this.art.returnUID().then((data)=>{
       // this.userId = data[0].userId.uid;
       this.tempName =data[0].name;
@@ -134,7 +174,6 @@ export class ViewPage implements OnInit{
         backBTN[0].style.transform = "translateY(-100%)";
         backBTN[0].style.transition = 0.5 + "s";   
         // toolbar[0].style.background = "linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0))"
-   
       }
       else if(event.directionY == 'up' && event.deltaY < -30){
         backBTN[0].style.transform="translateY(0%)";
@@ -179,7 +218,7 @@ export class ViewPage implements OnInit{
         uid:uid,
         currentUserId:currentUserId
       }
-      this.navCtrl.push(OrderPage, { obj: obj });
+      this.navCtrl.push(OrderModalPage, { obj: obj });
       // console.log("person posted " + uid + " | " + "person viewing " + this.userId);
       
 

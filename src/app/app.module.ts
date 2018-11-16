@@ -38,7 +38,7 @@ firebase.initializeApp({
   databaseURL: "https://databaseofstreetart.firebaseio.com",
   projectId: "databaseofstreetart",
   storageBucket: "databaseofstreetart.appspot.com",
-  messagingSenderId: "394201594315"
+  messagingSenderId:"394201594315"
 })
 
 

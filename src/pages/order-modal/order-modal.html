@@ -3,7 +3,7 @@
     <ion-title>Order</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content>
+<ion-content padding class="body">
 
   <!-- <div class="message"> -->
   <!-- use ngFor to loop all sent messages -->
@@ -45,10 +45,30 @@
       <p>Price:{{price}}</p>
     </ion-card-content>
   </ion-card>
-  <ion-list *ngFor="let a of arrMsg">
-    <p>{{a.message}}</p>
-    <p>{{a.uid}}</p>
-    <p>{{a.time}}</p>
+  <ion-list *ngFor="let a of arrMsg" class="theList">
+    <div class="receivedTail">
+      <div class="leftTail"></div>
+    </div>
+    <!-- <div class="sent">
+      <p>{{a.message}}</p>
+      <br>
+      <p>{{a.uid}}</p>
+      <p>{{a.time}}</p>
+    </div> -->
+    <ion-grid class={{side}}>
+      <ion-row>
+        <ion-col>{{a.message}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col align="right">{{a.time}}
+          <p class="uid" (click)="uidDecides()">{{a.uid}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div class="sentTail">
+      <div class="rightTail"></div>
+    </div>
+
   </ion-list>
 </ion-content>
 <ion-footer no-padding>
@@ -58,7 +78,7 @@
         <ion-input type="text" [(ngModel)]="message" placeholder="Message here..." id="commentTXT"></ion-input>
       </ion-col>
       <ion-col col-2 class="centerIt">
-        <button ion-button class="sendBtn" item-end icon-only large (click)="sendMesssage()">
+        <button ion-button class="sendBtn" item-end icon-only large (click)="sendRequest()">
           <ion-icon name="send"></ion-icon>
         </button>
       </ion-col>

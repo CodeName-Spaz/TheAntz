@@ -71,7 +71,7 @@ export class ChatsPage {
   // console.log(this.artId);
 
 
-    let currentUserId =firebase.auth().currentUser.uid
+    let currentUserId = firebase.auth().currentUser.uid
     firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
       this.retriveCustomerDetails.length =0;
       let infor = data.val();
