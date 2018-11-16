@@ -700,14 +700,7 @@ export class StreetartzProvider {
     return new Promise((accpt, rej) => {
       let dateObj = new Date
       let currentUser = firebase.auth().currentUser.uid;
-      console.log(currentUser)
-      console.log(userkey)
-      console.log(artkey)
-      console.log(message)
       let time = dateObj.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1")
-      console.log("message user id");
-      console.log(currentUser)
-      console.log(artkey)
       firebase.database().ref('messages/' + userkey).child(artkey).push({
         message: message,
         uid: currentUser,
@@ -719,9 +712,10 @@ export class StreetartzProvider {
     return new Promise((accpt, rej) => {
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
-        this.arrMssg.length = 0;
+    
         let infor1 = data.val();
         if (data.val() != null || data.val() != undefined) {
+          this.arrMssg.length = 0;
           let keys = Object.keys(infor1);
         }
         firebase.database().ref('messages/' + userkey).child(artkey).on('value', data2 => {
@@ -745,7 +739,7 @@ export class StreetartzProvider {
             // this.arrMssg.length = 0;
             let infor3 = data3.val();
             if (data3.val() != null || data3.val() != undefined) {
-              // this.arrMssg.length =0;
+              this.arrMssg.length =0;
               let keys3 = Object.keys(infor3);
               for (var i = 0; i < keys3.length; i++) {
                 let k = keys3[i]
