@@ -92,36 +92,39 @@ export class CategoryPage {
         }
       }
       if (this.category == "All") {
+        this.categoryArr.length =0;
         this.art.viewPicMain().then((data: any) => {
-          var keys: any = Object.keys(data);
-          console.log(keys);
-          for (var i = 0; i < keys.length; i++) {
-            var k = keys[i];
-            let obj = {
-              category: data[k].category,
-              downloadurl: data[k].downloadurl,
-              name: data[k].name,
-              key: k,
-              url: data[k].url,
-              uid: data[k].uid,
-              comments: data[k].comments,
-              username: data[k].username,
-              likes: data[k].likes,
-              email: data[k].email,
-              location: data[k].location,
-              price: data[k].price,
-            }
-            this.categoryArr.push(obj);
-            console.log(this.categoryArr);
-            this.categoryArr.reverse();
-          }
+          // var keys: any = Object.keys(data);
+          // console.log(keys);
+          // for (var i = 0; i < keys.length; i++) {
+        
+          //   var k = keys[i];
+          //   let obj = {
+          //     category: data[k].category,
+          //     downloadurl: data[k].downloadurl,
+          //     name: data[k].name,
+          //     key: k,
+          //     url: data[k].url,
+          //     uid: data[k].uid,
+          //     comments: data[k].comments,
+          //     username: data[k].username,
+          //     likes: data[k].likes,
+          //     email: data[k].email,
+          //     location: data[k].location,
+          //     price: data[k].price,
+          //   }
+          //   this.categoryArr.push(obj);
+          //   console.log(this.categoryArr);
+          //   this.categoryArr.reverse();
+          // }
           this.categoryArr = data;
+          this.categoryArr.reverse();
         })
       }
     })
   }
   retreivePics() {
-    this.art.viewPicMain().then((data:any) => {
+    this.art.viewPicMain().then((data: any) => {
       // let keys:any = Object.keys(data);
       // console.log(keys);
       // for (var i = 0; i < keys.length; i++) {
@@ -146,7 +149,8 @@ export class CategoryPage {
       //   console.log(this.categoryArr);
       //   this.categoryArr.reverse();
       // }
-this.categoryArr = data;
+      this.categoryArr = data;
+      this.categoryArr.reverse();
     })
   }
   pushArtistDetails(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid) {

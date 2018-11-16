@@ -4,7 +4,9 @@ import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { ViewInforPage } from '../view-infor/view-infor';
-/**
+
+
+/**;
  * Generated class for the OrderModalPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
@@ -29,8 +31,7 @@ export class OrderModalPage implements OnInit {
   location;
   numlikes;
   numComments;
-    message;
-
+  message;
   arr = [];
   tempName;
   uid: any;
@@ -38,10 +39,10 @@ export class OrderModalPage implements OnInit {
   tempemail;
   height;
   retriveCustomerDetails = [];
-  display=[];
+  display = [];
   currentUserId;
-  arrMsg=[];
-  messageRead="message read"
+  arrMsg = [];
+  messageRead = "message read"
   obj = this.navParams.get("obj");
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public toastCtrl: ToastController) {
@@ -63,8 +64,13 @@ export class OrderModalPage implements OnInit {
     this.uid = this.obj.uid;
     this.currentUserId = this.obj.currentUserId;
 
-    console.log(this.obj.currentUserId);
+    console.log(this.currentUserId);
     console.log(this.obj.uid);
+    // console.log(this.downloadurl1);
+    console.log(this.obj.name)
+    console.log(this.obj.username);
+
+    console.log(this.obj.pic);
 
 
     // this.currentUserId =firebase.auth().currentUser.uid
@@ -82,15 +88,17 @@ export class OrderModalPage implements OnInit {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      // console.log(this.tempName);
-      //  console.log(this.tempdownloadurl);
+      console.log(this.tempName);
+       console.log(this.tempdownloadurl);
     })
     this.getData();
   }
 
+
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad OrderModalPage');
-    this.getData();
+    // this.getData();
   }
   ngOnInit() {
     this.art.returnUID().then((data) => {
@@ -107,15 +115,15 @@ export class OrderModalPage implements OnInit {
     // console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
 
     // console.log(event);
-    
+
     var wMark = document.getElementsByClassName('watermarks') as HTMLCollectionOf<HTMLElement>;
     this.height = event.path[0].clientHeight;
-    wMark[0].style.top = (this.height /3) + "px";
+    wMark[0].style.top = (this.height / 3) + "px";
     wMark[0].style.transform = "translateY(-50px)";
     wMark[0].style.width = 100 + "%";
     // wMark[0].style.transform = "TranslateY(500px)"
     // console.log(this.height);
-    
+
   }
   imageSize() {
     setTimeout(() => {
@@ -132,49 +140,8 @@ export class OrderModalPage implements OnInit {
 
     // this.downloadurls = this.obj.pic;
   }
-  sendInformation() {
-    this.display.length =0;
-    var user = firebase.auth().currentUser;
-    firebase.database().ref('Orders/' + this.obj.uid).push({
-      tempName: this.tempName,
-      tempdownloadurl: this.tempdownloadurl,
-      email: this.tempemail,
-      name1: this.obj.name1,
-      price: this.obj.price,
-      uid:this.obj.uid,
-      downloadurl: this.obj.pic,
-      messageRead :"message read",
-      // message:this.message,
-      currentUserId:this.currentUserId
- 
-    })
-    // firebase.database().ref('Orders/' + this.currentUserId).push({
-    //   tempName: this.tempName,
-    //   tempdownloadurl: this.tempdownloadurl,
-    //   email: this.tempemail,
-    //   name1: this.obj.name1,
-    //   price: this.obj.price,
-    //   uid:this.obj.uid,
-    //   downloadurl: this.obj.pic,
-    //   messageRead :"message read",
-    //   message:this.message,
-    //   currentUserId:this.currentUserId
- 
-    // })
-    //  this.message=""
-    
-    console.log(this.obj.uid);
-    console.log(this.currentUserId);
 
-    const toast = this.toastCtrl.create({
-      message: 'you have made ur booking!',
-      duration: 3000
-    });
-    toast.present();
-    // this.BuyArt(this.obj.pic, name, this.obj.key, this.obj.url,this.obj.email,this.obj.username,this.obj.price,this.obj.name1,this.obj.uid,this.currentUserId);
-    // this.sendMesssage();
-  }
-  BuyArt(pic, name, key, url, email, username, price, name1,uid,currentUserId) {
+  BuyArt(pic, name, key, url, email, username, price, name1, uid, currentUserId) {
     let obj = {
       name: name,
       pic: pic,
@@ -185,12 +152,12 @@ export class OrderModalPage implements OnInit {
       location: location,
       price: price,
       name1: name1,
-      uid:uid,
-      currentUserId:currentUserId
+      uid: uid,
+      currentUserId: currentUserId
     }
     this.navCtrl.push(ViewInforPage, { obj: obj });
 
-}
+  }
   retrieveINformation() {
     firebase.database().ref('Orders/' + this.obj.uid).on("value", (data: any) => {
       data = data.val();
@@ -198,22 +165,25 @@ export class OrderModalPage implements OnInit {
       console.log(this.obj.uid);
     })
   }
-  
-  sendMesssage(){
-    // this.sendInformation();
+
+  sendMesssage() {
     let a = this.obj.uid;
-    if (this.obj.uid == this.currentUserId) {
+    console.log(a);
+
+    if (a == this.currentUserId) {
 
     }
-    this.art.BuyPicture(this.currentUserId,this.obj.uid,this.message).then((data) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+      this.arrMsg = data;
       console.log(data);
+
     })
-  
+
   }
   getData() {
-    let a = this.obj.uid;
-    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message).then((data: any) => {
-      this.arrMsg.length = 0;
+    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+      console.log(this.arrMsg);
+
       this.arrMsg = data;
     })
   }
