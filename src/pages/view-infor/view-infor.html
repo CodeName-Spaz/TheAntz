@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="secondary">
-    <ion-title>{{name1}}</ion-title>
+    <ion-title>{{tempName}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="body">
@@ -11,37 +11,18 @@
         <ion-avatar item-start>
           <img src="{{tempdownloadurl}}">
         </ion-avatar>
-        <h2 class="client">{{tempName}}</h2>
+        <h2 class="client">{{name1}}</h2>
       </ion-item>
     </ion-card>
   </div>
   <div padding>
     <ion-list>
-      <!-- <ion-card>
-        <p>{{a.message}}</p>
-        <p>{{a.uid}}</p>
-        <p>{{a.time}}</p>
-      </ion-card> -->
-      <!-- <div class="wrapper">
-        <div class="leftSpace"></div>
-        <div *ngFor="let a of arrMsg" class="{{condition}}">
-          <div class="leftTail"></div>
-          <p>{{a.message}}</p><br>
-          <p>{{a.uid}}</p>
-          <p class="time">{{a.time}}</p>
-          <div class="rightTail"></div>
-        </div>
-        <div class="rightSpace"></div>
-      </div> -->
       <div *ngFor="let a of arrMsg" class="wrapper">
         <div class="cont">
           <div *ngIf="a.uid === currentUserId" class="flexer">
             <div class="conter">
-              <!-- <div class="spacer">space</div> -->
               <div>
                 <div class="msgSent">
-
-                  <!-- <p>{{a.uid}}</p> -->
                   <p class="toFlip">{{a.message}}</p>
                   <br>
                   <p class="refSent">{{a.time}}</p>
