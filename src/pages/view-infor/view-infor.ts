@@ -31,6 +31,7 @@ export class ViewInforPage {
   primaryKey;
   foreignKey;
   // message;
+  condition="";
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
@@ -49,11 +50,11 @@ export class ViewInforPage {
 
 
     console.log(this.currentUserId);
-    // console.log(this.obj.uid);
+    console.log(this.obj.uid);
     // console.log(this.currentUser);
 
-    this.currentUser = firebase.auth().currentUser.uid
-      console.log(this.currentUser)
+    // this.currentUser = firebase.auth().currentUser.uid
+    // console.log(this.obj.currentUser)
     // alert("art currentuser" + this.currentUserId+ " client userid " + currentUser);
 
     // if(this.currentUserId == currentUser){
@@ -63,7 +64,7 @@ export class ViewInforPage {
     // }
     this.list.length = 0;
 
-  
+
     this.getData();
   }
 
@@ -73,33 +74,25 @@ export class ViewInforPage {
   }
 
   send(currentUserId) {
-    let a = this.obj.uid;
-    if (this.currentUser == this.currentUserId) {
-
-    }
-    this.art.BuyPicture(this.currentUser, this.currentUserId, this.message).then((data) => {
+    this.art.BuyPicture(this.currentUserId,this.obj.uid,this.message).then((data) => {
       console.log(data);
     })
-    // this.showDetails(currentUserId);
   }
-  
+
   showDetails(currentUserId) {
     let obj = {
-      currentUserId:currentUserId
+      currentUserId: currentUserId
     }
-
     this.navCtrl.push(ViewInforPage, { obj: obj });
-
-    
-    // document.getElementById("chats").style.backgroundColor="blue"
-  
   }
   getData() {
-    this.art.retrieveChats(this.currentUser, this.currentUserId, this.message).then((data: any) => {
-      // this.arrMsg.length = 0;
+    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
       this.arrMsg = data;
-      this.arrMsg.reverse();
+      console.log(this.arrMsg);
     })
+
   }
+
+
 
 }

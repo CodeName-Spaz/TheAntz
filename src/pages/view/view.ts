@@ -7,6 +7,7 @@ import { CategoryPage } from '../category/category';
 import { OrderModalPage } from '../order-modal/order-modal';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 /**
@@ -62,6 +63,7 @@ export class ViewPage implements OnInit {
   userId;
   display = [];
   tempemail;
+
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
@@ -85,6 +87,9 @@ export class ViewPage implements OnInit {
 
 
     this.currentUserId = firebase.auth().currentUser.uid
+      
+    console.log(this.currentUserId);
+    console.log(this.obj.uid);
 
     this.Retrivecomments();
     console.log(this.obj.name);
@@ -99,10 +104,14 @@ export class ViewPage implements OnInit {
       this.tempemail = data[0].email;
       console.log(this.tempName);
 
-      // console.log(this.tempdownloadurl);
+      console.log(this.tempdownloadurl);
       this.ifOrderYes();
     })
   }
+
+
+
+
 
 
 
@@ -153,6 +162,8 @@ export class ViewPage implements OnInit {
     }
     if (event.scrollTop < 10) {
       toolbar[0].style.transition = 700 + "ms";
+
+
     }
 
 
@@ -166,24 +177,20 @@ export class ViewPage implements OnInit {
     this.display.length = 0;
     console.log(this.currentUserId);
     console.log(this.obj.uid);
-    // if(this.currentUserId != this.currentUserId){
-      var user = firebase.auth().currentUser;
-      firebase.database().ref('Orders/' + this.obj.uid).push({
-        tempName: this.tempName,
-        tempdownloadurl: this.tempdownloadurl,
-        email: this.tempemail,
-        name1: this.obj.name1,
-        price: this.obj.price,
-        uid: this.obj.uid,
-        downloadurl: this.obj.pic,
-        currentUserId: this.currentUserId
-  
-      })
-    }
-    // else{
-    //   console.log('already ordered the imagine!')
-    // }
-  // }
+    var user = firebase.auth().currentUser;
+    firebase.database().ref('Orders/' + this.obj.uid).push({
+      tempName: this.tempName,
+      tempdownloadurl: this.tempdownloadurl,
+      email: this.tempemail,
+      name1: this.obj.name1,
+      price: this.obj.price,
+      uid: this.obj.uid,
+      downloadurl: this.obj.pic,
+      currentUserId: this.currentUserId
+
+    })
+  }
+
 
   BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid, currentUserId) {
     let obj = {
