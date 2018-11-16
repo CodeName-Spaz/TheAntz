@@ -38,49 +38,26 @@ export class ChatsPage {
   key;
   list = [];
   retriveCustomerDetails = [];
-  xxx ;
+  xxx;
   currentUserId;
   artId;
-  // obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams,public art: StreetartzProvider) {
-    // this.obj = this.navParams.get("obj");
+  tempUid;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
 
-    // console.log(this.obj.tempName);
-    // console.log(this.obj.downloadurl);
-    // this.downloadurl = this.obj.downloadurl;
-    // this.email = this.obj.email;
-    // this.price = this.obj.price;
-    // this.name1 = this.obj.name1;
-    // this.tempdownloadurl = this.obj.tempdownloadurl
-    // this.tempName = this.obj.tempName;
-    // this.currentUserId = this.obj.currentUserId;
-    // this.currentUser =this.obj.currentUser 
- 
-
-
-
-
-
-
-// This is my user ID as the peson logged in
     let currentUser = firebase.auth().currentUser.uid;
     console.log(currentUser);
-   
-
-  //   this.artId = firebase.auth().currentUser.uid;
-  // console.log(this.artId);
 
 
-    let currentUserId = firebase.auth().currentUser.uid
+    let currentUserId =firebase.auth().currentUser.uid
+    console.log(currentUserId);
     firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
-      this.retriveCustomerDetails.length =0;
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
+        this.retriveCustomerDetails.length =0;
         let keys = Object.keys(infor);
           firebase.database().ref('Orders/' + currentUserId).on("value", (data2: any) => {
             let inforKey = data2.val();
             let keys2 = Object.keys(inforKey);
-            // console.log(keys2);
             for(var i =0; i< keys.length;i++){
             var k = keys2[i];
             let obj = {
@@ -93,6 +70,7 @@ export class ChatsPage {
               message: inforKey[k].message,
               messageRead:infor[k].messageRead,
               currentUserId:infor[k].currentUserId,
+              uid:infor[k].uid,
               key:k
 
             }
@@ -101,8 +79,13 @@ export class ChatsPage {
             }
           })
         }
-    })
-  }
+    })  
+
+  
+  
+}
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ChatsPage');
@@ -112,7 +95,7 @@ export class ChatsPage {
 
   }
 
-  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message,key,currentUserId,currentUser) {
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message, key, currentUserId, uid) {
     let obj = {
       downloadurl: downloadurl,
       tempName: tempName,
@@ -121,16 +104,12 @@ export class ChatsPage {
       name1: name1,
       email: email,
       message: message,
-      key:key,
-      currentUserId:currentUserId,
-      currentUser:currentUser
+      key: key,
+      uid: uid,
+      currentUserId: currentUserId
     }
 
     this.navCtrl.push(ViewInforPage, { obj: obj });
-
-    
-    // document.getElementById("chats").style.backgroundColor="blue"
-  
   }
 
 
