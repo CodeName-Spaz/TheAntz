@@ -51,6 +51,8 @@ export class ViewInforPage {
 
     console.log(this.currentUserId);
     console.log(this.obj.uid);
+    console.log(this.name1);
+    console.log(this.tempName);
     // console.log(this.currentUser);
 
     // this.currentUser = firebase.auth().currentUser.uid
@@ -101,7 +103,7 @@ export class ViewInforPage {
   }
 
   send(currentUserId) {
-    this.art.BuyPicture(this.currentUserId,this.obj.uid,this.message).then((data) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data) => {
       console.log(data);
     })
   }
@@ -113,7 +115,7 @@ export class ViewInforPage {
     this.navCtrl.push(ViewInforPage, { obj: obj });
   }
   getData() {
-    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message).then((data: any) => {
       this.arrMsg = data;
       console.log(this.arrMsg);
     })
