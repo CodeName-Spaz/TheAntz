@@ -55,20 +55,26 @@
 
   <ion-header>
       <ion-navbar color="secondary">
-        <ion-title>{{name1}} </ion-title>
+        <ion-title>{{username}} </ion-title>
       </ion-navbar>
     </ion-header>
     <ion-content class="body">
       <div class="image">
-        <img src="{{downloadurl}}">
-        <ion-card class="buyer">
+        <img class="ordered" alt="orderedImage" src="{{downloadurl}}">
+        <!-- <ion-card class="buyer">
           <ion-item class="myName">
             <ion-avatar item-start>
               <img src="{{tempdownloadurl}}">
             </ion-avatar>
-            <h2 class="client">{{tempName}}</h2>
+            <h2 class="client">{{name1}}</h2>
           </ion-item>
-        </ion-card>
+        </ion-card> -->
+        <ion-item no-lines>
+          <ion-avatar item-start>
+            <img src="{{tempdownloadurl}}" alt="">
+          </ion-avatar>
+          <h2>{{name1}}</h2>
+        </ion-item>
       </div>
       <div padding>
         <ion-list>

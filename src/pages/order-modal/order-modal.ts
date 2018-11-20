@@ -76,7 +76,7 @@ export class OrderModalPage implements OnInit {
 
     this.currentUser = firebase.auth().currentUser.uid
 
-    console.log(this.currentUser);
+    console.log(this.obj.username);
 
 
     // this.currentUserId =firebase.auth().currentUser.uid
@@ -114,6 +114,8 @@ export class OrderModalPage implements OnInit {
       // console.log(this.tempemail);
       this.imageSize()
       //  console.log(this.tempdownloadurl);
+      console.log(data);
+      
     })
   }
   uidDecides() {
