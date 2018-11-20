@@ -31,12 +31,12 @@ import { ViewInforPage } from '../pages/view-infor/view-infor';
 
 
 firebase.initializeApp({
-  apiKey: "AIzaSyDZ8tUCNUDG2-WR1T-VN2KRhwVGa3549PQ",
-  authDomain: "streetartworkdatabase.firebaseapp.com",
-  databaseURL: "https://streetartworkdatabase.firebaseio.com",
-  projectId: "streetartworkdatabase",
-  storageBucket: "streetartworkdatabase.appspot.com",
-  messagingSenderId: "439134242843"
+  apiKey: "AIzaSyANfL1d1MMKd-72kO3eYEgVE5Jr24I21bw",
+  authDomain: "databaseofstreetart.firebaseapp.com",
+  databaseURL: "https://databaseofstreetart.firebaseio.com",
+  projectId: "databaseofstreetart",
+  storageBucket: "databaseofstreetart.appspot.com",
+  messagingSenderId: "394201594315"
 })
 
 @NgModule({
