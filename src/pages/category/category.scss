@@ -123,6 +123,7 @@ page-category {
         height: auto;
         width: 35px;
         border-radius:50%;
+        object-fit: cover;
     }
     @media screen and (min-width: 550px){
         .smaller{
