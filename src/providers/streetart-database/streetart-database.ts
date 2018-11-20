@@ -700,14 +700,65 @@ export class StreetartzProvider {
     return new Promise((accpt, rej) => {
       let dateObj = new Date
       let currentUser = firebase.auth().currentUser.uid;
-      let time = dateObj.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1")
+      let time = dateObj.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+      var resuls;
+      // if (currentUser == artkey){
+      //   resuls =  false;
+      // }
+      // else{
+      //   resuls = true;
+      // }
+      resuls = false;
       firebase.database().ref('messages/' + userkey).child(artkey).push({
         message: message,
         uid: currentUser,
-        time: time
+        time: time,
+        status: resuls
       })
     })
   }
+
+  getOrders(){
+    return new Promise((accpt, rej) =>{
+      this.retriveCustomerDetails.length = 0;
+      let currentUser = firebase.auth().currentUser.uid;
+      console.log(currentUser);
+      let currentUserId =firebase.auth().currentUser.uid
+      console.log(currentUserId);
+      firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
+        let infor = data.val();
+        if(data.val() !=null || data.val() !=undefined){
+          this.retriveCustomerDetails.length =0;
+          let keys = Object.keys(infor);
+            firebase.database().ref('Orders/' + currentUserId).on("value", (data2: any) => {
+              let inforKey = data2.val();
+              let keys2 = Object.keys(inforKey);
+              for(var i =0; i< keys.length;i++){
+              var k = keys2[i];
+              let obj = {
+                tempName: inforKey[k].tempName,
+                tempdownloadurl: inforKey[k].tempdownloadurl,
+                name1: inforKey[k].name1,
+                price: infor[k].price,
+                email: infor[k].email,
+                downloadurl: inforKey[k].downloadurl,
+                message: inforKey[k].message,
+                messageRead:infor[k].messageRead,
+                currentUserId:infor[k].currentUserId,
+                uid:infor[k].uid,
+                key:k
+              }
+              this.retriveCustomerDetails.push(obj)
+              console.log(this.retriveCustomerDetails);  
+              }
+            })
+            accpt(this.retriveCustomerDetails)
+          }
+      })  
+    })
+ 
+  }
+
   retrieveChats(artkey,userkey, message) {
     return new Promise((accpt, rej) => {
       let currentUser = firebase.auth().currentUser.uid;
@@ -729,10 +780,9 @@ export class StreetartzProvider {
               let obj = {
                 message: infor2[k].message,
                 time: infor2[k].time,
-                uid: infor2[k].uid
+                uid: infor2[k].uid,
               }
               this.arrMssg.push(obj);
-            
             }
           }
           firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
@@ -746,19 +796,75 @@ export class StreetartzProvider {
                 let obj = {
                   message: infor3[k].message,
                   time: infor3[k].time,
-                  uid: infor3[k].uid
+                  uid: infor3[k].uid,
                 }
                 this.arrMssg.push(obj);
-                console.log(this.arrMssg);
               }
             }
           })
         })
+         accpt(this.arrMssg);
       })
-      accpt(this.arrMssg);
     })
-
   }
+
+
+    getMessages(artkey,userkey){
+      return new Promise((accpt, rej) => {
+        firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
+          // this.arrMssg.length = 0;
+          let infor3 = data3.val();
+          if (data3.val() != null || data3.val() != undefined) {
+            this.arrMssg.length =0;
+            let keys3 = Object.keys(infor3);
+            let obj = {}
+            for (var i = 0; i < keys3.length; i++) {
+              let k = keys3[i]
+                obj = {
+                message: infor3[k].message,
+                time: infor3[k].time,
+                uid: infor3[k].uid,
+                status : infor3[k].status
+              }
+            }
+            accpt(obj)
+          }
+        })
+      })
+    }
+    usersIds = [];
+    checkOrder(userid, url){
+      return new Promise((accpt, rej) =>{
+        firebase.database().ref('Orders/' + userid).on("value", (data: any) => {
+          let currentUser = firebase.auth().currentUser.uid;
+          let results;
+          if(data.val() !=null || data.val() !=undefined){
+            let Orders =  data.val();
+            let keys =  Object.keys(Orders);
+            for (var x = 0; x < keys.length; x++){
+              firebase.database().ref('Orders/' + userid + '/' + keys[x]).on("value", (data2: any) => { 
+              this.usersIds.push(data2.val())
+              })
+            }
+            for (var i = 0; i < this.usersIds.length; i++){
+              console.log(results)
+             if ( this.usersIds[i].currentUserId == currentUser && url == this.usersIds[i].downloadurl){
+              results = "found"
+              accpt(results);
+              break;
+             }
+             else{
+                results = "not found"
+             }
+            }
+           accpt(results);
+          }
+          else{
+        accpt("not found");
+          }
+        })
+      })
+    }
   display(){
     return new Promise((accpt, rej) => {
     let currentUserId =firebase.auth().currentUser.uid
@@ -785,7 +891,6 @@ export class StreetartzProvider {
               currentUserId:infor[k].currentUserId,
               uid:infor[k].uid,
               key:k
-
             }
             this.retriveCustomerDetails.push(obj)
             console.log(this.retriveCustomerDetails);  
