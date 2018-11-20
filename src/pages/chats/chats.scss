@@ -4,12 +4,36 @@ page-chats {
         transform: translateY(-25%);
         text-align: center;
     }
+    .italics{
+        position: absolute;
+        font-size: 13px;
+        bottom: 15px;
+        color: grey
+    }
+    .italics1{
+        position: absolute;
+        font-size: 13px;
+        right: 10px;
+        top: 30px;
+    }
     .body{
         background: whitesmoke;
     }
     .client{
         box-shadow: 0 5px 5px rgba(1, 17, 39, 0.24);
         border-radius: 10px;
+        text-align: left;
+        position: relative;
+        padding-right: 10px;
+        height: 80px;
+    }
+    .cover{
+        width: 30px;
+        height: 30px; background: white;
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        bottom: 0;
     }
     .secondary{
         background: linear-gradient(rgba(0, 0, 0,0.4),rgba(0, 0, 0, 0));
@@ -19,6 +43,9 @@ page-chats {
     }
     .caps{
         text-transform: capitalize;
+        font-weight: bolder;
+        width: 100px;
+        
     }
     .no-data{
         margin-top:40%;

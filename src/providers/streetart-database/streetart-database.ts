@@ -832,7 +832,39 @@ export class StreetartzProvider {
         })
       })
     }
-
+    usersIds = [];
+    checkOrder(userid, url){
+      return new Promise((accpt, rej) =>{
+        firebase.database().ref('Orders/' + userid).on("value", (data: any) => {
+          let currentUser = firebase.auth().currentUser.uid;
+          let results;
+          if(data.val() !=null || data.val() !=undefined){
+            let Orders =  data.val();
+            let keys =  Object.keys(Orders);
+            for (var x = 0; x < keys.length; x++){
+              firebase.database().ref('Orders/' + userid + '/' + keys[x]).on("value", (data2: any) => { 
+              this.usersIds.push(data2.val())
+              })
+            }
+            for (var i = 0; i < this.usersIds.length; i++){
+              console.log(results)
+             if ( this.usersIds[i].currentUserId == currentUser && url == this.usersIds[i].downloadurl){
+              results = "found"
+              accpt(results);
+              break;
+             }
+             else{
+                results = "not found"
+             }
+            }
+           accpt(results);
+          }
+          else{
+        accpt("not found");
+          }
+        })
+      })
+    }
   display(){
     return new Promise((accpt, rej) => {
     let currentUserId =firebase.auth().currentUser.uid
