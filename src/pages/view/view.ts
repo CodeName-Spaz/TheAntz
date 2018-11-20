@@ -97,6 +97,7 @@ export class ViewPage implements OnInit {
     this.Retrivecomments();
     console.log(this.obj.name);
     console.log(this.obj.pic);
+    console.log(this.obj.username);
     // console.log(this.uid);
     console.log(this.obj.url)
     // console.log(this.currentUserId);
@@ -177,6 +178,12 @@ export class ViewPage implements OnInit {
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   sendInformation() {
+    this.art.checkOrder(this.obj.uid,this.downloadurl ).then(data =>{
+      console.log(data)
+      if (data == "found"){
+        console.log("found")
+      }
+      else if (data == "not found"){
     this.display.length = 0;
     console.log(this.currentUserId);
     console.log(this.obj.uid);
@@ -190,8 +197,10 @@ export class ViewPage implements OnInit {
       uid: this.obj.uid,
       downloadurl: this.obj.pic,
       currentUserId: this.currentUserId
-
     })
+      }
+    })
+
   }
 
 

@@ -42,53 +42,53 @@ export class ChatsPage {
   currentUserId;
   artId;
   tempUid;
+  displayCurentMessages = []
+  arrMsg = new Array();
+  color;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
-
-    let currentUser = firebase.auth().currentUser.uid;
-    console.log(currentUser);
-
-
-    let currentUserId =firebase.auth().currentUser.uid
-    console.log(currentUserId);
-    firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
-      let infor = data.val();
-      if(data.val() !=null || data.val() !=undefined){
-        this.retriveCustomerDetails.length =0;
-        let keys = Object.keys(infor);
-          firebase.database().ref('Orders/' + currentUserId).on("value", (data2: any) => {
-            let inforKey = data2.val();
-            let keys2 = Object.keys(inforKey);
-            for(var i =0; i< keys.length;i++){
-            var k = keys2[i];
-            let obj = {
-              tempName: inforKey[k].tempName,
-              tempdownloadurl: inforKey[k].tempdownloadurl,
-              name1: inforKey[k].name1,
-              price: infor[k].price,
-              email: infor[k].email,
-              downloadurl: inforKey[k].downloadurl,
-              message: inforKey[k].message,
-              messageRead:infor[k].messageRead,
-              currentUserId:infor[k].currentUserId,
-              uid:infor[k].uid,
-              key:k
-
-            }
-            this.retriveCustomerDetails.push(obj)
-            console.log(this.retriveCustomerDetails);  
-            }
-          })
-        }
-    })  
-
-  
-  
+// this.art.getOrders().then((data:any) =>{
+//   this.retriveCustomerDetails = data;
+//   this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
+// })
 }
 
+getData(id, user, message) {
+  this.art.getMessages(id, user).then((data:any) =>{
+    console.log(data)
+    for(var x =0; x< length;x++){
+      if (data.status == true){
+        this.color = "light";
+      }
+      else{
+        this.color = "dangers"
+      }
+      let obj = {
+        tempName: this.retriveCustomerDetails[x].tempName,
+        tempdownloadurl: this.retriveCustomerDetails[x].tempdownloadurl,
+        name1:this.retriveCustomerDetails[x].name1,
+        price:this.retriveCustomerDetails[x].price,
+        email: this.retriveCustomerDetails[x].email,
+        downloadurl: this.retriveCustomerDetails[x].downloadurl,
+        message:   data.message,
+        time :  data.time,
+        messageRead:this.retriveCustomerDetails[x].messageRead,
+        currentUserId:this.retriveCustomerDetails[x].currentUserId,
+        uid:this.retriveCustomerDetails[x].uid,
+        key:this.retriveCustomerDetails[x].key,
+        color : this.color
+      }
+      this.displayCurentMessages.push(obj)
+    }
+  })
+}
 
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChatsPage');
+  ionViewDidEnter() {
+    this.displayCurentMessages.length = 0;
+    this.retriveCustomerDetails.length = 0;
+    this.art.getOrders().then((data:any) =>{
+      this.retriveCustomerDetails = data;
+      this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
+    })
   }
   scroll(event) {
     // console.log(event);
