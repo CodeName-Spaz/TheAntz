@@ -95,9 +95,9 @@ export class ViewPage implements OnInit {
     console.log(this.obj.name);
     console.log(this.obj.pic);
     console.log(this.obj.username);
-    // console.log(this.uid);
+    console.log(this.uid);
     console.log(this.obj.url)
-    // console.log(this.currentUserId);
+    console.log(this.currentUserId);
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
@@ -117,6 +117,7 @@ export class ViewPage implements OnInit {
 
 
   ngOnInit() {
+    this.Retrivecomments() 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;

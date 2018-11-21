@@ -36,8 +36,6 @@ export class ViewInforPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
 
-    // console.log(this.obj.tempName);
-    // console.log(this.obj.downloadurl);
     this.downloadurl = this.obj.downloadurl;
     this.email = this.obj.email;
     this.price = this.obj.price;
@@ -53,17 +51,7 @@ export class ViewInforPage {
     console.log(this.obj.uid);
     console.log(this.name1);
     console.log(this.tempName);
-    // console.log(this.currentUser);
-
-    // this.currentUser = firebase.auth().currentUser.uid
-    // console.log(this.obj.currentUser)
-    // alert("art currentuser" + this.currentUserId+ " client userid " + currentUser);
-
-    // if(this.currentUserId == currentUser){
-
-
-
-    // }
+  
     this.list.length = 0;
 
 
@@ -78,6 +66,7 @@ export class ViewInforPage {
   send(currentUserId) {
     this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data) => {
       console.log(data);
+      this.message = "";
     })
   }
 

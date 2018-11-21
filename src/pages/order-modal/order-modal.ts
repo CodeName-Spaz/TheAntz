@@ -176,6 +176,7 @@ export class OrderModalPage implements OnInit {
     this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
       this.arrMsg = data;
       console.log(data);
+      this.message = "";
 
     })
 

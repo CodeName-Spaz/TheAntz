@@ -719,6 +719,12 @@ export class StreetartzProvider {
   }
 
   getOrders(){
+    let loader = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Loading...',
+      duration: 4000000000000000000
+    });
+    loader.present();
     return new Promise((accpt, rej) =>{
       this.retriveCustomerDetails.length = 0;
       let currentUser = firebase.auth().currentUser.uid;
@@ -752,6 +758,7 @@ export class StreetartzProvider {
               console.log(this.retriveCustomerDetails);  
               }
             })
+            loader.dismiss();
             accpt(this.retriveCustomerDetails)
           }
       })  
@@ -828,6 +835,7 @@ export class StreetartzProvider {
               }
             }
             accpt(obj)
+            console.log(obj)
           }
         })
       })

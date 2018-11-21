@@ -52,10 +52,9 @@ export class ChatsPage {
 // })
 }
 
-getData(id, user, message) {
+getData(id, user, message, x) {
   this.art.getMessages(id, user).then((data:any) =>{
     console.log(data)
-    for(var x =0; x< length;x++){
       if (data.status == true){
         this.color = "light";
       }
@@ -78,7 +77,7 @@ getData(id, user, message) {
         color : this.color
       }
       this.displayCurentMessages.push(obj)
-    }
+      console.log(this.displayCurentMessages)
   })
 }
 
@@ -87,7 +86,10 @@ getData(id, user, message) {
     this.retriveCustomerDetails.length = 0;
     this.art.getOrders().then((data:any) =>{
       this.retriveCustomerDetails = data;
-      this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
+      console.log(this.retriveCustomerDetails);
+      for (var x = 0; x < this.retriveCustomerDetails.length; x++){
+        this.getData(this.retriveCustomerDetails[x].currentUserId,this.retriveCustomerDetails[x].uid,"", x)
+      }
     })
   }
   scroll(event) {

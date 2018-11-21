@@ -11,6 +11,7 @@ import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
 import { ChatsPage } from '../chats/chats';
+import { Network } from '@ionic-native/network';
 
 
 /**
@@ -35,7 +36,7 @@ export class CategoryPage {
   username;
   comments;
   userId;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App,public network: Network) {
     this.retreivePics();
   }
   GoToProfilePage() {
@@ -58,6 +59,25 @@ export class CategoryPage {
   // ionViewDidEnter() {
   //   this.retreivePics();
   //   }
+  ionViewDidEnter(){
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network was disconnected ',
+        buttons: ['OK']
+      });
+      alert.present();
+    });
+ 
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network connection has been established',
+        buttons: ['Ok']
+      });
+      alert.present();
+    });
+  }
 
   typeOfArt() {
     this.art.selectCategory(this.category).then((data) => {

@@ -35,16 +35,27 @@ export class UploadImagePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadModalPage');
   }
+  insertImagine(event: any) {
 
-  insertvid(event: any) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
+      if (event.target.files[0].size > 1500000){
+        let alert = this.alertCtrl.create({
+          title: "Oh no!",
+          subTitle: "your photo is too large, please choose a photo with 1.5MB or less.",
+          buttons: ['OK']
+        });
+        alert.present();
       }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(reader.onload);
+      else{
+        reader.onload = (event: any) => {
+          this.url = event.target.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+        console.log(event.target.files[0].size);
+      }
+
     }
   }
   omit_special_char(event) {
