@@ -207,7 +207,7 @@ export class UploadImagePage {
     else {
       this.art.uploadPic(this.url).then(data => {
         this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-          this.navCtrl.setRoot(ProfilePage);
+          this.navCtrl.push(ProfilePage);
         },
           Error => {
             console.log(Error)

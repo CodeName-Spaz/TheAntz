@@ -66,24 +66,10 @@ export class OrderModalPage implements OnInit {
 
     console.log(this.currentUserId);
     console.log(this.obj.uid);
-    // console.log(this.downloadurl1);
     console.log(this.obj.name)
     console.log(this.obj.username);
 
     console.log(this.obj.pic);
-
-
-    // this.currentUserId =firebase.auth().currentUser.uid
-    // console.log(this.currentUserId);
-
-    // let userID = firebase.auth().currentUser;
-    // console.log(userID);
-    // firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
-    //   this.arr.length = 0
-    //   let details = data.val();
-    //   this.arr.push(details);
-    //   console.log(this.arr);
-    // })
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
@@ -117,23 +103,16 @@ export class OrderModalPage implements OnInit {
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   scanner(event) {
-    // console.log(event.path[0].attributes[1].ownerElement.height);
-    // console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
-
-    // console.log(event);
-
     var wMark = document.getElementsByClassName('watermarks') as HTMLCollectionOf<HTMLElement>;
     this.height = event.path[0].clientHeight;
     wMark[0].style.top = (this.height / 3) + "px";
     wMark[0].style.transform = "translateY(-50px)";
     wMark[0].style.width = 100 + "%";
-    // wMark[0].style.transform = "TranslateY(500px)"
-    // console.log(this.height);
+  
 
   }
   imageSize() {
     setTimeout(() => {
-      // this.scanner(event);
     }, 3000);
   }
   sendRequest(currentUserId) {
@@ -143,8 +122,6 @@ export class OrderModalPage implements OnInit {
     info[0].style.transform = "translateX(120%)";
     info[0].style.height = 0 + "px";
     sentMessage[0].style.display = "block";
-
-    // this.downloadurls = this.obj.pic;
   }
 
   BuyArt(pic, name, key, url, email, username, price, name1, uid, currentUserId) {
