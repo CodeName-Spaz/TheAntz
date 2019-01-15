@@ -29,6 +29,8 @@ import { ChatsPage } from '../pages/chats/chats';
 import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { ViewInforPage } from '../pages/view-infor/view-infor';
 import { Network } from '@ionic-native/network';
+import { ScreenOrientation} from '@ionic-native/screen-orientation'
+
 
 firebase.initializeApp({
   apiKey: "AIzaSyBl4zOtPUUJyXFvNLpV9Cdj55wBf_NDY5I",
@@ -81,6 +83,7 @@ firebase.initializeApp({
    ViewInforPage
  ],
  providers: [
+   ScreenOrientation,
    StatusBar,
    SplashScreen,
    EmailComposer,

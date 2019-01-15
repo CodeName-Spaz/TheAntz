@@ -37,6 +37,17 @@ export class UploadImagePage {
   }
   insertImagine(event: any) {
 
+    this.d = 1;
+
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf <HTMLElement>;
+
+    if(this.d == 1){
+      opts[0].style.top = "10vh";
+      // opts[0].style.top = "1500%";
+      console.log(this.d);
+      
+    }
+
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
 
@@ -65,6 +76,16 @@ export class UploadImagePage {
     return ((k >= 48 && k <= 57));
   }
   takepic= function(){
+    this.d = 1;
+
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf <HTMLElement>;
+
+    if(this.d == 1){
+      opts[0].style.top = "10vh";
+      // opts[0].style.top = "1500%";
+      console.log(this.d);
+      
+    }
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -208,7 +229,7 @@ export class UploadImagePage {
 
     let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
     if(this.d == 0){
-      action[0].style.transform = "translateY(-90%)";
+      action[0].style.top = "-25vh";
     action[0].style.transition = 500 + "ms";
     }
 
@@ -221,7 +242,7 @@ export class UploadImagePage {
     console.log(res);
     if (res > 0) {
       let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-      dropAction[0].style.transform = "translateY(0%)";
+      dropAction[0].style.top = "10vh";
     }
 
 

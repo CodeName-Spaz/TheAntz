@@ -89,7 +89,7 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       console.log(this.tempName);
-       console.log(this.tempdownloadurl);
+      //  console.log(this.tempdownloadurl);
     })
     this.getData();
   }

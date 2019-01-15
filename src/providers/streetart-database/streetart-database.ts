@@ -822,7 +822,7 @@ export class StreetartzProvider {
           // this.arrMssg.length = 0;
           let infor3 = data3.val();
           if (data3.val() != null || data3.val() != undefined) {
-            this.arrMssg.length =0;
+            // this.arrMssg.length =0;
             let keys3 = Object.keys(infor3);
             let obj = {}
             for (var i = 0; i < keys3.length; i++) {

@@ -93,10 +93,10 @@ export class ViewPage implements OnInit {
 
     this.Retrivecomments();
     console.log(this.obj.name);
-    console.log(this.obj.pic);
+    // console.log(this.obj.pic);
     console.log(this.obj.username);
-    console.log(this.uid);
-    console.log(this.obj.url)
+    // console.log(this.uid);
+    // console.log(this.obj.url)
     console.log(this.currentUserId);
 
     this.art.returnUID().then((data) => {
@@ -105,7 +105,7 @@ export class ViewPage implements OnInit {
       this.tempemail = data[0].email;
       console.log(this.tempName);
 
-      console.log(this.tempdownloadurl);
+      // console.log(this.tempdownloadurl);
       this.ifOrderYes();
     })
   }

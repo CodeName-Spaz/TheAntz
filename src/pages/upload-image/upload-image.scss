@@ -11,9 +11,12 @@ page-upload-image {
         height: 500px;
         box-shadow: 0 0 5px black;
         position: absolute;
-        top: 1500%;
+        top: 10vh;
         border-top-right-radius: 30px;
         border-top-left-radius: 30px; 
+    }
+    ion-footer{
+        height: 0px;
     }
     // ion-col{
     //     text-align: center;

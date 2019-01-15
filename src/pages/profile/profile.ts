@@ -60,7 +60,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.popToRoot();
   }
   getUid() {
     this.art.getUserID().then(data => {
