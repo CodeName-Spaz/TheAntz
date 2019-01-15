@@ -66,8 +66,8 @@ export class ViewInforPage {
   send(currentUserId) {
     this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data) => {
       console.log(data);
-      this.message = "";
     })
+    this.message = "";
   }
 
   showDetails(currentUserId) {

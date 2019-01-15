@@ -110,6 +110,12 @@ export class OrderModalPage implements OnInit {
       //  console.log(this.tempdownloadurl);
     })
   }
+
+  scan(event) {
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.transform = "TranslateY(-50px)"
+  }
   scanner(event) {
     // console.log(event.path[0].attributes[1].ownerElement.height);
     // console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
@@ -176,10 +182,9 @@ export class OrderModalPage implements OnInit {
     this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
       this.arrMsg = data;
       console.log(data);
-      this.message = "";
 
     })
-
+    this.message = "";
   }
   getData() {
     this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {

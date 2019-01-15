@@ -56,11 +56,6 @@ firebase.initializeApp({
    ChatsPage,
    OrderModalPage,
    ViewInforPage
-
-
-   
-
-
  ],
  imports: [
    BrowserModule, HttpClientModule ,
@@ -84,8 +79,6 @@ firebase.initializeApp({
    ChatsPage,
    OrderModalPage,
    ViewInforPage
-
-
  ],
  providers: [
    StatusBar,
