@@ -58,6 +58,7 @@ export class UploadImagePage {
 
     }
   }
+
   omit_special_char(event) {
     var k;
     k = event.charCode;
@@ -89,7 +90,7 @@ export class UploadImagePage {
       this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
-        subTitle: "Please make sure that all the fields are filled.",
+        subTitle: "Please make sure that all fields are filled.",
         buttons: [
           {
             text: 'Ok',

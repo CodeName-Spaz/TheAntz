@@ -119,7 +119,8 @@ page-category {
         padding-top: 5px;
     }
     .dp{
-        height: auto;
+        height: 35px;
+        object-fit: cover;
         width: 35px;
         border-radius:50%;
     }
@@ -210,8 +211,9 @@ page-category {
             padding-top: 5px;
         }
         .dp{
-            height: auto;
-            width: 35px;
+            // height: 35px;
+            // width: 35px;
+            object-fit: cover;
             border-radius:50%;
         }
     }

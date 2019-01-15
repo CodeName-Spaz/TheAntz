@@ -109,13 +109,6 @@ export class ViewPage implements OnInit {
       this.ifOrderYes();
     })
   }
-
-
-
-
-
-
-
   ngOnInit() {
     this.Retrivecomments() 
     this.art.returnUID().then((data) => {
@@ -228,7 +221,7 @@ export class ViewPage implements OnInit {
   }
 
   Retrivecomments() {
-    this.art.viewComments(this.obj.key, this.comment).then((data) => {
+    this.art.viewComments(this.obj.key, this.comment).then((data:any) => {
       if (data == null || data == undefined) {
       }
       else {

@@ -36,30 +36,14 @@ export class CategoryPage {
   username;
   comments;
   userId;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App,public network: Network) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
   }
   GoToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
-  // ionViewDidLoad() {
-  //   this.art.viewPicMain().then((data:any) => {
-  //     this.categoryArr = data;
-  //     this.categoryArr.reverse();
-  //   })
-  // }
-  // ngAfterViewInit() {
-  //   this.retreivePics();
-  // }
 
-  // ngOnInit() {
-  //   this.retreivePics();
-  // }
-
-  // ionViewDidEnter() {
-  //   this.retreivePics();
-  //   }
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       let alert = this.alertCtrl.create({
         title: '',
@@ -68,7 +52,7 @@ export class CategoryPage {
       });
       alert.present();
     });
- 
+
     let connectSubscription = this.network.onConnect().subscribe(() => {
       let alert = this.alertCtrl.create({
         title: '',
@@ -112,31 +96,8 @@ export class CategoryPage {
         }
       }
       if (this.category == "All") {
-        this.categoryArr.length =0;
+        this.categoryArr.length = 0;
         this.art.viewPicMain().then((data: any) => {
-          // var keys: any = Object.keys(data);
-          // console.log(keys);
-          // for (var i = 0; i < keys.length; i++) {
-        
-          //   var k = keys[i];
-          //   let obj = {
-          //     category: data[k].category,
-          //     downloadurl: data[k].downloadurl,
-          //     name: data[k].name,
-          //     key: k,
-          //     url: data[k].url,
-          //     uid: data[k].uid,
-          //     comments: data[k].comments,
-          //     username: data[k].username,
-          //     likes: data[k].likes,
-          //     email: data[k].email,
-          //     location: data[k].location,
-          //     price: data[k].price,
-          //   }
-          //   this.categoryArr.push(obj);
-          //   console.log(this.categoryArr);
-          //   this.categoryArr.reverse();
-          // }
           this.categoryArr = data;
           this.categoryArr.reverse();
         })
@@ -145,30 +106,6 @@ export class CategoryPage {
   }
   retreivePics() {
     this.art.viewPicMain().then((data: any) => {
-      // let keys:any = Object.keys(data);
-      // console.log(keys);
-      // for (var i = 0; i < keys.length; i++) {
-      //   let k = keys[i];
-      //   console.log(k);
-      //   let obj = {
-      //     category: data[k].category,
-      //     downloadurl: data[k].downloadurl,
-      //     name: data[k].name,
-      //     key: k,
-      //     url: data[k].url,
-      //     uid: data[k].uid,
-      //     comments: data[k].comments,
-      //     username: data[k].username,
-      //     likes: data[k].likes,
-      //     email: data[k].email,
-      //     location: data[k].location,
-      //     price: data[k].price,
-      //   }
-      //   console.log(this.obj);
-      //   this.categoryArr.push(obj);
-      //   console.log(this.categoryArr);
-      //   this.categoryArr.reverse();
-      // }
       this.categoryArr = data;
       this.categoryArr.reverse();
     })
