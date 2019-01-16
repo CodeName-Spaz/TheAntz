@@ -155,17 +155,17 @@ export class OrderModalPage implements OnInit {
     console.log(a);
 
     if (a == this.currentUserId) {
-
     }
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message, this.keys2).then((data: any) => {
       this.arrMsg = data;
       console.log(data);
+      this.message = "";
 
     })
-    this.message = "";
+
   }
   getData() {
-    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message, this.keys2).then((data: any) => {
       console.log(this.arrMsg);
       this.arrMsg = data;
     })

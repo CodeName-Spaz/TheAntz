@@ -29,7 +29,7 @@ export class UploadImagePage {
   downloadurl;
   photos:any;
   d=1;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
+  constructor(private viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -45,8 +45,6 @@ export class UploadImagePage {
       opts[0].style.top = "10vh";
       // opts[0].style.top = "1500%";
       console.log(this.d);
-      
-    }
 
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -67,6 +65,8 @@ export class UploadImagePage {
         console.log(event.target.files[0].size);
       }
 
+    }
+      
     }
   }
 
@@ -207,7 +207,7 @@ export class UploadImagePage {
     else {
       this.art.uploadPic(this.url).then(data => {
         this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-          this.navCtrl.push(ProfilePage);
+          this.viewCtrl.dismiss()
         },
           Error => {
             console.log(Error)
@@ -221,7 +221,7 @@ export class UploadImagePage {
   }
 
   dismiss() {
-    this.navCtrl.setRoot(ProfilePage);
+    this.viewCtrl.dismiss();
   }
   showAction(event) {
     this.d = 0;
@@ -229,7 +229,7 @@ export class UploadImagePage {
 
     let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
     if(this.d == 0){
-      action[0].style.top = "-25vh";
+      action[0].style.top = "-30vh";
     action[0].style.transition = 500 + "ms";
     }
 

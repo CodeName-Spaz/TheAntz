@@ -44,7 +44,7 @@
     <ion-label>
       <ion-icon name="call"></ion-icon>
     </ion-label>
-    <ion-input type="number" [value]="contact" [(ngModel)]="contact" maxlength="11"  placeholder="Mobile" pattern="[789][0-90]{9}"></ion-input>
+    <ion-input type="number" [value]="contact" [(ngModel)]="contact" maxlength="10"  (ngModelChange)="change($event)" placeholder="Mobile"></ion-input>
   </ion-item>
 
   <!-- <input type='tel' pattern='[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}' title='Phone Number (Format: +99(99)9999-9999)'> -->

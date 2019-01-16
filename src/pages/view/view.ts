@@ -9,7 +9,7 @@ import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { SendEmailProvider } from '../../providers/send-email/send-email';
-
+import { CurrencyPipe } from '@angular/common'
 
 
 /**
@@ -193,27 +193,27 @@ export class ViewPage implements OnInit {
 
   BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid, currentUserId) {
     this.art.getUserEmail().then(data =>{
-      this.SendEmailProvider.sendEmail(data,this.email,this.downloadurl,price)
+     this.SendEmailProvider.sendEmail(data,this.email,this.downloadurl,price);
       let obj = {
-        name: name,
-        pic: pic,
-        key: key,
-        url: url,
-        comments: comments,
-        email: email,
-        username: username,
-        description: description,
-        location: location,
-        price: price,
-        likes: likes,
-        name1: name1,
-        uid: uid,
-        currentUserId: currentUserId
-      }
-      this.navCtrl.push(OrderModalPage, { obj: obj });
-      this.sendInformation();
+      name: name,
+      pic: pic,
+      key:   this.keys2 ,
+      url: url,
+      comments:this.numComments,
+      email: email,
+      username: username,
+      description: description,
+      location: location,
+      price: price,
+      likes: this.numlikes ,
+      name1: name1,
+      uid: uid,
+      currentUserId: currentUserId
+    }
+    this.sendInformation();
+    this.navCtrl.push(OrderModalPage, { obj: obj });
     })
-  
+
   }
 
   GoBackToCategory() {

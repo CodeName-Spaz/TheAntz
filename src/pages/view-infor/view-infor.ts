@@ -29,6 +29,7 @@ export class ViewInforPage {
   currentUser;
   uid: any;
   primaryKey;
+  key
   foreignKey;
   condition="";
   obj = this.navParams.get("obj");
@@ -39,6 +40,7 @@ export class ViewInforPage {
     this.email = this.obj.email;
     this.price = this.obj.price;
     this.name1 = this.obj.name1;
+    this.key = this.obj.key
     this.tempdownloadurl = this.obj.tempdownloadurl
     this.tempName = this.obj.tempName;
     this.currentUserId = this.obj.currentUserId;
@@ -63,7 +65,7 @@ export class ViewInforPage {
   }
 
   send(currentUserId) {
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message,this.key).then((data) => {
       console.log(data);
     })
     this.message = "";
@@ -76,7 +78,7 @@ export class ViewInforPage {
     this.navCtrl.push(ViewInforPage, { obj: obj });
   }
   getData() {
-    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message).then((data: any) => {
+    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message,this.key).then((data: any) => {
       this.arrMsg = data;
       console.log(this.arrMsg);
     })

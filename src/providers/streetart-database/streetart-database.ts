@@ -695,8 +695,8 @@ export class StreetartzProvider {
     })
   }
 
-
-  BuyPicture(artkey,userkey, message) {
+  BuyPicture(artkey,userkey, message, picKey) {
+    console.log(picKey)
     return new Promise((accpt, rej) => {
       let dateObj = new Date
       let currentUser = firebase.auth().currentUser.uid;
@@ -713,7 +713,8 @@ export class StreetartzProvider {
         message: message,
         uid: currentUser,
         time: time,
-        status: resuls
+        status: resuls,
+        artKey : picKey
       })
     })
   }
@@ -766,7 +767,7 @@ export class StreetartzProvider {
  
   }
 
-  retrieveChats(artkey,userkey, message) {
+  retrieveChats(artkey,userkey, message, picKey) {
     return new Promise((accpt, rej) => {
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
@@ -777,38 +778,46 @@ export class StreetartzProvider {
           let keys = Object.keys(infor1);
         }
         firebase.database().ref('messages/' + userkey).child(artkey).on('value', data2 => {
+          // this.arrMssg.length = 0;
           let infor2 = data2.val();
           if (data2.val() != null || data2.val() != undefined) {
             this.arrMssg.length = 0;
             let keys2 = Object.keys(infor2);
+            console.log(picKey)
             for (var i = 0; i < keys2.length; i++) {
               let k = keys2[i]
-              let obj = {
-                message: infor2[k].message,
-                time: infor2[k].time,
-                uid: infor2[k].uid,
+              console.log(infor2[k].artKey);
+              if (infor2[k].artKey == picKey){
+                let obj = {
+                  message: infor2[k].message,
+                  time: infor2[k].time,
+                  uid: infor2[k].uid,
+                }
+                this.arrMssg.push(obj);
               }
-              this.arrMssg.push(obj);
             }
           }
           firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
-
+            // this.arrMssg.length = 0;
             let infor3 = data3.val();
             if (data3.val() != null || data3.val() != undefined) {
               this.arrMssg.length =0;
               let keys3 = Object.keys(infor3);
               for (var i = 0; i < keys3.length; i++) {
                 let k = keys3[i]
-                let obj = {
-                  message: infor3[k].message,
-                  time: infor3[k].time,
-                  uid: infor3[k].uid,
+                if (infor3[k].artKey == picKey){
+                  let obj = {
+                    message: infor3[k].message,
+                    time: infor3[k].time,
+                    uid: infor3[k].uid,
+                  }
+                  this.arrMssg.push(obj);
                 }
-                this.arrMssg.push(obj);
               }
             }
           })
         })
+        console.log(this.arrMssg)
          accpt(this.arrMssg);
       })
     })

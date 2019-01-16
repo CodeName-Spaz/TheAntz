@@ -4,6 +4,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { LoadingController } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { ToastController } from 'ionic-angular';
+import { ChangeDetectorRef } from '@angular/core';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -31,8 +32,9 @@ export class EditProfilePage implements OnInit {
   details
   downloadurl
   imageUrl: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public alertCtrl: AlertController) {
 
+  constructor(public cdRef :ChangeDetectorRef,public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public alertCtrl: AlertController) {
+  
   }
   GoToProfile() {
     this.navCtrl.setRoot(ProfilePage);
@@ -50,6 +52,13 @@ export class EditProfilePage implements OnInit {
       this.bio = details.bio
     })
   }
+
+  change(value){
+    this.cdRef.detectChanges();
+    this.contact= value.length > 10 ? value.substring(0,10) : value;
+  }
+
+
   insertpic(event: any) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -89,27 +98,7 @@ export class EditProfilePage implements OnInit {
     })
   }
 
-  // checkChar(event){
-
-    
-  //   let b = event.target.length;
-  //   let a = this.contact.length;
-
-  //   if(a.length > 10) a = a.substring(0,10);
-  //   // console.log(b);
-    
-    
-
-    
-  //   // let k;
-  //   // k = event.charCode;
-
-  //   // console.log(k);
-    
-  //   // return((k > 64 && k < 91))
-
-    
-  // }
+ 
   retreivePics1() {
     this.arr.length = 0;
     this.getUid1();

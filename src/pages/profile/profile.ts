@@ -60,7 +60,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.viewCtrl.dismiss()
+    this.viewCtrl.dismiss();
   }
   getUid() {
     this.art.getUserID().then(data => {
