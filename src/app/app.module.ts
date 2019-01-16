@@ -30,6 +30,7 @@ import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { ViewInforPage } from '../pages/view-infor/view-infor';
 import { Network } from '@ionic-native/network';
 import { ScreenOrientation} from '@ionic-native/screen-orientation'
+import { SendEmailProvider } from '../providers/send-email/send-email';
 
 
 firebase.initializeApp({
@@ -89,7 +90,8 @@ firebase.initializeApp({
    EmailComposer,
    Camera,
    {provide: ErrorHandler, useClass: IonicErrorHandler},
-   StreetartzProvider,EmailComposer,Camera, Network
+   StreetartzProvider,EmailComposer,Camera, Network,
+  SendEmailProvider
  ]
 })
 export class AppModule {}

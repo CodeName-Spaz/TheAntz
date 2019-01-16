@@ -777,7 +777,6 @@ export class StreetartzProvider {
           let keys = Object.keys(infor1);
         }
         firebase.database().ref('messages/' + userkey).child(artkey).on('value', data2 => {
-          // this.arrMssg.length = 0;
           let infor2 = data2.val();
           if (data2.val() != null || data2.val() != undefined) {
             this.arrMssg.length = 0;
@@ -793,7 +792,7 @@ export class StreetartzProvider {
             }
           }
           firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
-            // this.arrMssg.length = 0;
+
             let infor3 = data3.val();
             if (data3.val() != null || data3.val() != undefined) {
               this.arrMssg.length =0;
@@ -815,6 +814,15 @@ export class StreetartzProvider {
     })
   }
 
+  getUserEmail(){
+    return new Promise((resolve, reject) => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user != null) {
+          resolve(user.email)
+        } 
+      })
+    })
+  }
 
     getMessages(artkey,userkey){
       return new Promise((accpt, rej) => {

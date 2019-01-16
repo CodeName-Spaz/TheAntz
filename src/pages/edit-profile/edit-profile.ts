@@ -88,6 +88,28 @@ export class EditProfilePage implements OnInit {
       this.uid1 = data
     })
   }
+
+  // checkChar(event){
+
+    
+  //   let b = event.target.length;
+  //   let a = this.contact.length;
+
+  //   if(a.length > 10) a = a.substring(0,10);
+  //   // console.log(b);
+    
+    
+
+    
+  //   // let k;
+  //   // k = event.charCode;
+
+  //   // console.log(k);
+    
+  //   // return((k > 64 && k < 91))
+
+    
+  // }
   retreivePics1() {
     this.arr.length = 0;
     this.getUid1();

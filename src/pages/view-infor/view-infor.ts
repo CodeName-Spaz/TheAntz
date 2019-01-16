@@ -30,7 +30,6 @@ export class ViewInforPage {
   uid: any;
   primaryKey;
   foreignKey;
-  // message;
   condition="";
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {

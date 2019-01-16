@@ -46,23 +46,7 @@ export class ChatsPage {
   arrMsg = new Array();
   color;
   constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
-    // this.art.getOrders().then((data:any) =>{
-    //   this.retriveCustomerDetails = data;
-    //   this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
-    // })
-
-    this.displayCurentMessages.length = 0;
-    this.retriveCustomerDetails.length = 0;
-    this.art.getOrders().then((data: any) => {
-      this.retriveCustomerDetails = data;
-      console.log(this.retriveCustomerDetails);
-      console.log(this.displayCurentMessages);
-      for (var x = 0; x < this.retriveCustomerDetails.length; x++) {
-        this.getData(this.retriveCustomerDetails[x].currentUserId, this.retriveCustomerDetails[x].uid, "", x)
-      }
-    })
-
-
+  
   }
 
   getData(id, user, message, x) {
@@ -94,17 +78,17 @@ export class ChatsPage {
     })
   }
 
-  // ionViewDidEnter() {
-  //   this.displayCurentMessages.length = 0;
-  //   this.retriveCustomerDetails.length = 0;
-  //   this.art.getOrders().then((data:any) =>{
-  //     this.retriveCustomerDetails = data;
-  //     console.log(this.retriveCustomerDetails);
-  //     for (var x = 0; x < this.retriveCustomerDetails.length; x++){
-  //       this.getData(this.retriveCustomerDetails[x].currentUserId,this.retriveCustomerDetails[x].uid,"", x)
-  //     }
-  //   })
-  // }
+  ionViewDidEnter() {
+    this.displayCurentMessages.length = 0;
+    this.retriveCustomerDetails.length = 0;
+    this.art.getOrders().then((data:any) =>{
+      this.retriveCustomerDetails = data;
+      console.log(this.retriveCustomerDetails);
+      for (var x = 0; x < this.retriveCustomerDetails.length; x++){
+        this.getData(this.retriveCustomerDetails[x].currentUserId,this.retriveCustomerDetails[x].uid,"", x)
+      }
+    })
+  }
   scroll(event) {
     // console.log(event);
 

@@ -68,6 +68,8 @@ export class OrderModalPage implements OnInit {
     console.log(this.obj.uid);
     console.log(this.obj.name)
     console.log(this.obj.username);
+    console.log(this.tempName);
+  
 
     console.log(this.obj.pic);
 
@@ -75,7 +77,8 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       console.log(this.tempName);
-      //  console.log(this.tempdownloadurl);
+
+
     })
     this.getData();
   }
@@ -91,9 +94,7 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      // console.log(this.tempemail);
       this.imageSize()
-      //  console.log(this.tempdownloadurl);
     })
   }
 
@@ -166,7 +167,6 @@ export class OrderModalPage implements OnInit {
   getData() {
     this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
       console.log(this.arrMsg);
-
       this.arrMsg = data;
     })
   }

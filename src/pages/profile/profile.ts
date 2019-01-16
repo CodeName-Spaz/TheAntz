@@ -4,7 +4,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { obj } from '../../app/class';
 import { CategoryPage } from '../category/category';
 import { UploadImagePage } from '../upload-image/upload-image';
-import { ModalController } from 'ionic-angular';
+import { ModalController, ViewController } from 'ionic-angular';
 import { PopoverController } from 'ionic-angular';
 import { PopOverProfilePage } from '../pop-over-profile/pop-over-profile';
 import { LoadingController } from 'ionic-angular';
@@ -36,7 +36,7 @@ export class ProfilePage {
 
   name;
   details;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public modalCtrl: ModalController, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     this.retreivePics();
 
     let userID = firebase.auth().currentUser;
@@ -60,7 +60,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.navCtrl.popToRoot();
+    this.viewCtrl.dismiss()
   }
   getUid() {
     this.art.getUserID().then(data => {
@@ -130,7 +130,7 @@ export class ProfilePage {
   }
 
   dismissPage() {
-    this.navCtrl.setRoot(CategoryPage);
+    this.navCtrl.pop();
   }
   removeImage(key) {
     const confirm = this.alertCtrl.create({

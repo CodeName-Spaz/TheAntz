@@ -8,6 +8,8 @@ import { OrderModalPage } from '../order-modal/order-modal';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { SendEmailProvider } from '../../providers/send-email/send-email';
+
 
 
 /**
@@ -65,10 +67,10 @@ export class ViewPage implements OnInit {
   tempemail;
 
   obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public SendEmailProvider:SendEmailProvider, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
 
-    console.log(this.obj.email);
+
     console.log(this.obj.name1);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
@@ -92,12 +94,7 @@ export class ViewPage implements OnInit {
     console.log(this.obj.uid);
 
     this.Retrivecomments();
-    console.log(this.obj.email);
-    // console.log(this.obj.pic);
-    console.log(this.obj.username);
-    // console.log(this.uid);
-    // console.log(this.obj.url)
-    console.log(this.currentUserId);
+  
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
@@ -105,8 +102,6 @@ export class ViewPage implements OnInit {
       this.tempemail = data[0].email;
       console.log(this.tempemail)
       console.log(this.tempName);
-
-      // console.log(this.tempdownloadurl);
       this.ifOrderYes();
     })
   }
@@ -197,24 +192,28 @@ export class ViewPage implements OnInit {
 
 
   BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid, currentUserId) {
-    let obj = {
-      name: name,
-      pic: pic,
-      key: key,
-      url: url,
-      comments: comments,
-      email: email,
-      username: username,
-      description: description,
-      location: location,
-      price: price,
-      likes: likes,
-      name1: name1,
-      uid: uid,
-      currentUserId: currentUserId
-    }
-    this.navCtrl.push(OrderModalPage, { obj: obj });
-    this.sendInformation();
+    this.art.getUserEmail().then(data =>{
+      this.SendEmailProvider.sendEmail(data,this.email,this.downloadurl,price)
+      let obj = {
+        name: name,
+        pic: pic,
+        key: key,
+        url: url,
+        comments: comments,
+        email: email,
+        username: username,
+        description: description,
+        location: location,
+        price: price,
+        likes: likes,
+        name1: name1,
+        uid: uid,
+        currentUserId: currentUserId
+      }
+      this.navCtrl.push(OrderModalPage, { obj: obj });
+      this.sendInformation();
+    })
+  
   }
 
   GoBackToCategory() {

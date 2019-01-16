@@ -6,7 +6,7 @@ import { ProfilePage } from '../profile/profile';
 import { ViewPage } from '../view/view';
 import firebase from 'firebase';
 import { AlertController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ModalController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
@@ -36,11 +36,12 @@ export class CategoryPage {
   username;
   comments;
   userId;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
+  constructor(private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
   }
   GoToProfilePage() {
-    this.navCtrl.push(ProfilePage);
+    const modal = this.modalCtrl.create(ProfilePage);
+    modal.present();
   }
 
   ionViewDidEnter() {
