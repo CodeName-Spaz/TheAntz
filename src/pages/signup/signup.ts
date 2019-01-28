@@ -55,7 +55,7 @@ export class SignupPage {
       });
       alert.present();
     }
-    else if (this.name == undefined || this.name == null) {
+    else if (this.name == undefined) {
       const alert = this.alertCtrl.create({
         title: "No Name",
         subTitle: "It looks like you didn't enter your Name.",
@@ -65,7 +65,7 @@ export class SignupPage {
     }
     else {
       this.art.register(this.email, this.password, this.name).then(() => {
-        this.presentLoading1();
+        // this.presentLoading1();
         this.navCtrl.setRoot(CategoryPage);
       }, (error) => {
         console.log(error.message);

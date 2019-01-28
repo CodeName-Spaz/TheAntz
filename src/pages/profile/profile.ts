@@ -60,7 +60,7 @@ export class ProfilePage {
   }
 
   GoBackToCategory() {
-    this.viewCtrl.dismiss();
+    this.navCtrl.setRoot(CategoryPage);
   }
   getUid() {
     this.art.getUserID().then(data => {
@@ -77,7 +77,6 @@ export class ProfilePage {
       }
       else {
         var keys: any = Object.keys(data);
-        console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           if (this.uid == data[k].uid) {

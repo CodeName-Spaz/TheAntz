@@ -33,8 +33,8 @@ export class EditProfilePage implements OnInit {
   downloadurl
   imageUrl: any;
 
-  constructor(public cdRef :ChangeDetectorRef,public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public alertCtrl: AlertController) {
-  
+  constructor(public cdRef: ChangeDetectorRef, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+
   }
   GoToProfile() {
     this.navCtrl.setRoot(ProfilePage);
@@ -53,9 +53,9 @@ export class EditProfilePage implements OnInit {
     })
   }
 
-  change(value){
+  change(value) {
     this.cdRef.detectChanges();
-    this.contact= value.length > 10 ? value.substring(0,10) : value;
+    this.contact = value.length < 10 ? value.substring(0, 10) : value;
   }
 
 
@@ -71,25 +71,25 @@ export class EditProfilePage implements OnInit {
   }
   uploadPicture() {
     this.arr.length = 0;
-    if (this.contact.length < 11) {
-      this.art.uploadProfilePic(this.downloadurl,this.name).then(data => {
-        console.log('added to db');
-        this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
-          this.arr.push(data);
-        })
-        this.navCtrl.setRoot(ProfilePage);
-      },
-        Error => {
-          console.log(Error)
-        })
-    }
-    else {
+    if (this.contact.length < 10 || this.contact.length >10) {
       const alert = this.alertCtrl.create({
         title: "Oops!",
         subTitle: "Please make sure that your mobile number is correct.",
         buttons: ['OK']
       });
       alert.present();
+    }
+    else {
+      this.art.uploadProfilePic(this.downloadurl, this.name).then(data => {
+        console.log('added to db');
+        this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
+          this.arr.push(data);
+        })
+        this.navCtrl.pop();
+      },
+        Error => {
+          console.log(Error)
+        })
     }
   }
   getUid1() {
@@ -98,7 +98,7 @@ export class EditProfilePage implements OnInit {
     })
   }
 
- 
+
   retreivePics1() {
     this.arr.length = 0;
     this.getUid1();
@@ -113,7 +113,7 @@ export class EditProfilePage implements OnInit {
           this.arr.push(objt);
         }
       }
- 
+
     }, Error => {
       console.log(Error)
     });

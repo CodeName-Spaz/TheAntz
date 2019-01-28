@@ -71,7 +71,6 @@ export class ViewPage implements OnInit {
     this.obj = this.navParams.get("obj");
 
 
-    console.log(this.obj.name1);
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -85,14 +84,7 @@ export class ViewPage implements OnInit {
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
     this.uid = this.obj.uid
-
-
-
     this.currentUserId = firebase.auth().currentUser.uid
-      
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-
     this.Retrivecomments();
   
 
@@ -100,8 +92,6 @@ export class ViewPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      console.log(this.tempemail)
-      console.log(this.tempName);
       this.ifOrderYes();
     })
   }
@@ -110,7 +100,6 @@ export class ViewPage implements OnInit {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
       this.ifOrderYes();
     })
   }
@@ -166,14 +155,12 @@ export class ViewPage implements OnInit {
   }
   sendInformation() {
     this.art.checkOrder(this.obj.uid,this.downloadurl ).then(data =>{
-      console.log(data)
+      // console.log(data)
       if (data == "found"){
         console.log("found")
       }
       else if (data == "not found"){
     this.display.length = 0;
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
     var user = firebase.auth().currentUser;
     firebase.database().ref('Orders/' + this.obj.uid).push({
       tempName: this.tempName,

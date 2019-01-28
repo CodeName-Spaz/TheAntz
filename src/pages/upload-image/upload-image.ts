@@ -43,9 +43,6 @@ export class UploadImagePage {
 
     if(this.d == 1){
       opts[0].style.top = "10vh";
-      // opts[0].style.top = "1500%";
-      console.log(this.d);
-
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
 
@@ -62,7 +59,6 @@ export class UploadImagePage {
           this.url = event.target.result;
         }
         reader.readAsDataURL(event.target.files[0]);
-        console.log(event.target.files[0].size);
       }
 
     }
@@ -82,8 +78,6 @@ export class UploadImagePage {
 
     if(this.d == 1){
       opts[0].style.top = "10vh";
-      // opts[0].style.top = "1500%";
-      console.log(this.d);
       
     }
     const options: CameraOptions = {
@@ -207,13 +201,14 @@ export class UploadImagePage {
     else {
       this.art.uploadPic(this.url).then(data => {
         this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-          this.viewCtrl.dismiss()
+        this.navCtrl.setRoot(ProfilePage)
+          
         },
           Error => {
-            console.log(Error)
+            // console.log(Error)
           })
       }, Error => {
-        console.log(Error)
+        // console.log(Error)
       })
 
     }
@@ -239,7 +234,7 @@ export class UploadImagePage {
   decide(res) {
     // console.log('clicked body');
     res = this.d++;
-    console.log(res);
+
     if (res > 0) {
       let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
       dropAction[0].style.top = "10vh";

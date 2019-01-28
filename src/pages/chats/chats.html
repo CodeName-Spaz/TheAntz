@@ -9,14 +9,14 @@
 
 <ion-content padding class="body" (ionScroll)="scroll($event)">
   <!-- if there are no messages yet -->
-  <div class="no-data" *ngIf="retriveCustomerDetails.length == 0 || retriveCustomerDetails.length == undefined">
+  <div class="no-data" *ngIf="displayCurentMessages.length == 0 || displayCurentMessages.length == undefined">
       <p class="emptycontent">It looks like there are no messages yet...</p>
       <img src="../../assets/empty.png">
     </div>
   <div class="not-empty">
     <div class="patcher" *ngFor="let a of displayCurentMessages">
 
-         <ion-item class="client" (click)="showDetails(a.downloadurl, a.tempName, a.tempdownloadurl, a.price, a.name1, a.email,a.message,a.key,a.currentUserId,a.uid)" id="chats">
+         <ion-item class="client" (click)="showDetails(a.downloadurl, a.tempName, a.tempdownloadurl, a.price, a.name1, a.email,a.message,a.key,a.currentUserId,a.uid,a.path, a.pic)" id="chats">
       <ion-avatar item-start>
         <img src="{{a.tempdownloadurl}}">
       </ion-avatar>

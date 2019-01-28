@@ -31,12 +31,13 @@ export class ViewInforPage {
   primaryKey;
   key
   foreignKey;
+  path;
   condition="";
   obj = this.navParams.get("obj");
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
     this.obj = this.navParams.get("obj");
 
-    this.downloadurl = this.obj.downloadurl;
+    this.downloadurl = this.obj.pic;
     this.email = this.obj.email;
     this.price = this.obj.price;
     this.name1 = this.obj.name1;
@@ -46,29 +47,21 @@ export class ViewInforPage {
     this.currentUserId = this.obj.currentUserId;
     this.uid = this.obj.uid;
     this.currentUser = this.obj.currentUser
-
-
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    console.log(this.name1);
-    console.log(this.tempName);
-  
+    this.path = this.obj.path;
     this.list.length = 0;
-
-
-    this.getData();
+    this.getData(this.path);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ViewInforPage');
+    // console.log('ionViewDidLoad ViewInforPage');
 
   }
 
-  send(currentUserId) {
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message,this.key).then((data) => {
+  send() {
+    this.art.sendMessage(this.path,this.message).then((data) => {
       console.log(data);
+      this.message = "";
     })
-    this.message = "";
   }
 
   showDetails(currentUserId) {
@@ -77,8 +70,12 @@ export class ViewInforPage {
     }
     this.navCtrl.push(ViewInforPage, { obj: obj });
   }
-  getData() {
-    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message,this.key).then((data: any) => {
+  
+  getData(path) {
+    console.log(path)
+    this.arrMsg.length = 0;
+    this.art.retrieveAllChats(path).then((data: any) => {
+      this.arrMsg.length = 0;
       this.arrMsg = data;
       console.log(this.arrMsg);
     })

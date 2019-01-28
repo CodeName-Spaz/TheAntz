@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit,NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { obj } from '../../app/class';
@@ -36,12 +36,12 @@ export class CategoryPage {
   username;
   comments;
   userId;
-  constructor(private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
+  constructor(private ngZone: NgZone,private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
   }
   GoToProfilePage() {
-    const modal = this.modalCtrl.create(ProfilePage);
-    modal.present();
+    this.navCtrl.push(ProfilePage)
+   
   }
 
   ionViewDidEnter() {
@@ -72,7 +72,6 @@ export class CategoryPage {
       else {
         this.categoryArr.length = 0;
         var keys: any = Object.keys(data);
-        console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           if (this.category == data[k].category) {
@@ -91,7 +90,7 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
-            console.log(this.categoryArr);
+            // console.log(this.categoryArr);
             this.categoryArr.reverse();
           }
         }
@@ -99,8 +98,8 @@ export class CategoryPage {
       if (this.category == "All") {
         this.categoryArr.length = 0;
         this.art.viewPicMain().then((data: any) => {
-          this.categoryArr = data;
-          this.categoryArr.reverse();
+        this.categoryArr = data;
+        this.categoryArr.reverse();
         })
       }
     })

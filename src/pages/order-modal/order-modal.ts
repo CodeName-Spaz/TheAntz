@@ -64,19 +64,10 @@ export class OrderModalPage implements OnInit {
     this.uid = this.obj.uid;
     this.currentUserId = this.obj.currentUserId;
 
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    console.log(this.obj.name)
-    console.log(this.obj.username);
-    console.log(this.tempName);
-  
-
-    console.log(this.obj.pic);
-
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
+     
 
 
     })
@@ -86,7 +77,7 @@ export class OrderModalPage implements OnInit {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderModalPage');
+    // console.log('ionViewDidLoad OrderModalPage');
     // this.getData();
   }
   ngOnInit() {
@@ -146,28 +137,24 @@ export class OrderModalPage implements OnInit {
     firebase.database().ref('Orders/' + this.obj.uid).on("value", (data: any) => {
       data = data.val();
       this.retriveCustomerDetails.push(data);
-      console.log(this.obj.uid);
     })
   }
 
   sendMesssage() {
     let a = this.obj.uid;
-    console.log(a);
-
+    var tempMsg = this.message;
+    this.message = "";
     if (a == this.currentUserId) {
     }
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message, this.keys2).then((data: any) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,tempMsg, this.keys2).then((data: any) => {
       this.arrMsg = data;
-      console.log(data);
       this.message = "";
-
     })
-
   }
   getData() {
     this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message, this.keys2).then((data: any) => {
-      console.log(this.arrMsg);
       this.arrMsg = data;
+      this.message = "";
     })
   }
 }

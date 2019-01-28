@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.streetartz" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.theAntz.streetartz" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>StreetArtz</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>StreetArtz is a mobile artwork gallery in your pocket, providing you with the local’s vast talent and artwork, communication is between you and the artist you want to buy art from and it is secured, meaning that only you and the artist will have separate copies of the same message and no one else but you. The app is buy-and-sell based and is more focused on local artists and their potential buyers, thus giving them a proper platform for exposure to a broader range of clientele.</description>
+    <author email="theantz39@gmail.com">TheAntz Team</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
