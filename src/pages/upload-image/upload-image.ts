@@ -29,30 +29,57 @@ export class UploadImagePage {
   downloadurl;
   photos:any;
   d=1;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
+  constructor(private viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadModalPage');
   }
+  insertImagine(event: any) {
 
-  insertvid(event: any) {
+    this.d = 1;
+
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf <HTMLElement>;
+
+    if(this.d == 1){
+      opts[0].style.top = "10vh";
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
+      if (event.target.files[0].size > 1500000){
+        let alert = this.alertCtrl.create({
+          title: "Oh no!",
+          subTitle: "your photo is too large, please choose a photo with 1.5MB or less.",
+          buttons: ['OK']
+        });
+        alert.present();
       }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(reader.onload);
+      else{
+        reader.onload = (event: any) => {
+          this.url = event.target.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+      }
+
+    }
+      
     }
   }
+
   omit_special_char(event) {
     var k;
     k = event.charCode;
     return ((k >= 48 && k <= 57));
   }
   takepic= function(){
+    this.d = 1;
+
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf <HTMLElement>;
+
+    if(this.d == 1){
+      opts[0].style.top = "10vh";
+      
+    }
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -78,7 +105,7 @@ export class UploadImagePage {
       this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
-        subTitle: "Please make sure that all the fields are filled.",
+        subTitle: "Please make sure that all fields are filled.",
         buttons: [
           {
             text: 'Ok',
@@ -174,13 +201,14 @@ export class UploadImagePage {
     else {
       this.art.uploadPic(this.url).then(data => {
         this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-          this.navCtrl.setRoot(ProfilePage);
+        this.navCtrl.setRoot(ProfilePage)
+          
         },
           Error => {
-            console.log(Error)
+            // console.log(Error)
           })
       }, Error => {
-        console.log(Error)
+        // console.log(Error)
       })
 
     }
@@ -188,7 +216,7 @@ export class UploadImagePage {
   }
 
   dismiss() {
-    this.navCtrl.setRoot(ProfilePage);
+    this.viewCtrl.dismiss();
   }
   showAction(event) {
     this.d = 0;
@@ -196,7 +224,7 @@ export class UploadImagePage {
 
     let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
     if(this.d == 0){
-      action[0].style.transform = "translateY(-90%)";
+      action[0].style.top = "-30vh";
     action[0].style.transition = 500 + "ms";
     }
 
@@ -206,10 +234,10 @@ export class UploadImagePage {
   decide(res) {
     // console.log('clicked body');
     res = this.d++;
-    console.log(res);
+
     if (res > 0) {
       let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-      dropAction[0].style.transform = "translateY(0%)";
+      dropAction[0].style.top = "10vh";
     }
 
 

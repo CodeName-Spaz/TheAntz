@@ -28,15 +28,18 @@ import { Camera } from '@ionic-native/camera';
 import { ChatsPage } from '../pages/chats/chats';
 import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { ViewInforPage } from '../pages/view-infor/view-infor';
+import { Network } from '@ionic-native/network';
+import { ScreenOrientation} from '@ionic-native/screen-orientation'
+import { SendEmailProvider } from '../providers/send-email/send-email';
 
 
 firebase.initializeApp({
-  apiKey: "AIzaSyANfL1d1MMKd-72kO3eYEgVE5Jr24I21bw",
-  authDomain: "databaseofstreetart.firebaseapp.com",
-  databaseURL: "https://databaseofstreetart.firebaseio.com",
-  projectId: "databaseofstreetart",
-  storageBucket: "databaseofstreetart.appspot.com",
-  messagingSenderId: "394201594315"
+  apiKey: "AIzaSyBl4zOtPUUJyXFvNLpV9Cdj55wBf_NDY5I",
+  authDomain: "databaseartwork-a69e9.firebaseapp.com",
+  databaseURL: "https://databaseartwork-a69e9.firebaseio.com",
+  projectId: "databaseartwork-a69e9",
+  storageBucket: "databaseartwork-a69e9.appspot.com",
+  messagingSenderId: "901702648492"
 })
 
 @NgModule({
@@ -56,11 +59,6 @@ firebase.initializeApp({
    ChatsPage,
    OrderModalPage,
    ViewInforPage
-
-
-   
-
-
  ],
  imports: [
    BrowserModule, HttpClientModule ,
@@ -84,16 +82,16 @@ firebase.initializeApp({
    ChatsPage,
    OrderModalPage,
    ViewInforPage
-
-
  ],
  providers: [
+   ScreenOrientation,
    StatusBar,
    SplashScreen,
    EmailComposer,
    Camera,
    {provide: ErrorHandler, useClass: IonicErrorHandler},
-   StreetartzProvider,EmailComposer,Camera
+   StreetartzProvider,EmailComposer,Camera, Network,
+  SendEmailProvider
  ]
 })
 export class AppModule {}

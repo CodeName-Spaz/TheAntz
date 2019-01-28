@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit,NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { obj } from '../../app/class';
@@ -6,11 +6,12 @@ import { ProfilePage } from '../profile/profile';
 import { ViewPage } from '../view/view';
 import firebase from 'firebase';
 import { AlertController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController, ModalController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ToastController } from 'ionic-angular';
 import { App } from 'ionic-angular';
 import { ChatsPage } from '../chats/chats';
+import { Network } from '@ionic-native/network';
 
 
 /**
@@ -35,29 +36,33 @@ export class CategoryPage {
   username;
   comments;
   userId;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
+  constructor(private ngZone: NgZone,private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
   }
   GoToProfilePage() {
-    this.navCtrl.push(ProfilePage);
+    this.navCtrl.push(ProfilePage)
+   
   }
-  // ionViewDidLoad() {
-  //   this.art.viewPicMain().then((data:any) => {
-  //     this.categoryArr = data;
-  //     this.categoryArr.reverse();
-  //   })
-  // }
-  // ngAfterViewInit() {
-  //   this.retreivePics();
-  // }
 
-  // ngOnInit() {
-  //   this.retreivePics();
-  // }
+  ionViewDidEnter() {
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network was disconnected ',
+        buttons: ['OK']
+      });
+      alert.present();
+    });
 
-  // ionViewDidEnter() {
-  //   this.retreivePics();
-  //   }
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network connection has been established',
+        buttons: ['Ok']
+      });
+      alert.present();
+    });
+  }
 
   typeOfArt() {
     this.art.selectCategory(this.category).then((data) => {
@@ -67,7 +72,6 @@ export class CategoryPage {
       else {
         this.categoryArr.length = 0;
         var keys: any = Object.keys(data);
-        console.log(keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           if (this.category == data[k].category) {
@@ -86,69 +90,22 @@ export class CategoryPage {
               price: data[k].price,
             }
             this.categoryArr.push(obj);
-            console.log(this.categoryArr);
+            // console.log(this.categoryArr);
             this.categoryArr.reverse();
           }
         }
       }
       if (this.category == "All") {
-        this.categoryArr.length =0;
+        this.categoryArr.length = 0;
         this.art.viewPicMain().then((data: any) => {
-          // var keys: any = Object.keys(data);
-          // console.log(keys);
-          // for (var i = 0; i < keys.length; i++) {
-        
-          //   var k = keys[i];
-          //   let obj = {
-          //     category: data[k].category,
-          //     downloadurl: data[k].downloadurl,
-          //     name: data[k].name,
-          //     key: k,
-          //     url: data[k].url,
-          //     uid: data[k].uid,
-          //     comments: data[k].comments,
-          //     username: data[k].username,
-          //     likes: data[k].likes,
-          //     email: data[k].email,
-          //     location: data[k].location,
-          //     price: data[k].price,
-          //   }
-          //   this.categoryArr.push(obj);
-          //   console.log(this.categoryArr);
-          //   this.categoryArr.reverse();
-          // }
-          this.categoryArr = data;
-          this.categoryArr.reverse();
+        this.categoryArr = data;
+        this.categoryArr.reverse();
         })
       }
     })
   }
   retreivePics() {
     this.art.viewPicMain().then((data: any) => {
-      // let keys:any = Object.keys(data);
-      // console.log(keys);
-      // for (var i = 0; i < keys.length; i++) {
-      //   let k = keys[i];
-      //   console.log(k);
-      //   let obj = {
-      //     category: data[k].category,
-      //     downloadurl: data[k].downloadurl,
-      //     name: data[k].name,
-      //     key: k,
-      //     url: data[k].url,
-      //     uid: data[k].uid,
-      //     comments: data[k].comments,
-      //     username: data[k].username,
-      //     likes: data[k].likes,
-      //     email: data[k].email,
-      //     location: data[k].location,
-      //     price: data[k].price,
-      //   }
-      //   console.log(this.obj);
-      //   this.categoryArr.push(obj);
-      //   console.log(this.categoryArr);
-      //   this.categoryArr.reverse();
-      // }
       this.categoryArr = data;
       this.categoryArr.reverse();
     })

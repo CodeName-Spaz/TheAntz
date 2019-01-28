@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable,NgZone} from '@angular/core';
 import { LoginPage } from '../../pages/login/login';
 import { obj } from '../../app/class';
 import { AlertController } from 'ionic-angular';
@@ -47,11 +47,12 @@ export class StreetartzProvider {
   returnCurrentUser = [];
   retriveCustomerDetails = [];
   arrMssg = [];
-  constructor(public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  constructor(private ngzone:NgZone,public toastCtrl: ToastController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello StreetartzProvider Provider');
   }
   checkstate() {
     return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
       firebase.auth().onAuthStateChanged((user) => {
         if (user != null) {
           this.stayLoggedIn = 1
@@ -61,21 +62,26 @@ export class StreetartzProvider {
         resolve(this.stayLoggedIn)
       })
     })
+    })
   }
   logout() {
     return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
       firebase.auth().signOut().then(() => {
         resolve()
       }, (error) => {
         reject(error)
       });
     });
+  });
   }
+
   register(email, password, name) {
     return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
-        content: 'Sign in....',
+        content: 'Signing in....',
         duration: 4000000
       });
       loading.present();
@@ -107,6 +113,7 @@ export class StreetartzProvider {
         console.log(error);
       })
     })
+  })
   }
   login(email, password) {
     let loading = this.loadingCtrl.create({
@@ -116,6 +123,7 @@ export class StreetartzProvider {
     });
     loading.present();
     return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
       firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
         resolve();
         loading.dismiss();
@@ -154,6 +162,7 @@ export class StreetartzProvider {
 
       })
     })
+  })
 
   }
   retrieve() {
@@ -163,6 +172,7 @@ export class StreetartzProvider {
   profile() {
     this.ProfileArr.length = 0;
     return new Promise((pass, fail) => {
+      this.ngzone.run(() => {
       let userID = firebase.auth().currentUser;
       firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
         let details = data.val();
@@ -170,6 +180,7 @@ export class StreetartzProvider {
       })
       pass(this.ProfileArr);
     })
+  })
   }
   forgotpassword(email) {
     return new Promise((resolve, reject) => {
@@ -213,13 +224,16 @@ export class StreetartzProvider {
       });
       alert.present();
     })
+  
+  
+
   }
   uploadPic(pic) {
     var name = "SA" + Date.now();
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait',
-      duration: 7000
+      duration: 8000
     });
     const toast = this.toastCtrl.create({
       message: 'your imagine had been uploaded!',
@@ -227,19 +241,21 @@ export class StreetartzProvider {
     });
     loading.present();
     return new Promise((accpt, rejc) => {
-
+      this.ngzone.run(() => {
       firebase.storage().ref(name + "jpg").putString(pic, 'data_url').then(() => {
-        toast.present();
+        // toast.present();
         accpt(name);
         console.log(name)
       }, Error => {
         rejc(Error.message)
       })
     })
+  })
   }
   storeToDB(name, category, picName, description, location, price) {
     var d = "SA" + Date.now();
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var storageRef = firebase.storage().ref(name + "jpg");
       storageRef.getDownloadURL().then(url => {
         var user = firebase.auth().currentUser;
@@ -262,9 +278,11 @@ export class StreetartzProvider {
         console.log(Error.message);
       });
     })
+  })
   }
   viewPicGallery() {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         if(data.val() != null || data.val() !=undefined){
@@ -281,10 +299,12 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
 
   getUserID() {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref("uploads").on("value", (data: any) => {
         var a = data.val();
@@ -295,6 +315,7 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
   uploadProfilePic(pic, name) {
     let loading = this.loadingCtrl.create({
@@ -307,6 +328,7 @@ export class StreetartzProvider {
       duration: 3000
     });
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       toast.present();
       firebase.storage().ref(name).putString(pic, 'data_url').then(() => {
         accpt(name);
@@ -315,10 +337,12 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
 
   storeToDB1(name) {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       this.storeProfilePic.length = 0;
       var storageRef = firebase.storage().ref(name);
       storageRef.getDownloadURL().then(url => {
@@ -334,9 +358,11 @@ export class StreetartzProvider {
         console.log(Error.message);
       });
     })
+  })
   }
   viewPicGallery1() {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref("profiles").on("value", (data: any) => {
         var b = data.val();
@@ -349,9 +375,11 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
   getUserID1() {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var userID = firebase.auth().currentUser
       firebase.database().ref("profiles").on("value", (data: any) => {
         var b = data.val();
@@ -363,6 +391,7 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
   storeImgur(url) {
     this.url = url;
@@ -378,6 +407,7 @@ export class StreetartzProvider {
 
   selectCategory(category) {
     return new Promise((pass, fail) => {
+      this.ngzone.run(() => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         if (data.val() != null || data.val() != undefined && this.selectCategoryArr != null || this.selectCategoryArr != undefined) {
           let uploads = data.val();
@@ -403,7 +433,6 @@ export class StreetartzProvider {
                 username: "",
               }
               this.selectCategoryArr.push(obj);
-              console.log(this.selectCategoryArr);
               this.viewProfileMain(chckId).then((profileData: any) => {
                 obj.username = profileData.name
                 obj.url = profileData.downloadurl
@@ -422,10 +451,12 @@ export class StreetartzProvider {
         }
       }), pass(this.selectCategoryArr);
     })
+  })
   }
   update(name, email, contact, bio, downloadurl) {
     this.arr.length = 0;
     return new Promise((pass, fail) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref('profiles/' + user.uid).update({
         name: name,
@@ -435,9 +466,11 @@ export class StreetartzProvider {
         downloadurl: downloadurl,
       });
     })
+  })
   }
   push(obj: obj) {
     return new Promise((pass, fail) => {
+      this.ngzone.run(() => {
       firebase.database().ref("uploads").on('value', (data: any) => {
         let uploads = data.val();
         console.log(uploads);
@@ -471,7 +504,6 @@ export class StreetartzProvider {
                     username: uploads[k].username
                   }
                   this.pushArr.push(obj);
-                  console.log(this.pushArr);
                   this.viewProfileMain(chckId).then((profileData: any) => {
                     obj.email = profileData.email
                     obj.username = profileData.name
@@ -485,6 +517,7 @@ export class StreetartzProvider {
         }
       })
     })
+  })
   }
   viewPicMain() {
     let loader = this.loadingCtrl.create({
@@ -495,6 +528,7 @@ export class StreetartzProvider {
     loader.present();
     return new Promise((accpt, rejc) => {
       firebase.database().ref("uploads").on("value", (data: any) => {
+        this.ngzone.run(() => {
         let uploads3 = data.val();
         if (data.val() != null || data.val() != undefined && this.DisplayArrUploads.length != null || this.arr2 != undefined || uploads3 !=null ) {
           this.DisplayArrUploads.length = 0;
@@ -519,7 +553,6 @@ export class StreetartzProvider {
               url: this.url,
             }
             this.DisplayArrUploads.push(obj);
-            // console.log(this.DisplayArrUploads);
             this.viewProfileMain(chckId).then((profileData: any) => {
               obj.username = profileData.name
               obj.url = profileData.downloadurl
@@ -527,20 +560,23 @@ export class StreetartzProvider {
             });
 
             this.storeImgur(uploads3[keys1[0]].downloadurl);
-            // console.log(this.DisplayArrUploads);
           }
           
+          loader.dismiss();
         }
         else {
           this.DisplayArrUploads = null
           console.log('empty');
         }
+        
       }), accpt(this.DisplayArrUploads);
     })
+  })
 
   }
   viewProfileMain(userid: string) {
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       firebase.database().ref("profiles/" + userid).on("value", (data: any) => {
         var a = data.val();
         accpt(a);
@@ -548,10 +584,12 @@ export class StreetartzProvider {
         rejc(Error.message)
       })
     })
+  })
   }
   comments(key: any, comment: any) {
     var user = firebase.auth().currentUser;
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var day = moment().format('MMMM Do YYYY, h:mm:ss a');
       firebase.database().ref('comments/' + key).push({
         comment: comment,
@@ -561,11 +599,12 @@ export class StreetartzProvider {
       })
       accpt('success');
     });
-
+  })
   }
   viewComments(key: any, comment: string) {
     this.keyArr.length = 0;
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref("comments/" + key).on("value", (data: any) => {
         var CommentDetails = data.val();
@@ -597,27 +636,32 @@ export class StreetartzProvider {
       })
 
     })
+  })
   }
   addNumOfComments(key, numComments) {
     numComments = numComments + 1;
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       firebase.database().ref('uploads/' + key).update({ comments: numComments });
       accpt('comment added')
     })
+  })
   }
   likePic(key) {
-    console.log(key);
     var user = firebase.auth().currentUser
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       firebase.database().ref('likes/' + key).push({
         uid: user.uid
       })
       accpt('success');
     })
+  })
   }
   viewLikes(key) {
     this.keyArr.length = 0;
     return new Promise((accpt, rejc) => {
+      this.ngzone.run(() => {
       var user = firebase.auth().currentUser
       firebase.database().ref("likes/" + key).on("value", (data: any) => {
         if (data.val() != undefined) {
@@ -647,34 +691,39 @@ export class StreetartzProvider {
       })
 
     })
+  })
   }
   addNumOfLikes(key, num) {
-    console.log(key)
     num = num + 1;
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       firebase.database().ref('uploads/' + key).update({ likes: num });
       accpt('like added')
     })
+  })
   }
   removeLike(key: any, num, key1) {
-    console.log(key1)
     num = num - 1;
     var user = firebase.auth().currentUser
     console.log(user.uid)
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       firebase.database().ref('uploads/' + key).update({ likes: num });
       firebase.database().ref('likes/' + key + '/' + key1).remove();
       accpt('like removed')
     })
+  })
   }
 
 
   RemoveUploadedPicture(key) {
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       this.removepic.length = 0;
       firebase.database().ref('uploads/' + key).remove();
       accpt('image deleted')
     })
+  })
   }
   LicenceContract() {
     var user = firebase.auth().currentUser
@@ -684,20 +733,22 @@ export class StreetartzProvider {
   }
   returnUID() {
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       let user = firebase.auth().currentUser;
       firebase.database().ref("profiles/" + user.uid).on('value', (data: any) => {
         let details = data.val();
         var keys = Object.keys(details);
         this.returnCurrentUser.push(details);
-        console.log(this.returnCurrentUser);
         accpt(this.returnCurrentUser)
       })
     })
+  })
   }
 
-
-  BuyPicture(artkey,userkey, message) {
+  BuyPicture(artkey,userkey, message, picKey) {
+    console.log(picKey)
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       let dateObj = new Date
       let currentUser = firebase.auth().currentUser.uid;
       let time = dateObj.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
@@ -709,22 +760,29 @@ export class StreetartzProvider {
       //   resuls = true;
       // }
       resuls = false;
-      firebase.database().ref('messages/' + userkey).child(artkey).push({
+      firebase.database().ref('messages/' + artkey).child(userkey).push({
         message: message,
         uid: currentUser,
         time: time,
-        status: resuls
+        status: resuls,
+        artKey : picKey
       })
     })
+  })
   }
 
   getOrders(){
+    let loader = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Loading...',
+      duration: 4000000000000000000
+    });
+    loader.present();
     return new Promise((accpt, rej) =>{
+      this.ngzone.run(() => {
       this.retriveCustomerDetails.length = 0;
       let currentUser = firebase.auth().currentUser.uid;
-      console.log(currentUser);
       let currentUserId =firebase.auth().currentUser.uid
-      console.log(currentUserId);
       firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
         let infor = data.val();
         if(data.val() !=null || data.val() !=undefined){
@@ -748,19 +806,21 @@ export class StreetartzProvider {
                 uid:infor[k].uid,
                 key:k
               }
-              this.retriveCustomerDetails.push(obj)
-              console.log(this.retriveCustomerDetails);  
+              this.retriveCustomerDetails.push(obj) 
               }
             })
+            loader.dismiss();
             accpt(this.retriveCustomerDetails)
           }
       })  
     })
+  })
  
   }
 
-  retrieveChats(artkey,userkey, message) {
+  retrieveChats(artkey,userkey, message, picKey) {
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
       let currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('messages/' + currentUser).on('value', data => {
     
@@ -775,14 +835,18 @@ export class StreetartzProvider {
           if (data2.val() != null || data2.val() != undefined) {
             this.arrMssg.length = 0;
             let keys2 = Object.keys(infor2);
+            console.log(picKey)
             for (var i = 0; i < keys2.length; i++) {
               let k = keys2[i]
-              let obj = {
-                message: infor2[k].message,
-                time: infor2[k].time,
-                uid: infor2[k].uid,
+              console.log(infor2[k].artKey);
+              if (infor2[k].artKey == picKey){
+                let obj = {
+                  message: infor2[k].message,
+                  time: infor2[k].time,
+                  uid: infor2[k].uid,
+                }
+                this.arrMssg.push(obj);
               }
-              this.arrMssg.push(obj);
             }
           }
           firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
@@ -793,12 +857,14 @@ export class StreetartzProvider {
               let keys3 = Object.keys(infor3);
               for (var i = 0; i < keys3.length; i++) {
                 let k = keys3[i]
-                let obj = {
-                  message: infor3[k].message,
-                  time: infor3[k].time,
-                  uid: infor3[k].uid,
+                if (infor3[k].artKey == picKey){
+                  let obj = {
+                    message: infor3[k].message,
+                    time: infor3[k].time,
+                    uid: infor3[k].uid,
+                  }
+                  this.arrMssg.push(obj);
                 }
-                this.arrMssg.push(obj);
               }
             }
           })
@@ -806,16 +872,29 @@ export class StreetartzProvider {
          accpt(this.arrMssg);
       })
     })
+  })
   }
 
+  getUserEmail(){
+    return new Promise((resolve, reject) => {
+      this.ngzone.run(() => {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user != null) {
+          resolve(user.email)
+        } 
+      })
+    })
+  })
+  }
 
     getMessages(artkey,userkey){
       return new Promise((accpt, rej) => {
+        this.ngzone.run(() => {
         firebase.database().ref('messages/' + artkey).child(userkey).on('value', data3 => {
           // this.arrMssg.length = 0;
           let infor3 = data3.val();
           if (data3.val() != null || data3.val() != undefined) {
-            this.arrMssg.length =0;
+            // this.arrMssg.length =0;
             let keys3 = Object.keys(infor3);
             let obj = {}
             for (var i = 0; i < keys3.length; i++) {
@@ -831,10 +910,12 @@ export class StreetartzProvider {
           }
         })
       })
+    })
     }
     usersIds = [];
     checkOrder(userid, url){
       return new Promise((accpt, rej) =>{
+        this.ngzone.run(() => {
         firebase.database().ref('Orders/' + userid).on("value", (data: any) => {
           let currentUser = firebase.auth().currentUser.uid;
           let results;
@@ -847,7 +928,6 @@ export class StreetartzProvider {
               })
             }
             for (var i = 0; i < this.usersIds.length; i++){
-              console.log(results)
              if ( this.usersIds[i].currentUserId == currentUser && url == this.usersIds[i].downloadurl){
               results = "found"
               accpt(results);
@@ -864,11 +944,12 @@ export class StreetartzProvider {
           }
         })
       })
+    })
     }
   display(){
     return new Promise((accpt, rej) => {
+      this.ngzone.run(() => {
     let currentUserId =firebase.auth().currentUser.uid
-    console.log(currentUserId);
     firebase.database().ref('Orders/' + currentUserId).on("value", (data: any) => {
       let infor = data.val();
       if(data.val() !=null || data.val() !=undefined){
@@ -892,14 +973,211 @@ export class StreetartzProvider {
               uid:infor[k].uid,
               key:k
             }
-            this.retriveCustomerDetails.push(obj)
-            console.log(this.retriveCustomerDetails);  
+            this.retriveCustomerDetails.push(obj) 
             }
           })
         }
     })  
     accpt(this.retriveCustomerDetails); 
   })
+    })
+}
 
+sendMessage(path, message){
+  return new Promise((accpt, rej) => {
+    this.ngzone.run(() => {
+    let dateObj = new Date
+    let currentUser = firebase.auth().currentUser.uid;
+    let time = moment().format('MMMM Do YYYY, h:mm:ss a');
+    var resuls = "false";
+    firebase.database().ref(path).push({
+      message: message,
+      uid: currentUser,
+      time: time,
+      status: resuls,
+      artKey : currentUser
+    })
+    accpt('sent');
+  })
+
+})
+}
+
+
+allMessages = new Array();
+retrieveAllChats(path) {
+  return new Promise((accpt, rej) => {
+    this.ngzone.run(() => {
+    this.allMessages.length = 0;
+    let currentUser = firebase.auth().currentUser.uid;
+    firebase.database().ref(path).on('value', data => {
+      var messages = data.val();
+      var keys = Object.keys(messages);
+      for (var x = 0; x < keys.length; x++){
+        var k = keys[x];
+        let obj = {
+          message: messages[k].message,
+          time: messages[k].time,
+          uid: messages[k].uid,
+          status:messages[k].status
+        }
+        this.allMessages.push(obj)
+      }
+      accpt(this.allMessages)
+    })
+  })
+})
+}
+
+conversation = new Array();
+setConversation(image,lastMessage, time,name, path, id, pic){
+  let msgObj = {
+    tempName: name,
+    message : lastMessage,
+    time : time,
+    tempdownloadurl: image,
+    path : path,
+    ID : id,
+    pic : pic
+  }
+  this.conversation.push(msgObj)
+  console.log('aassignnn')
+}
+
+getAllConvo(){
+  return this.conversation;
+  // return new Promise((accpt, rej) =>{
+  //   console.log('returning messages');
+  //   console.log(this.conversation)
+  // accpt (this.conversation);
+  // })
+
+}
+
+messgaes = new Array();
+retriveMessages(){
+  return new Promise ((pass, fail) =>{
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Signing in....',
+      duration: 4000000
+    });
+    loading.present();
+    this.ngzone.run(() => {
+    this.conversation.length = 0;
+    this.messgaes.length = 0;
+   var currentUser = firebase.auth().currentUser.uid;
+      console.log(currentUser );
+      var keys 
+    firebase.database().ref('messages/' + currentUser).on('value', data3 => {
+      this.messgaes.length = 0;
+      if (data3.val() != undefined || data3.val() !=  null){
+      var infor3= data3.val();
+       keys = Object.keys(data3.val())
+      for (var x = 0; x < keys.length; x++){
+      firebase.database().ref('messages/' + currentUser + "/" + keys[x]).on('value', data4 => {
+        var details =  data4.val();
+        var msgKeys =  Object.keys(details)
+        var artKey;
+        var lastMesag;
+        var time;
+       var Mainpath = 'messages/' + currentUser + "/" + keys[x];
+        for (var i = 0; i < msgKeys.length; i++){
+           let mssags = {
+            message: details[msgKeys[i]].message,
+            time: details[msgKeys[i]].time,
+            uid:keys[x],
+            status : details[msgKeys[i]].status,
+            orderKey : details[msgKeys[i]].artKey
+          }
+          artKey =details[msgKeys[i]].artKey
+          lastMesag = details[msgKeys[i]].message
+          time = details[msgKeys[i]].time
+          this.messgaes.push(mssags);
+        }
+        var path = 'Orders/'+ currentUser ;
+        firebase.database().ref(path).on('value', data5 => {
+          if (data5.val() != null || data5.val() != undefined){
+          var senderDetails = data5.val();
+          var senderk = Object.keys(senderDetails)
+          for (var xx = 0; xx < senderk.length; xx++){
+            var kk =  senderk[xx];
+                 var path2 = 'profiles/' + keys[x];
+                 console.log(path2)
+                firebase.database().ref(path2).on('value', data6 => {
+              console.log(data6.val())
+            this.setConversation(data6.val().downloadurl,lastMesag,time,data6.val().name,Mainpath, keys[x],senderDetails[kk].downloadurl)
+            })
+          }
+          console.log(senderk)
+        }
+        })
+      })
+    }
+     }
+    })
+    firebase.database().ref('messages').on('value', data => {
+      if (data.val() != undefined || data.val() != null){
+        var allMessages = data.val();
+        var keys = Object.keys(allMessages);
+        for (var x = 0; x < keys.length; x++){
+          if (keys[x] != currentUser){
+            console.log(keys[x])
+            firebase.database().ref('messages/' + keys[x]).on('value', data2 => {
+             var innerDetails =  data2.val();
+             var innerKeys = Object.keys(innerDetails);
+             for (var i = 0; i < innerKeys.length; i++){
+              firebase.database().ref('messages/' + keys[x] + "/" + innerKeys[i]).on('value', data3 => {
+                var lastDetails = data3.val();
+                var lastkeys = Object.keys(lastDetails);
+                var artKey;
+                var lastMesag;
+                var time;
+                var Mainpath = 'messages/' + keys[x] + "/" + innerKeys[i];
+                for (var a = 0; a < lastkeys.length; a++){
+                  if (lastDetails[lastkeys[a]].uid == currentUser){
+                    let mssags = {
+                      message: lastDetails[lastkeys[a]].message,
+                      time: lastDetails[lastkeys[a]].time,
+                      uid:lastDetails[lastkeys[a]].uid,
+                      status : lastDetails[lastkeys[a]].status
+                    }
+                   this.messgaes.push(mssags);
+                   artKey =lastDetails[lastkeys[a]].artKey
+                   lastMesag = lastDetails[lastkeys[a]].message
+                   time = lastDetails[lastkeys[a]].time
+                  }
+                 }
+                 var path = 'Orders/'+ keys[x];
+                 firebase.database().ref(path).on('value', data5 => {
+                   if (data5.val() != null || data5.val() != undefined){
+                   var senderDetails = data5.val();
+                   var senderk = Object.keys(senderDetails)
+                   for (var xx = 0; xx < senderk.length; xx++){
+                     var kk =  senderk[xx];
+                     if (senderDetails[kk].currentUserId ==  currentUser){
+                       if (lastMesag != undefined || time != undefined ){
+                        firebase.database().ref('profiles/'+ keys[x]).on('value', data6 => {
+                      this.setConversation(data6.val().downloadurl,lastMesag,time,data6.val().name,Mainpath, keys[x],senderDetails[kk].downloadurl)
+                     })
+                   }
+                     }
+                   }
+                  }
+                  })
+               })
+              }
+            })
+          }
+        }
+        console.log(this.messgaes)
+      }
+   
+    })
+ 
+  })
+  loading.dismiss();
+  pass('done')
+})
 }
 }

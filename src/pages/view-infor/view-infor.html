@@ -6,7 +6,12 @@
 <ion-content class="body">
   <div class="image">
     <img src="{{downloadurl}}">
-    <p>{{name1}}</p>
+    <ion-item no-lines>
+      <ion-avatar item-start>
+        <img src="{{tempdownloadurl}}" alt="">
+      </ion-avatar>
+      <h2>{{name1}}</h2>
+    </ion-item>
     <ion-card class="buyer">
       <ion-item class="myName">
         <ion-avatar item-start>
@@ -18,59 +23,31 @@
   </div>
   <div padding>
     <ion-list>
-      <!-- <ion-card>
-        <p>{{a.message}}</p>
-        <p>{{a.uid}}</p>
-        <p>{{a.time}}</p>
-      </ion-card> -->
-      <!-- <div class="wrapper">
-        <div class="leftSpace"></div>
-        <div *ngFor="let a of arrMsg" class="{{condition}}">
-          <div class="leftTail"></div>
-          <p>{{a.message}}</p><br>
-          <p>{{a.uid}}</p>
-          <p class="time">{{a.time}}</p>
-          <div class="rightTail"></div>
-        </div>
-        <div class="rightSpace"></div>
-      </div> -->
       <div *ngFor="let a of arrMsg" class="wrapper">
         <div class="cont">
           <div *ngIf="a.uid === currentUserId" class="flexer">
             <div class="conter">
-              <!-- <div class="spacer">space</div> -->
               <div>
                 <div class="msgSent">
-
-                  <!-- <p>{{a.uid}}</p> -->
                   <p class="toFlip">{{a.message}}</p>
                   <br>
                   <p class="refSent">{{a.time}}</p>
                 </div>
                 <br>
-
               </div>
             </div>
-
-
           </div>
           <div *ngIf="a.uid !== currentUserId" class="flexer">
             <div>
               <div class="msgReceived">
-                <!-- <p>{{a.uid}}</p> -->
                 <p class="sender">{{a.message}}</p>
                 <br>
                 <p class="ref">{{a.time}}</p>
               </div>
               <br>
             </div>
-            <!-- <div class="spacer"></div> -->
-
-
           </div>
         </div>
-
-
       </div>
     </ion-list>
   </div>

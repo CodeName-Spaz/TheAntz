@@ -11,7 +11,6 @@
 
 
     </div>
-    <!-- <p class="price">Price</p> -->
   </ion-fab>
 
   <div class="post">
@@ -38,7 +37,7 @@
         </ion-col>
         <ion-col col-3>
           <p class="thePrices">
-            R{{price}}
+            {{price | currency : 'ZAR'}}
           </p>
 
         </ion-col>

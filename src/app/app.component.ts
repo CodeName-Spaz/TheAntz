@@ -15,6 +15,8 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { viewParentEl } from '@angular/core/src/view/util';
 import { UploadImagePage } from '../pages/upload-image/upload-image';
 
+import { ScreenOrientation} from '@ionic-native/screen-orientation'
+
 
 @Component({
  templateUrl: 'app.html'
@@ -26,7 +28,7 @@ export class MyApp {
 
  pages: Array<{title: string, component: any}>;
 
- constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public art: StreetartzProvider) {
+ constructor(public screenOrientation: ScreenOrientation, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,public art: StreetartzProvider) {
    art.checkstate().then((data:any)=>{
      if (data ==1){
        this.rootPage = CategoryPage;
@@ -40,6 +42,9 @@ export class MyApp {
    // used for an example of ngFor and navigation
 
 
+   // Lock the screen orientation to portrait
+   this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT)
+
 
  }
 
@@ -47,7 +52,7 @@ export class MyApp {
    this.platform.ready().then(() => {
      // Okay, so the platform is ready and our plugins are available.
      // Here you can do any higher level native things you might need.
-     this.statusBar.styleDefault();
+     this.statusBar.styleLightContent();
      this.splashScreen.hide(); 
    });
  }

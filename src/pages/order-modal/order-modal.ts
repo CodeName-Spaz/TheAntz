@@ -64,32 +64,12 @@ export class OrderModalPage implements OnInit {
     this.uid = this.obj.uid;
     this.currentUserId = this.obj.currentUserId;
 
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    // console.log(this.downloadurl1);
-    console.log(this.obj.name)
-    console.log(this.obj.username);
-
-    console.log(this.obj.pic);
-
-
-    // this.currentUserId =firebase.auth().currentUser.uid
-    // console.log(this.currentUserId);
-
-    // let userID = firebase.auth().currentUser;
-    // console.log(userID);
-    // firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
-    //   this.arr.length = 0
-    //   let details = data.val();
-    //   this.arr.push(details);
-    //   console.log(this.arr);
-    // })
-
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
-       console.log(this.tempdownloadurl);
+     
+
+
     })
     this.getData();
   }
@@ -97,7 +77,7 @@ export class OrderModalPage implements OnInit {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderModalPage');
+    // console.log('ionViewDidLoad OrderModalPage');
     // this.getData();
   }
   ngOnInit() {
@@ -105,29 +85,26 @@ export class OrderModalPage implements OnInit {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      // console.log(this.tempemail);
       this.imageSize()
-      //  console.log(this.tempdownloadurl);
     })
   }
+
+  scan(event) {
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.transform = "TranslateY(-50px)"
+  }
   scanner(event) {
-    // console.log(event.path[0].attributes[1].ownerElement.height);
-    // console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
-
-    // console.log(event);
-
     var wMark = document.getElementsByClassName('watermarks') as HTMLCollectionOf<HTMLElement>;
     this.height = event.path[0].clientHeight;
     wMark[0].style.top = (this.height / 3) + "px";
     wMark[0].style.transform = "translateY(-50px)";
     wMark[0].style.width = 100 + "%";
-    // wMark[0].style.transform = "TranslateY(500px)"
-    // console.log(this.height);
+  
 
   }
   imageSize() {
     setTimeout(() => {
-      // this.scanner(event);
     }, 3000);
   }
   sendRequest(currentUserId) {
@@ -137,8 +114,6 @@ export class OrderModalPage implements OnInit {
     info[0].style.transform = "translateX(120%)";
     info[0].style.height = 0 + "px";
     sentMessage[0].style.display = "block";
-
-    // this.downloadurls = this.obj.pic;
   }
 
   BuyArt(pic, name, key, url, email, username, price, name1, uid, currentUserId) {
@@ -162,29 +137,24 @@ export class OrderModalPage implements OnInit {
     firebase.database().ref('Orders/' + this.obj.uid).on("value", (data: any) => {
       data = data.val();
       this.retriveCustomerDetails.push(data);
-      console.log(this.obj.uid);
     })
   }
 
   sendMesssage() {
     let a = this.obj.uid;
-    console.log(a);
-
+    var tempMsg = this.message;
+    this.message = "";
     if (a == this.currentUserId) {
-
     }
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
+    this.art.BuyPicture(this.obj.uid,this.currentUserId,tempMsg, this.keys2).then((data: any) => {
       this.arrMsg = data;
-      console.log(data);
-
+      this.message = "";
     })
-
   }
   getData() {
-    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
-      console.log(this.arrMsg);
-
+    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message, this.keys2).then((data: any) => {
       this.arrMsg = data;
+      this.message = "";
     })
   }
 }

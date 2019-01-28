@@ -8,6 +8,8 @@ import { OrderModalPage } from '../order-modal/order-modal';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { SendEmailProvider } from '../../providers/send-email/send-email';
+import { CurrencyPipe } from '@angular/common'
 
 
 /**
@@ -65,11 +67,10 @@ export class ViewPage implements OnInit {
   tempemail;
 
   obj = this.navParams.get("obj");
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public SendEmailProvider:SendEmailProvider, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
 
-    console.log(this.obj.email);
-    console.log(this.obj.name1);
+
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -83,44 +84,22 @@ export class ViewPage implements OnInit {
     this.numlikes = this.obj.likes;
     this.name1 = this.obj.name1;
     this.uid = this.obj.uid
-
-
-
     this.currentUserId = firebase.auth().currentUser.uid
-      
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-
     this.Retrivecomments();
-    console.log(this.obj.name);
-    console.log(this.obj.pic);
-    console.log(this.obj.username);
-    // console.log(this.uid);
-    console.log(this.obj.url)
-    // console.log(this.currentUserId);
+  
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      console.log(this.tempName);
-
-      console.log(this.tempdownloadurl);
       this.ifOrderYes();
     })
   }
-
-
-
-
-
-
-
   ngOnInit() {
+    this.Retrivecomments() 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
       this.ifOrderYes();
     })
   }
@@ -176,14 +155,12 @@ export class ViewPage implements OnInit {
   }
   sendInformation() {
     this.art.checkOrder(this.obj.uid,this.downloadurl ).then(data =>{
-      console.log(data)
+      // console.log(data)
       if (data == "found"){
         console.log("found")
       }
       else if (data == "not found"){
     this.display.length = 0;
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
     var user = firebase.auth().currentUser;
     firebase.database().ref('Orders/' + this.obj.uid).push({
       tempName: this.tempName,
@@ -202,24 +179,28 @@ export class ViewPage implements OnInit {
 
 
   BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid, currentUserId) {
-    let obj = {
+    this.art.getUserEmail().then(data =>{
+     this.SendEmailProvider.sendEmail(data,this.email,this.downloadurl,price);
+      let obj = {
       name: name,
       pic: pic,
-      key: key,
+      key:   this.keys2 ,
       url: url,
-      comments: comments,
+      comments:this.numComments,
       email: email,
       username: username,
       description: description,
       location: location,
       price: price,
-      likes: likes,
+      likes: this.numlikes ,
       name1: name1,
       uid: uid,
       currentUserId: currentUserId
     }
-    this.navCtrl.push(OrderModalPage, { obj: obj });
     this.sendInformation();
+    this.navCtrl.push(OrderModalPage, { obj: obj });
+    })
+
   }
 
   GoBackToCategory() {
@@ -227,7 +208,7 @@ export class ViewPage implements OnInit {
   }
 
   Retrivecomments() {
-    this.art.viewComments(this.obj.key, this.comment).then((data) => {
+    this.art.viewComments(this.obj.key, this.comment).then((data:any) => {
       if (data == null || data == undefined) {
       }
       else {
