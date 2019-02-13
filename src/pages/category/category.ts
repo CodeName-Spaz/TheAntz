@@ -39,25 +39,9 @@ export class CategoryPage {
   verified;
   constructor(private ngZone: NgZone, private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
-    this.verified = this.art.checkVerificatiom();
-    console.log(this.verified);
   }
   GoToProfilePage() {
-    this.verified = this.art.verify();
-    console.log(this.verified);
-    if (this.verified == 0) {
-      let alert = this.alertCtrl.create({
-        title: '',
-        subTitle: "We have sent you an email,Open it up to activate your account.",
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-    else {
-      this.navCtrl.push(ProfilePage)
-    }
-
-
+    this.navCtrl.push(ProfilePage)
   }
 
   ionViewDidEnter() {
@@ -142,27 +126,30 @@ export class CategoryPage {
       name1: name1,
       uid: uid,
     }
-    this.verified = this.art.verify();
-    if (this.verified == 0) {
-      let alert = this.alertCtrl.create({
-        title: '',
-        subTitle: "We have sent you an email,Open it up to activate your account.",
-        buttons: ['OK']
-      });
-      alert.present();
+    this.navCtrl.push(ViewPage, { obj: obj });
 
-    }
-    else {
-      this.navCtrl.push(ViewPage, { obj: obj });
-    }
   }
   chats() {
     this.verified = this.art.verify();
     if (this.verified == 0) {
       let alert = this.alertCtrl.create({
-        title: '',
-        subTitle: "We have sent you an email,Open it up to activate your account.",
-        buttons: ['OK']
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
       });
       alert.present();
 

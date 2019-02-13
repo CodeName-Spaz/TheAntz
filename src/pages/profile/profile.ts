@@ -51,12 +51,65 @@ export class ProfilePage {
     this.retreivePics();
   }
   EditProfile() {
-    this.navCtrl.push(EditProfilePage);
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
+      });
+      alert.present();
+
+    }
+    else {
+      this.navCtrl.push(EditProfilePage);
+    }
 
   }
+  verified;
   upload() {
-    const modal = this.modalCtrl.create(UploadImagePage);
-    modal.present();
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
+      });
+      alert.present();
+
+    }
+    else {
+      const modal = this.modalCtrl.create(UploadImagePage);
+      modal.present();
+    }
   }
   presentPopover() {
     const popover = this.popoverCtrl.create(PopOverProfilePage);

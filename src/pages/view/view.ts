@@ -154,6 +154,7 @@ export class ViewPage implements OnInit {
     wMark[0].style.transform = "TranslateY(-50px)"
   }
   sendInformation() {
+
     this.art.checkOrder(this.obj.uid, this.downloadurl).then(data => {
       // console.log(data)
       if (data == "found") {
@@ -180,28 +181,53 @@ export class ViewPage implements OnInit {
 
 
   BuyArt(pic, name, key, url, comments, email, username, description, location, price, likes, name1, uid, currentUserId) {
-    this.art.getUserEmail().then(data => {
-      this.SendEmailProvider.sendEmail(data, this.email, this.downloadurl, price);
-      let obj = {
-        name: name,
-        pic: pic,
-        key: this.keys2,
-        url: url,
-        comments: this.numComments,
-        email: email,
-        username: username,
-        description: description,
-        location: location,
-        price: price,
-        likes: this.numlikes,
-        name1: name1,
-        uid: uid,
-        currentUserId: currentUserId
-      }
-      this.sendInformation();
-      this.navCtrl.push(OrderModalPage, { obj: obj });
-    })
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
+      });
+      alert.present();
 
+    }
+    else {
+      this.art.getUserEmail().then(data => {
+        this.SendEmailProvider.sendEmail(data, this.email, this.downloadurl, price);
+        let obj = {
+          name: name,
+          pic: pic,
+          key: this.keys2,
+          url: url,
+          comments: this.numComments,
+          email: email,
+          username: username,
+          description: description,
+          location: location,
+          price: price,
+          likes: this.numlikes,
+          name1: name1,
+          uid: uid,
+          currentUserId: currentUserId
+        }
+        this.sendInformation();
+        this.navCtrl.push(OrderModalPage, { obj: obj });
+      })
+    }
   }
 
   GoBackToCategory() {
@@ -235,41 +261,91 @@ export class ViewPage implements OnInit {
 
   }
   likePicture() {
-    this.art.viewLikes(this.obj.key).then(data => {
-      if (data == "not found") {
-        this.art.likePic(this.obj.key);
-        this.art.addNumOfLikes(this.obj.key, this.numlikes);
-        this.numlikes++;
-      }
-      else {
-        this.art.removeLike(this.obj.key, this.numlikes, data);
-        this.numlikes--;
-      }
-    })
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
+      });
+      alert.present();
 
+    }
+    else {
+      this.art.viewLikes(this.obj.key).then(data => {
+        if (data == "not found") {
+          this.art.likePic(this.obj.key);
+          this.art.addNumOfLikes(this.obj.key, this.numlikes);
+          this.numlikes++;
+        }
+        else {
+          this.art.removeLike(this.obj.key, this.numlikes, data);
+          this.numlikes--;
+        }
+      })
+    }
 
   }
-
+  verified;
   CommentPic(key) {
-    if (this.comment == "" || this.comment == null) {
-      const alert = this.alertCtrl.create({
-        title: "Oops!",
-        subTitle: "It looks like you didn't write anything on the comments, please check.",
-        buttons: ['OK']
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: 'Email Verification',
+        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel');
+            }
+          },
+          {
+            text: 'Send',
+            handler: () => {
+              this.art.checkVerificatiom();
+            }
+          }
+        ]
       });
       alert.present();
     }
     else {
-      this.art.comments(this.obj.key, this.comment).then((data: any) => {
-        this.art.addNumOfComments(this.obj.key, this.numComments).then(data => {
-          this.art.viewComments(this.obj.key, this.viewComments).then(data => {
-            this.arr2.length = 0;
-            this.Retrivecomments();
+      if (this.comment == "" || this.comment == null) {
+        const alert = this.alertCtrl.create({
+          title: "Oops!",
+          subTitle: "It looks like you didn't write anything on the comments, please check.",
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+      else {
+        this.art.comments(this.obj.key, this.comment).then((data: any) => {
+          this.art.addNumOfComments(this.obj.key, this.numComments).then(data => {
+            this.art.viewComments(this.obj.key, this.viewComments).then(data => {
+              this.arr2.length = 0;
+              this.Retrivecomments();
+            })
           })
+          this.numComments++;
         })
-        this.numComments++;
-      })
-      this.comment = "";
+        this.comment = "";
+      }
     }
   }
 
