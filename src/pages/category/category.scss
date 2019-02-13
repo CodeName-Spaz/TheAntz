@@ -19,6 +19,10 @@ page-category {
     .Caps-Lock{
         text-transform: capitalize;
     }
+    .buyersIcon{
+        // width: 20px;
+        // height: 20px;
+    }
     #gotoTop{
         width: 30px;
         height: 30px;
@@ -52,7 +56,6 @@ page-category {
         border-bottom-right-radius: 10px;
     }
     .theImg{
-        
         height: 29vh;
         max-height: 300px;
         width: 53vw;
@@ -120,10 +123,10 @@ page-category {
         padding-top: 5px;
     }
     .dp{
-        height: auto;
+        height: 35px;
+        object-fit: cover;
         width: 35px;
         border-radius:50%;
-        object-fit: cover;
     }
     @media screen and (min-width: 550px){
         .smaller{
@@ -212,8 +215,9 @@ page-category {
             padding-top: 5px;
         }
         .dp{
-            height: auto;
-            width: 35px;
+            // height: 35px;
+            // width: 35px;
+            object-fit: cover;
             border-radius:50%;
         }
     }

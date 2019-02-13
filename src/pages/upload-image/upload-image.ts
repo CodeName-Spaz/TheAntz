@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
 import { ProfilePage } from '../profile/profile';
@@ -27,80 +27,85 @@ export class UploadImagePage {
   location;
   price;
   downloadurl;
-  photos:any;
-  d=1;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController,private camera: Camera) {
+  photos: any;
+  d = 1;
+  constructor(private viewCtrl: ViewController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public view: ViewController, public alertCtrl: AlertController, private camera: Camera) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadModalPage');
   }
-
-  insertvid(event: any) {
+  insertImagine(event: any) {
 
     this.d = 1;
-    console.log(event.type + " button");
 
-    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-    if(this.d == 1){
-      action[0].style.transform = "translateY(10%)";
-    action[0].style.transition = 500 + "ms";
-    }
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
 
+    if (this.d == 1) {
+      opts[0].style.top = "10vh";
+      if (event.target.files && event.target.files[0]) {
+        let reader = new FileReader();
 
-    if (event.target.files && event.target.files[0]) {
-      let reader = new FileReader();
+        if (event.target.files[0].size > 1500000) {
+          let alert = this.alertCtrl.create({
+            title: "Oh no!",
+            subTitle: "your photo is too large, please choose a photo with 1.5MB or less.",
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+        else {
+          reader.onload = (event: any) => {
+            this.url = event.target.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+        }
 
-      reader.onload = (event: any) => {
-        this.url = event.target.result;
       }
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(reader.onload);
+
     }
   }
+
   omit_special_char(event) {
     var k;
     k = event.charCode;
     return ((k >= 48 && k <= 57));
   }
-  takepic= function(){
-
+  takepic = function () {
     this.d = 1;
-    console.log(event.type + " button");
 
-    let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-    if(this.d == 1){
-      action[0].style.transform = "translateY(10%)";
-    action[0].style.transition = 500 + "ms";
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+
+    if (this.d == 1) {
+      opts[0].style.top = "10vh";
+
     }
-
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
-   
+
     this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     this.url = 'data:image/jpeg;base64,' + imageData;
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.url = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
-     // Handle error
+      // Handle error
     });
-   
-   }
+
+  }
   uploadPicture() {
-    this.d = 1;
-    if (this.category == undefined || this.category == null ,
-      this.name == undefined || this.name == null ,
+    if (this.category == undefined || this.category == null,
+      this.name == undefined || this.name == null,
       this.description == undefined || this.description == null,
       this.location == undefined || this.location == null,
-      this.price == undefined || this.price == null ,
+      this.price == undefined || this.price == null,
       this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "Fields Missing",
-        subTitle: "Please make sure that all the fields are filled.",
+        subTitle: "Please make sure that all fields are filled.",
         buttons: [
           {
             text: 'Ok',
@@ -110,7 +115,7 @@ export class UploadImagePage {
         ]
       });
       confirm.present();
-    } else if (this.category == null || this.category ==undefined) {
+    } else if (this.category == null || this.category == undefined) {
       const confirm = this.alertCtrl.create({
         title: "category",
         subTitle: "you did not select the category",
@@ -137,7 +142,7 @@ export class UploadImagePage {
         ]
       });
       confirm.present();
-    }  else if (this.url == '../../assets/default.jpg') {
+    } else if (this.url == '../../assets/default.jpg') {
       const confirm = this.alertCtrl.create({
         title: "uploadImage",
         subTitle: "please select a imagine to continue..",
@@ -151,7 +156,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.location == null || this.location ==undefined) {
+    else if (this.location == null || this.location == undefined) {
       const confirm = this.alertCtrl.create({
         title: "location",
         subTitle: "please select a location to continue..",
@@ -165,7 +170,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.name == null || this.location ==undefined) {
+    else if (this.name == null || this.location == undefined) {
       const confirm = this.alertCtrl.create({
         title: "name",
         subTitle: "please select a name to continue..",
@@ -179,7 +184,7 @@ export class UploadImagePage {
       });
       confirm.present();
     }
-    else if (this.description == null || this.description ==undefined) {
+    else if (this.description == null || this.description == undefined) {
       const confirm = this.alertCtrl.create({
         title: "description",
         subTitle: "please select a description to continue..",
@@ -196,44 +201,56 @@ export class UploadImagePage {
     else {
       this.art.uploadPic(this.url).then(data => {
         this.art.storeToDB(data, this.category, this.name, this.description, this.location, this.price).then(() => {
-          this.navCtrl.setRoot(ProfilePage);
-        },
-          Error => {
-            console.log(Error)
-          })
-      }, Error => {
-        console.log(Error)
-      })
+          const confirm = this.alertCtrl.create({
+            title: "Thank you",
+            subTitle: "Your artwork will be available on the app as soon as it has been approved",
+            buttons: [
+              {
+                text: 'Ok',
+                handler: () => {
+                  this.navCtrl.push(ProfilePage)
+                }
+              },
+            ]
+          });
+          confirm.present();
+        })
+        // this.navCtrl.pop();
+      },
+        Error => {
+          // console.log(Error)
+        })
+
 
     }
 
   }
 
   dismiss() {
-    this.navCtrl.setRoot(ProfilePage);
+    this.viewCtrl.dismiss();
   }
   showAction(event) {
     this.d = 0;
     console.log(event.type + " button");
 
     let action = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-    if(this.d == 0){
-      action[0].style.transform = "translateY(-90%)";
-    action[0].style.transition = 500 + "ms";
+    if (this.d == 0) {
+      action[0].style.top = "-30vh";
+      action[0].style.transition = 500 + "ms";
     }
 
-    
+
 
   }
   decide(res) {
     // console.log('clicked body');
     res = this.d++;
-    console.log(res);
+
     if (res > 0) {
       let dropAction = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
-      dropAction[0].style.transform = "translateY(0%)";
+      dropAction[0].style.top = "10vh";
     }
 
 
-}
+  }
 }

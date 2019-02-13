@@ -24,81 +24,83 @@ import { EmailComposer } from '@ionic-native/email-composer';
 import { ChatsPage } from '../pages/chats/chats';
 
 import firebase from 'firebase';
-import { ForgotPasswordPage } from'../pages/forgot-password/forgot-password'
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password'
 import { EulaPage } from '../pages/eula/eula';
 import { Camera } from '@ionic-native/camera';
 import { OrderPage } from '../pages/order/order'
 import { OrderModalPage } from '../pages/order-modal/order-modal';
 import { ViewInforPage } from '../pages/view-infor/view-infor';
+import { EmailProvider } from '../providers/email/email';
 
 
 firebase.initializeApp({
-  apiKey: "AIzaSyANfL1d1MMKd-72kO3eYEgVE5Jr24I21bw",
-  authDomain: "databaseofstreetart.firebaseapp.com",
-  databaseURL: "https://databaseofstreetart.firebaseio.com",
-  projectId: "databaseofstreetart",
-  storageBucket: "databaseofstreetart.appspot.com",
-  messagingSenderId:"394201594315"
+  apiKey: "AIzaSyB6pOe3yLnWgwxG7UADv93MUgm_8S7ipzQ",
+  authDomain: "street-arts.firebaseapp.com",
+  databaseURL: "https://street-arts.firebaseio.com",
+  projectId: "street-arts",
+  storageBucket: "street-arts.appspot.com",
+  messagingSenderId: "326198585168"
 })
 
 
 @NgModule({
- declarations: [
-   MyApp,
-   SplashPage,
-   LoginPage,
-   SignupPage,
-   CategoryPage,
-   ProfilePage,
-   UploadImagePage,
-   ViewPage,
-   EditProfilePage,
-   PopOverProfilePage,
-   ForgotPasswordPage,
-   EulaPage,
-   ChatsPage,
-   OrderPage,
-   OrderModalPage,
-   ViewInforPage
+  declarations: [
+    MyApp,
+    SplashPage,
+    LoginPage,
+    SignupPage,
+    CategoryPage,
+    ProfilePage,
+    UploadImagePage,
+    ViewPage,
+    EditProfilePage,
+    PopOverProfilePage,
+    ForgotPasswordPage,
+    EulaPage,
+    ChatsPage,
+    OrderPage,
+    OrderModalPage,
+    ViewInforPage
 
 
-   
 
 
- ],
- imports: [
-   BrowserModule, HttpClientModule ,
-   IonicModule.forRoot(MyApp),
-   IonicImageViewerModule
- ],
- bootstrap: [IonicApp],
- entryComponents: [
-   MyApp,
-   SplashPage,
-   LoginPage,
-   SignupPage,
-   CategoryPage,
-   ProfilePage,
-   UploadImagePage,
-   ViewPage,
-   EditProfilePage,
-   PopOverProfilePage,
-   ForgotPasswordPage,
-   EulaPage,
-   ChatsPage,
-   OrderPage,
-   OrderModalPage,
-   ViewInforPage
+
+  ],
+  imports: [
+    BrowserModule, HttpClientModule,
+    IonicModule.forRoot(MyApp),
+    IonicImageViewerModule
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    SplashPage,
+    LoginPage,
+    SignupPage,
+    CategoryPage,
+    ProfilePage,
+    UploadImagePage,
+    ViewPage,
+    EditProfilePage,
+    PopOverProfilePage,
+    ForgotPasswordPage,
+    EulaPage,
+    ChatsPage,
+    OrderPage,
+    OrderModalPage,
+    ViewInforPage
 
 
- ],
- providers: [
-   StatusBar,
-   SplashScreen,
-   EmailComposer,
-   Camera,
-   {provide: ErrorHandler, useClass: IonicErrorHandler},
-   StreetartzProvider,EmailComposer,Camera
- ]
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    EmailComposer,
+    Camera,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    StreetartzProvider, EmailComposer, Camera,
+    EmailProvider
+  ]
 })
-export class AppModule {}
+export class AppModule { }

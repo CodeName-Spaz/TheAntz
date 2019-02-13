@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, OnInit } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
 import { OrderModalPage } from '../order-modal/order-modal';
 import { ViewInforPage } from '../view-infor/view-infor';
@@ -45,57 +45,65 @@ export class ChatsPage {
   displayCurentMessages = []
   arrMsg = new Array();
   color;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
-// this.art.getOrders().then((data:any) =>{
-//   this.retriveCustomerDetails = data;
-//   this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
-// })
-}
+  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
 
-getData(id, user, message) {
-  this.art.getMessages(id, user).then((data:any) =>{
-    console.log(data)
-    for(var x =0; x< length;x++){
-      if (data.status == true){
-        this.color = "light";
-      }
-      else{
-        this.color = "dangers"
-      }
-      let obj = {
-        tempName: this.retriveCustomerDetails[x].tempName,
-        tempdownloadurl: this.retriveCustomerDetails[x].tempdownloadurl,
-        name1:this.retriveCustomerDetails[x].name1,
-        price:this.retriveCustomerDetails[x].price,
-        email: this.retriveCustomerDetails[x].email,
-        downloadurl: this.retriveCustomerDetails[x].downloadurl,
-        message:   data.message,
-        time :  data.time,
-        messageRead:this.retriveCustomerDetails[x].messageRead,
-        currentUserId:this.retriveCustomerDetails[x].currentUserId,
-        uid:this.retriveCustomerDetails[x].uid,
-        key:this.retriveCustomerDetails[x].key,
-        color : this.color
-      }
-      this.displayCurentMessages.push(obj)
-    }
-  })
-}
+  }
 
   ionViewDidEnter() {
     this.displayCurentMessages.length = 0;
-    this.retriveCustomerDetails.length = 0;
-    this.art.getOrders().then((data:any) =>{
-      this.retriveCustomerDetails = data;
-      this.getData(this.retriveCustomerDetails[0].currentUserId,this.retriveCustomerDetails[0].uid,"")
-    })
+    this.getData();
   }
+
+  getData() {
+    let loading = this.loadingCtrl.create({
+      spinner: "bubbles",
+      content: "Please wait....",
+      duration: 4000000
+    });
+    loading.present();
+    this.art.getSentMessages().then(() => {
+      this.art.getDirectMessgs().then((data: any) => {
+        console.log(data);
+        setTimeout(() => {
+          if (data != '') {
+            //this.art.step2(data)
+            this.art.getAllConvo().then((data2: any) => {
+              this.displayCurentMessages = data2;
+              loading.dismiss();
+            })
+          }
+          else {
+            this.art.getAllConvo().then((data2: any) => {
+              this.displayCurentMessages = data2;
+              loading.dismiss();
+            })
+          }
+        }, 1400);
+      }, Error => {
+        console.log(Error);
+      })
+    })
+
+  }
+
+  // ionViewDidEnter() {
+  //   this.displayCurentMessages.length = 0;
+  //   this.retriveCustomerDetails.length = 0;
+  //   this.art.getOrders().then((data:any) =>{
+  //     this.retriveCustomerDetails = data;
+  //     console.log(this.retriveCustomerDetails);
+  //     for (var x = 0; x < this.retriveCustomerDetails.length; x++){
+  //       this.getData(this.retriveCustomerDetails[x].currentUserId,this.retriveCustomerDetails[x].uid,"", x)
+  //     }
+  //   })
+  // }
+
   scroll(event) {
     // console.log(event);
 
   }
 
-  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message, key, currentUserId, uid) {
+  showDetails(downloadurl, tempName, tempdownloadurl, price, name1, email, message, key, currentUserId, uid, path, pic) {
     let obj = {
       downloadurl: downloadurl,
       tempName: tempName,
@@ -106,8 +114,11 @@ getData(id, user, message) {
       message: message,
       key: key,
       uid: uid,
-      currentUserId: currentUserId
+      currentUserId: currentUserId,
+      path: path,
+      pic: pic
     }
+    console.log(obj);
 
     this.navCtrl.push(ViewInforPage, { obj: obj });
   }

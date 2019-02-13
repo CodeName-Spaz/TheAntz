@@ -29,83 +29,45 @@ export class ViewInforPage {
   currentUser;
   uid: any;
   primaryKey;
+  key
   foreignKey;
-  // message;
-  condition="";
+  path;
+  condition = "";
   obj = this.navParams.get("obj");
+  artKey;
   constructor(public navCtrl: NavController, public navParams: NavParams, private emailComposer: EmailComposer, public art: StreetartzProvider) {
-    this.obj = this.navParams.get("obj");
 
-    // console.log(this.obj.tempName);
-    // console.log(this.obj.downloadurl);
-    this.downloadurl = this.obj.downloadurl;
+  }
+
+  ionViewDidEnter() {
+    this.obj = this.navParams.get("obj");
+    this.downloadurl = this.obj.pic;
     this.email = this.obj.email;
     this.price = this.obj.price;
     this.name1 = this.obj.name1;
+    this.key = this.obj.key
     this.tempdownloadurl = this.obj.tempdownloadurl
     this.tempName = this.obj.tempName;
     this.currentUserId = this.obj.currentUserId;
     this.uid = this.obj.uid;
     this.currentUser = this.obj.currentUser
-
-
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    console.log(this.name1);
-    console.log(this.tempName);
-    // console.log(this.currentUser);
-
-    // this.currentUser = firebase.auth().currentUser.uid
-    // console.log(this.obj.currentUser)
-    // alert("art currentuser" + this.currentUserId+ " client userid " + currentUser);
-
-    
-
-
+    this.path = this.obj.path;
     this.list.length = 0;
-
-
-    this.getData();
-    this.decideSide()
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ViewInforPage');
+    this.getData(this.path);
 
   }
 
-  decideSide(){
-    let currentUser = firebase.auth().currentUser.uid
-    console.log('the current user is');
-    
-    console.log(currentUser);
-    console.log('the other user is');
-    console.log(this.currentUserId);
-
-
-    
-    
-    
-  }
-  repond() {
-    let email = {
-      to: this.obj.email,
-      cc: '',
-      bcc: ['john@doe.com', 'jane@doe.com'],
-      attachments: [
-
-      ],
-      subject: 'Cordova Icons',
-      body: 'Greetings' + this.obj.tempName + 'i have received ur request',
-      isHtml: true
-    };
-    this.emailComposer.open(email);
-  }
-
-  send(currentUserId) {
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data) => {
+  send() {
+    this.arrMsg = [];
+    this.art.sendMessage(this.path, this.message, this.artKey).then((data) => {
       console.log(data);
+      this.getData(this.path)
+      this.message = "";
     })
+  }
+
+  assignArtKey(key) {
+    this.artKey = key;
   }
 
   showDetails(currentUserId) {
@@ -114,9 +76,21 @@ export class ViewInforPage {
     }
     this.navCtrl.push(ViewInforPage, { obj: obj });
   }
-  getData() {
-    this.art.retrieveChats(this.currentUserId,this.obj.uid,this.message).then((data: any) => {
+
+  getData(path) {
+    // this.arrMsg.length = 0;
+    // console.log(this.arrMsg);
+    // console.log('nothing man');
+    // this.art.retrieveChats(this.uid, this.currentUserId, this.message, this.key).then((data: any) => {
+    //   this.arrMsg = data;
+    //   this.message = "";
+    // })
+    console.log(path)
+    this.arrMsg.length = 0;
+    this.art.retrieveAllChats(path).then((data: any) => {
+      this.arrMsg.length = 0;
       this.arrMsg = data;
+      this.assignArtKey(this.arrMsg[0].artKey)
       console.log(this.arrMsg);
     })
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { StreetartzProvider } from '../../providers/streetart-database/streetart-database';
@@ -31,7 +31,7 @@ export class OrderModalPage implements OnInit {
   location;
   numlikes;
   numComments;
-  message;
+  message = "";
   arr = [];
   tempName;
   uid: any;
@@ -44,13 +44,9 @@ export class OrderModalPage implements OnInit {
   arrMsg = [];
   messageRead = "message read"
   obj = this.navParams.get("obj");
-  side;
-  currentUser;
-  condition;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public toastCtrl: ToastController, private alertCtrl: AlertController) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
-
-
     this.username = this.obj.username;
     this.downloadurl = this.obj.pic;
     this.keys2 = this.obj.key;
@@ -65,99 +61,47 @@ export class OrderModalPage implements OnInit {
     this.name1 = this.obj.name1;
     this.uid = this.obj.uid;
     this.currentUserId = this.obj.currentUserId;
-
-    console.log(this.currentUserId);
-    console.log(this.obj.uid);
-    // console.log(this.downloadurl1);
-    console.log(this.obj.name)
-    console.log(this.obj.username);
-
-    console.log(this.obj.pic);
-
-    this.currentUser = firebase.auth().currentUser.uid
-
-    console.log(this.obj.username);
-
-
-    // this.currentUserId =firebase.auth().currentUser.uid
-    // console.log(this.currentUserId);
-
-    // let userID = firebase.auth().currentUser;
-    // console.log(userID);
-    // firebase.database().ref("profiles/" + userID.uid).on('value', (data: any) => {
-    //   this.arr.length = 0
-    //   let details = data.val();
-    //   this.arr.push(details);
-    //   console.log(this.arr);
-    // })
-
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
-      console.log(this.tempName);
-       console.log(this.tempdownloadurl);
+
+
+
     })
     this.getData();
   }
 
 
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderModalPage');
-    // this.getData();
+  ionViewDidEnter() {
+    this.getData();
+    console.log(this.arrMsg)
   }
   ngOnInit() {
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
       this.tempdownloadurl = data[0].downloadurl;
       this.tempemail = data[0].email;
-      // console.log(this.tempemail);
       this.imageSize()
-      //  console.log(this.tempdownloadurl);
-      console.log(data);
-      
     })
   }
-  uidDecides() {
-    console.log('loaded userID');
-    this.obj = this.navParams.get("obj");
-    this.currentUserId = firebase.auth().currentUser.uid;
-    let received = this.obj.uid;
-    let me = this.currentUserId;
 
-    console.log();
-
-    if (me == received) {
-      this.side = "received"
-      console.log("received");
-
-    }
-    else {
-      this.side = "received"
-    }
-
-
-
-
+  scan(event) {
+    var wMark = document.getElementsByClassName('watermark') as HTMLCollectionOf<HTMLElement>;
+    wMark[0].style.top = (event.path[0].attributes[1].ownerElement.height / 2.5) + "px";
+    wMark[0].style.transform = "TranslateY(-50px)"
   }
   scanner(event) {
-    // console.log(event.path[0].attributes[1].ownerElement.height);
-    // console.log('half ' + (event.path[0].attributes[1].ownerElement.height * 0.5 - 50));
-
-    // console.log(event);
-
     var wMark = document.getElementsByClassName('watermarks') as HTMLCollectionOf<HTMLElement>;
     this.height = event.path[0].clientHeight;
     wMark[0].style.top = (this.height / 3) + "px";
     wMark[0].style.transform = "translateY(-50px)";
     wMark[0].style.width = 100 + "%";
-    // wMark[0].style.transform = "TranslateY(500px)"
-    // console.log(this.height);
+
 
   }
   imageSize() {
     setTimeout(() => {
-      // this.scanner(event);
     }, 3000);
   }
   sendRequest(currentUserId) {
@@ -167,9 +111,8 @@ export class OrderModalPage implements OnInit {
     info[0].style.transform = "translateX(120%)";
     info[0].style.height = 0 + "px";
     sentMessage[0].style.display = "block";
-
-    // this.downloadurls = this.obj.pic;
   }
+
   BuyArt(pic, name, key, url, email, username, price, name1, uid, currentUserId) {
     let obj = {
       name: name,
@@ -191,37 +134,31 @@ export class OrderModalPage implements OnInit {
     firebase.database().ref('Orders/' + this.obj.uid).on("value", (data: any) => {
       data = data.val();
       this.retriveCustomerDetails.push(data);
-      console.log(this.obj.uid);
     })
   }
 
   sendMesssage() {
-    let a = this.obj.uid;
-    console.log(a);
-
-    if (a == this.currentUserId) {
-
+    if (this.message != "") {
+      let a = this.obj.uid;
+      var tempMsg = this.message;
+      this.message = "";
+      if (a == this.currentUserId) {
+      }
+      this.art.BuyPicture(this.obj.uid, this.currentUserId, tempMsg, this.keys2).then((data: any) => {
+        this.arrMsg = data;
+        this.message = "";
+        this.getData()
+      })
     }
-    this.art.BuyPicture(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
-      this.arrMsg = data;
-      console.log(data);
-
-    })
 
   }
   getData() {
-    this.art.retrieveChats(this.obj.uid,this.currentUserId,this.message).then((data: any) => {
-      console.log(this.arrMsg);
-
+    this.arrMsg.length = 0;
+    console.log(this.arrMsg);
+    console.log('nothing man');
+    this.art.retrieveChats(this.obj.uid, this.currentUserId, this.message, this.keys2).then((data: any) => {
       this.arrMsg = data;
-      if (this.currentUserId == true) {
-        this.condition == "left"
-      }
-      else {
-        this.condition == "right"
-      }
+      this.message = "";
     })
   }
-
-
 }
