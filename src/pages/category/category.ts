@@ -37,31 +37,47 @@ export class CategoryPage {
   comments;
   userId;
   verified;
-  constructor(private ngZone: NgZone, private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App) {
+  constructor(private ngZone: NgZone, private modalCtrl: ModalController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public appCtrl: App, public network: Network) {
     this.retreivePics();
+    this.verified = this.art.checkVerificatiom();
+    console.log(this.verified);
   }
   GoToProfilePage() {
-    this.navCtrl.push(ProfilePage)
+    this.verified = this.art.verify();
+    console.log(this.verified);
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: "We have sent you an email,Open it up to activate your account.",
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.navCtrl.push(ProfilePage)
+    }
+
+
   }
 
   ionViewDidEnter() {
-    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-    //   let alert = this.alertCtrl.create({
-    //     title: '',
-    //     subTitle: 'network was disconnected ',
-    //     buttons: ['OK']
-    //   });
-    //   alert.present();
-    // });
+    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network was disconnected ',
+        buttons: ['OK']
+      });
+      alert.present();
+    });
 
-    // let connectSubscription = this.network.onConnect().subscribe(() => {
-    //   let alert = this.alertCtrl.create({
-    //     title: '',
-    //     subTitle: 'network connection has been established',
-    //     buttons: ['Ok']
-    //   });
-    //   alert.present();
-    // });
+    let connectSubscription = this.network.onConnect().subscribe(() => {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: 'network connection has been established',
+        buttons: ['Ok']
+      });
+      alert.present();
+    });
   }
 
   typeOfArt() {
@@ -126,31 +142,27 @@ export class CategoryPage {
       name1: name1,
       uid: uid,
     }
+    this.verified = this.art.verify();
+    if (this.verified == 0) {
+      let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: "We have sent you an email,Open it up to activate your account.",
+        buttons: ['OK']
+      });
+      alert.present();
 
-    this.navCtrl.push(ViewPage, { obj: obj });
-
+    }
+    else {
+      this.navCtrl.push(ViewPage, { obj: obj });
+    }
   }
   chats() {
     this.verified = this.art.verify();
     if (this.verified == 0) {
       let alert = this.alertCtrl.create({
-        title: 'Email Verification',
-        message: 'We have sent you a verification mail, Please activate your account with the link in the mail. If you cannot find the mail, please click send so that we can resend it.',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel');
-            }
-          },
-          {
-            text: 'Send',
-            handler: () => {
-              this.art.checkVerificatiom();
-            }
-          }
-        ]
+        title: '',
+        subTitle: "We have sent you an email,Open it up to activate your account.",
+        buttons: ['OK']
       });
       alert.present();
 

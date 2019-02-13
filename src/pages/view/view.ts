@@ -8,7 +8,7 @@ import { OrderModalPage } from '../order-modal/order-modal';
 import firebase from 'firebase';
 import { ToastController } from 'ionic-angular';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
-import { EmailProvider } from '../../providers/email/email';
+import { SendEmailProvider } from '../../providers/send-email/send-email';
 import { CurrencyPipe } from '@angular/common'
 
 
@@ -67,7 +67,7 @@ export class ViewPage implements OnInit {
   tempemail;
 
   obj = this.navParams.get("obj");
-  constructor(public SendEmailProvider: EmailProvider, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public SendEmailProvider: SendEmailProvider, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
 
 

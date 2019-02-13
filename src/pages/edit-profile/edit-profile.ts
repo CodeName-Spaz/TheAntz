@@ -4,6 +4,7 @@ import { StreetartzProvider } from '../../providers/streetart-database/streetart
 import { LoadingController } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { ToastController } from 'ionic-angular';
+import { ChangeDetectorRef } from '@angular/core';
 /**
  * Generated class for the EditProfilePage page.
  *
@@ -31,7 +32,8 @@ export class EditProfilePage implements OnInit {
   details
   downloadurl
   imageUrl: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController,public alertCtrl: AlertController) {
+
+  constructor(public cdRef: ChangeDetectorRef, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, public loadingCtrl: LoadingController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
 
   }
   GoToProfile() {
@@ -50,6 +52,13 @@ export class EditProfilePage implements OnInit {
       this.bio = details.bio
     })
   }
+
+  change(value) {
+    this.cdRef.detectChanges();
+    this.contact = value.length < 10 ? value.substring(0, 10) : value;
+  }
+
+
   insertpic(event: any) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
@@ -62,26 +71,7 @@ export class EditProfilePage implements OnInit {
   }
   uploadPicture() {
     this.arr.length = 0;
-    if (this.contact.length < 11) {
-      const loader = this.loadingCtrl.create({
-        content: "Please wait...",
-        duration: 3000000000
-      });
-      loader.present();
-      this.art.uploadProfilePic(this.downloadurl,this.name).then(data => {
-        console.log('added to db');
-        this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
-          this.arr.push(data);
-        });
-        this.navCtrl.setRoot(ProfilePage);
-        loader.dismiss();
-      },
-        Error => {
-          loader.dismiss();
-          console.log(Error)
-        })
-    }
-    else {
+    if (this.contact.length < 10 || this.contact.length > 10) {
       const alert = this.alertCtrl.create({
         title: "Oops!",
         subTitle: "Please make sure that your mobile number is correct.",
@@ -89,12 +79,26 @@ export class EditProfilePage implements OnInit {
       });
       alert.present();
     }
+    else {
+      this.art.uploadProfilePic(this.downloadurl, this.name).then(data => {
+        console.log('added to db');
+        this.art.update(this.name, this.email, this.contact, this.bio, this.downloadurl).then((data) => {
+          this.arr.push(data);
+        })
+        this.navCtrl.pop();
+      },
+        Error => {
+          // console.log(Error)
+        })
+    }
   }
   getUid1() {
     this.art.getUserID().then(data => {
       this.uid1 = data
     })
   }
+
+
   retreivePics1() {
     this.arr.length = 0;
     this.getUid1();
@@ -109,7 +113,7 @@ export class EditProfilePage implements OnInit {
           this.arr.push(objt);
         }
       }
- 
+
     }, Error => {
       console.log(Error)
     });

@@ -31,7 +31,7 @@ export class OrderModalPage implements OnInit {
   location;
   numlikes;
   numComments;
-  message = "";
+  message;
   arr = [];
   tempName;
   uid: any;
@@ -138,19 +138,16 @@ export class OrderModalPage implements OnInit {
   }
 
   sendMesssage() {
-    if (this.message != "") {
-      let a = this.obj.uid;
-      var tempMsg = this.message;
-      this.message = "";
-      if (a == this.currentUserId) {
-      }
-      this.art.BuyPicture(this.obj.uid, this.currentUserId, tempMsg, this.keys2).then((data: any) => {
-        this.arrMsg = data;
-        this.message = "";
-        this.getData()
-      })
+    let a = this.obj.uid;
+    var tempMsg = this.message;
+    this.message = "";
+    if (a == this.currentUserId) {
     }
-
+    this.art.BuyPicture(this.obj.uid, this.currentUserId, tempMsg, this.keys2).then((data: any) => {
+      this.arrMsg = data;
+      this.message = "";
+      this.getData()
+    })
   }
   getData() {
     this.arrMsg.length = 0;

@@ -25,7 +25,7 @@ export class PopOverProfilePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopOverProfilePage');
+    // console.log('ionViewDidLoad PopOverProfilePage');
   }
   nextpage() {
     this.navCtrl.push(EditProfilePage);

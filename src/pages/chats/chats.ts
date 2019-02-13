@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { OrderModalPage } from '../order-modal/order-modal';
 import { ViewInforPage } from '../view-infor/view-infor';
@@ -45,7 +45,7 @@ export class ChatsPage {
   displayCurentMessages = []
   arrMsg = new Array();
   color;
-  constructor(public loadingCtrl: LoadingController, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider) {
 
   }
 
@@ -55,33 +55,12 @@ export class ChatsPage {
   }
 
   getData() {
-    let loading = this.loadingCtrl.create({
-      spinner: "bubbles",
-      content: "Please wait....",
-      duration: 4000000
-    });
-    loading.present();
-    this.art.getSentMessages().then(() => {
-      this.art.getDirectMessgs().then((data: any) => {
-        console.log(data);
-        setTimeout(() => {
-          if (data != '') {
-            //this.art.step2(data)
-            this.art.getAllConvo().then((data2: any) => {
-              this.displayCurentMessages = data2;
-              loading.dismiss();
-            })
-          }
-          else {
-            this.art.getAllConvo().then((data2: any) => {
-              this.displayCurentMessages = data2;
-              loading.dismiss();
-            })
-          }
-        }, 1400);
-      }, Error => {
-        console.log(Error);
+    this.art.retriveMessages().then((data: any) => {
+      this.art.getAllConvo().then((data: any) => {
+        this.displayCurentMessages = data;
       })
+    }, Error => {
+      console.log(Error);
     })
 
   }

@@ -3,9 +3,7 @@ page-upload-image {
         width: 50px;
         height: 50px;
         border-radius: 50px;
-
     }
-
     .options{
         
         background: rgb(255, 255, 255);
@@ -13,9 +11,12 @@ page-upload-image {
         height: 500px;
         box-shadow: 0 0 5px black;
         position: absolute;
-        top: 1500%;
-        border-top-right-radius: 15px;
-        border-top-left-radius: 15px; 
+        top: 10vh;
+        border-top-right-radius: 30px;
+        border-top-left-radius: 30px; 
+    }
+    ion-footer{
+        height: 0px;
     }
     // ion-col{
     //     text-align: center;
