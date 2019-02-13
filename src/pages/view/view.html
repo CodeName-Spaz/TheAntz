@@ -1,4 +1,3 @@
-
 <ion-content (ionScroll)="scroll($event)" class="content">
   <ion-fab left class="theWidth" id="back">
     <div class="secondary">
@@ -31,7 +30,8 @@
               <br>
             </h2>
             <p id="Location">
-              <ion-icon ios="ios-pin" md="md-pin"></ion-icon> {{location}}</p>
+              <ion-icon ios="ios-pin" md="md-pin"></ion-icon> {{location}}
+            </p>
 
           </ion-item>
         </ion-col>
@@ -52,7 +52,7 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <button class="statements" ion-button clear (click)="likePicture()"> {{numlikes}} Likes</button>
+            <button class="statements" ion-button color={{clr}} clear (click)="likePicture()"> {{numlikes}} Likes</button>
           </ion-col>
           <ion-col>
             <button ion-button class="statements" clear>{{numComments}} Comments</button>
@@ -82,7 +82,7 @@
       </ion-card>
     </ion-list>
   </div>
-  
+
 </ion-content>
 <ion-footer no-padding>
   <ion-toolbar>

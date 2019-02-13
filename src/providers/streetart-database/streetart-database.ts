@@ -943,17 +943,23 @@ export class StreetartzProvider {
           .toTimeString()
           .replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
         var resuls;
-        // if (currentUser == artkey){
-        //   resuls =  false;
-        // }
-        // else{
-        //   resuls = true;
-        // }
+
+        // firebase
+        // .database()
+        // .ref("messages/" + artkey)
+        // .child(userkey)
+        // .push({
+        //   message: message,
+        //   uid: currentUser,
+        //   time: time,
+        //   status: resuls,
+        //   artKey: picKey
+        // });
+
         resuls = false;
         firebase
           .database()
-          .ref("messages/" + artkey)
-          .child(userkey)
+          .ref("messages/" + userkey + '/' + artkey + '/' + picKey)
           .push({
             message: message,
             uid: currentUser,
@@ -1264,9 +1270,161 @@ export class StreetartzProvider {
   }
 
 
-
-
   conversation = new Array();
+  messgaes = new Array();
+
+  getSentMessages() {
+    return new Promise((pass, fail) => {
+      var currentUser = firebase.auth().currentUser.uid;
+      firebase.database().ref('messages/' + currentUser).on('value', data => {
+        this.conversation.length = 0;
+        this.allMessages.length = 0;
+        var destinationIDs = data.val();
+        var destKeys = Object.keys(destinationIDs);
+        for (var x = 0; x < destKeys.length; x++) {
+          firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x]).on('value', artKeys => {
+            var artskeyz = artKeys.val();
+            var artKeyzz = Object.keys(artskeyz);
+            for (var i = 0; i < artKeyzz.length; i++) {
+              firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i]).on('value', messages => {
+                var messg = messages.val();
+                var msgKeys = Object.keys(messg);
+                var artKey;
+                var lastMesag;
+                var time;
+                var destKey = destKeys[x]
+                var path = 'messages/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i];
+                for (var y = 0; y < msgKeys.length; y++) {
+                  artKey = messg[msgKeys[y]].artKey;
+                  lastMesag = messg[msgKeys[y]].message;
+                  time = messg[msgKeys[y]].time;
+                }
+                firebase.database().ref('Orders/' + destKeys[x]).on('value', orders => {
+                  var allOrders = orders.val();
+                  var OrdersKey = Object.keys(allOrders);
+                  for (var z = 0; z < OrdersKey.length; z++) {
+                    var k = OrdersKey[z]
+                    var keyArt = allOrders[k].artKey;
+                    if (keyArt == artKey) {
+                      console.log(destKey);
+                      firebase.database().ref('profiles/' + destKey).on('value', profile => {
+                        console.log(profile.val());
+                        this.setConversation(profile.val().downloadurl, lastMesag, time, profile.val().name, path, destKey, allOrders[k].downloadurl, artKey)
+                      })
+                    }
+                  }
+                })
+              })
+              pass('')
+            }
+          })
+        }
+      })
+    })
+  }
+
+
+  checkOrderState(id, key) {
+    return new Promise((accpt, rej) => {
+      var currentUser = firebase.auth().currentUser.uid;
+      firebase.database().ref('Orders/' + currentUser).on('value', data => {
+
+      })
+    })
+  }
+
+  tempMsgArray = new Array();
+  getDirectMessgs() {
+    return new Promise((pass, fail) => {
+      var currentUser = firebase.auth().currentUser.uid;
+      firebase.database().ref('Orders/' + currentUser).on('value', data => {
+        this.tempMsgArray.length = 0;
+        var orders = data.val();
+        var keys = Object.keys(orders)
+        var artKey;
+        var lastMesag;
+        var time;
+        var path;
+        for (var x = 0; x < keys.length; x++) {
+          var k = keys[x]
+          path = 'messages2/' + orders[k].currentUserId + '/' + currentUser + '/' + orders[k].artKey;
+          let Obj = {
+            path: path,
+            id: orders[k].currentUserId,
+            url: orders[k].downloadurl,
+          }
+          this.tempMsgArray.push(Obj)
+        }
+        setTimeout(() => {
+          this.step2(this.tempMsgArray)
+        }, 100);
+      })
+    })
+  }
+
+  step2Arr = new Array();
+  step2(data) {
+    return new Promise((pass, fail) => {
+      console.log(data);
+      this.step2Arr.length = 0;
+      for (var x = 0; x < data.length; x++) {
+        console.log(data[x].path);
+        firebase.database().ref(data[x].path).limitToLast(1).on('value', data2 => {
+          this.tempMsgArray.length = 0;
+          var details = data2.val();
+          var keys = Object.keys(details)
+          let obj = {
+            artKey: details[keys[0]].artKey,
+            time: details[keys[0]].time,
+            lastMesag: details[keys[0]].message,
+            id: details[keys[0]].uid
+          }
+          this.step2Arr.push(obj)
+        })
+      }
+      setTimeout(() => {
+        this.step3(data, this.step2Arr)
+      }, 700);
+    })
+  }
+
+  step3Arr = new Array();
+  step3(users, messgages) {
+    return new Promise((pass, fail) => {
+      console.log(messgages.length);
+      for (var x = 0; x < messgages.length; x++) {
+        console.log(messgages[x].id);
+        firebase.database().ref('profiles/' + messgages[x].id).on('value', data2 => {
+          this.step3Arr.length = 0;
+          this.step2Arr.length = 0;
+          console.log(data2.val());
+          let obj = {
+            url: data2.val().downloadurl,
+            name: data2.val().name
+          }
+        })
+      }
+    })
+  }
+
+  // getProfiles(data) {
+  //   return new Promise((accpt, rej) => {
+  //     console.log(data.length);
+  //     var temp = data;
+  //     console.log(data[0]);
+  //     var artKey = data[0].artKey
+  //     var lastMesag = data[0].lastMesag
+  //     var time = data[0].time
+  //     var path = data[0].path;
+  //     var url = data[0].url
+  //     var id = data[0].id
+  //     firebase.database().ref('profiles/' + data[0].id).on('value', profile => {
+  //       console.log(lastMesag);
+  //       this.setConversation(profile.val().downloadurl, lastMesag, time, profile.val().name, path, id, url, artKey)
+  //     })
+  //     accpt('')
+  //   })
+  // }
   setConversation(image, lastMessage, time, name, path, id, pic, key) {
     console.log(key);
     var currentUser = firebase.auth().currentUser.uid;
@@ -1282,23 +1440,6 @@ export class StreetartzProvider {
       user: currentUser
     };
     this.conversation.push(msgObj);
-    // if (this.conversation.length == 0) {
-
-    // }
-    // else {
-    //   var len = this.conversation.length;
-    //   var status = false;
-    //   for (var x = 0; x < len; x++) {
-    //     if (this.conversation[x].id == id) {
-    //       status = true;
-    //       break;
-    //     }
-    //   }
-    //   if (status != true) {
-    //     this.conversation.push(msgObj)
-    //   }
-    // }
-
     console.log("aassignnn");
     console.log(this.conversation);
 
@@ -1316,184 +1457,4 @@ export class StreetartzProvider {
     // })
   }
 
-  messgaes = new Array();
-  retriveMessages() {
-    return new Promise((pass, fail) => {
-      this.conversation.length = 0;
-      this.messgaes.length = 0;
-      console.log(this.conversation);
-      console.log(this.conversation);
-
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Please Wait.....',
-        duration: 4000000
-      });
-      loading.present();
-      this.ngzone.run(() => {
-        this.conversation.length = 0;
-        this.messgaes.length = 0;
-        var currentUser = firebase.auth().currentUser.uid;
-        console.log(currentUser);
-        var keys
-        firebase.database().ref('messages/' + currentUser).on('value', data3 => {
-          this.messgaes.length = 0;
-          if (data3.val() != undefined || data3.val() != null) {
-            var infor3 = data3.val();
-            keys = Object.keys(data3.val())
-            this.conversation.length = 0;
-            this.messgaes.length = 0;
-            for (var x = 0; x < keys.length; x++) {
-              firebase.database().ref('messages/' + currentUser + "/" + keys[x]).on('value', data4 => {
-                var details = data4.val();
-                var msgKeys = Object.keys(details)
-                var artKey;
-                var lastMesag;
-                var time;
-                var Mainpath = 'messages/' + currentUser + "/" + keys[x];
-                for (var i = 0; i < msgKeys.length; i++) {
-                  let mssags = {
-                    message: details[msgKeys[i]].message,
-                    time: details[msgKeys[i]].time,
-                    uid: keys[x],
-                    status: details[msgKeys[i]].status,
-                    orderKey: details[msgKeys[i]].artKey
-                  }
-                  artKey = details[msgKeys[i]].artKey
-                  lastMesag = details[msgKeys[i]].message
-                  time = details[msgKeys[i]].time
-                  // this.messgaes.push(mssags);
-                }
-                var path = 'Orders/' + currentUser;
-                firebase.database().ref(path).on('value', data5 => {
-                  if (data5.val() != null || data5.val() != undefined) {
-                    var senderDetails = data5.val();
-                    var senderk = Object.keys(senderDetails)
-                    console.log(senderDetails);
-                    for (var a = 0; a < senderk.length; a++) {
-                      var kk = senderk[a];
-                      if (senderDetails[kk].currentUserId == keys[x]) {
-                        // if (keys[x] == undefined) {
-                        //   this.retriveMessages()
-                        // }
-                        console.log('mon');
-
-                        var path2 = 'profiles/' + keys[x];
-                        firebase.database().ref(path2).on('value', data6 => {
-                          if (data6.val() != undefined) {
-                            console.log('set convo');
-                            this.setConversation(data6.val().downloadurl, lastMesag, time, data6.val().name, Mainpath, keys[x], senderDetails[kk].downloadurl, senderDetails[kk].artKey)
-                          }
-                        })
-                        break;
-                      }
-                    }
-                  }
-                })
-
-              })
-
-            }
-
-          }
-          else {
-            loading.dismiss();
-          }
-        })
-        // loading.dismiss();
-        // pass('done')
-        this.getDirectMEssages('done').then(() => {
-          loading.dismiss();
-          pass('done')
-        })
-      })
-    })
-  }
-  artIndx = 0;
-  getDirectMEssages(result) {
-    if (result == 'done') {
-      return new Promise((accpt, rej) => {
-        var currentUser = firebase.auth().currentUser.uid;
-        firebase.database().ref('messages').once('value', data => {
-          if (data.val() != undefined || data.val() != null) {
-            var allMessages = data.val();
-            var firtsArtkey;
-            var keys = Object.keys(allMessages);
-            for (var x = 0; x < keys.length; x++) {
-              if (keys[x] != currentUser) {
-                firebase.database().ref('messages/' + keys[x]).on('value', data2 => {
-                  var innerDetails = data2.val();
-                  var innerKeys = Object.keys(innerDetails);
-                  for (var i = 0; i < innerKeys.length; i++) {
-                    firebase.database().ref('messages/' + keys[x] + "/" + innerKeys[i]).on('value', data3 => {
-                      if (data3.val() != undefined) {
-                        var lastDetails = data3.val();
-                        var lastkeys = Object.keys(lastDetails);
-                        var artKey;
-                        var lastMesag;
-                        var time;
-                        var state = 0;
-                        var Mainpath = 'messages/' + keys[x] + "/" + innerKeys[i];
-                        var artkey;
-                        console.log(this.artIndx)
-                        for (var a = this.artIndx; a < lastkeys.length; a++) {
-
-                          // firtsArtkey = lastDetails[lastkeys[this.artIndx]].artKey
-                          // console.log(firtsArtkey);
-                          if (innerKeys[i] == currentUser) {
-                            state = 1;
-                            let mssags = {
-                              message: lastDetails[lastkeys[a]].message,
-                              time: lastDetails[lastkeys[a]].time,
-                              uid: lastDetails[lastkeys[a]].uid,
-                              status: lastDetails[lastkeys[a]].status
-                            }
-                            artKey = lastDetails[lastkeys[a]].artKey
-                            lastMesag = lastDetails[lastkeys[a]].message
-                            time = lastDetails[lastkeys[a]].time
-                            artKey = lastDetails[lastkeys[a]].artKey
-                            console.log(artKey);
-                          }
-                          // else {
-                          //   this.artIndx = a;
-                          // }
-                        }
-                        if (state == 1) {
-                          var path = 'Orders/' + keys[x];
-                          console.log(path)
-                          firebase.database().ref(path).once('value', data5 => {
-                            console.log(data5.val());
-                            if (data5.val() != null || data5.val() != undefined) {
-                              var senderDetails = data5.val();
-                              var senderk = Object.keys(senderDetails)
-                              for (var xx = 0; xx < senderk.length; xx++) {
-                                var kk = senderk[xx];
-                                console.log(artKey)
-                                console.log(senderDetails[kk].artKey);
-                                if (senderDetails[kk].currentUserId == currentUser) {
-                                  if (lastMesag != undefined || time != undefined) {
-                                    firebase.database().ref('profiles/' + senderDetails[kk].uid).on('value', data6 => {
-                                      if (data6.val() != undefined) {
-                                        this.setConversation(data6.val().downloadurl, lastMesag, time, data6.val().name, Mainpath, senderDetails[kk].uid, senderDetails[kk].downloadurl, senderDetails[kk].artKey)
-                                      }
-                                    })
-                                  }
-                                }
-                              }
-                            }
-                          })
-                        }
-                      }
-                    })
-                  }
-                })
-              }
-            }
-            accpt('done')
-            console.log(this.messgaes)
-          }
-        })
-      })
-    }
-  }
 }

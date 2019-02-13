@@ -66,6 +66,7 @@ export class ViewPage implements OnInit {
   display = [];
   tempemail;
 
+  clr = "";
   obj = this.navParams.get("obj");
   constructor(public SendEmailProvider: SendEmailProvider, public navCtrl: NavController, public navParams: NavParams, public art: StreetartzProvider, private emailComposer: EmailComposer, public alertCtrl: AlertController, public toastCtrl: ToastController) {
     this.obj = this.navParams.get("obj");
@@ -86,7 +87,7 @@ export class ViewPage implements OnInit {
     this.uid = this.obj.uid
     this.currentUserId = firebase.auth().currentUser.uid
     this.Retrivecomments();
-
+    this.checkLikes();
 
     this.art.returnUID().then((data) => {
       this.tempName = data[0].name;
@@ -115,7 +116,20 @@ export class ViewPage implements OnInit {
       btnOrder[0].style.display = "none";
     }
 
+
   }
+
+  checkLikes() {
+    this.art.viewLikes(this.obj.key).then(data => {
+      if (data == "not found") {
+        this.clr = "light"
+      }
+      else {
+        this.clr = "primary"
+      }
+    })
+  }
+
   scroll(event) {
     let page = document.getElementsByClassName('content') as HTMLCollectionOf<HTMLElement>;
     let backBTN = document.getElementsByClassName('theWidth') as HTMLCollectionOf<HTMLElement>;
@@ -227,6 +241,7 @@ export class ViewPage implements OnInit {
         this.sendInformation();
         this.navCtrl.push(OrderModalPage, { obj: obj });
       })
+
     }
   }
 
@@ -286,17 +301,23 @@ export class ViewPage implements OnInit {
 
     }
     else {
+      console.log(this.clr);
+
       this.art.viewLikes(this.obj.key).then(data => {
         if (data == "not found") {
           this.art.likePic(this.obj.key);
           this.art.addNumOfLikes(this.obj.key, this.numlikes);
           this.numlikes++;
+          this.clr = "primary"
         }
         else {
           this.art.removeLike(this.obj.key, this.numlikes, data);
           this.numlikes--;
+          this.clr = "light"
         }
       })
+      console.log(this.clr);
+
     }
 
   }

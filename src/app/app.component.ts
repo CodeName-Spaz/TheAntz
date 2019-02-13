@@ -32,7 +32,6 @@ export class MyApp {
     art.checkstate().then((data: any) => {
       if (data == 1) {
         this.rootPage = CategoryPage;
-        this.art.retriveMessages();
       }
       else {
         this.rootPage = LoginPage

@@ -55,14 +55,10 @@ export class ChatsPage {
   }
 
   getData() {
-    this.art.retriveMessages().then((data: any) => {
-      this.art.getAllConvo().then((data: any) => {
-        this.displayCurentMessages = data;
-      })
-    }, Error => {
-      console.log(Error);
+    this.art.getDirectMessgs();
+    this.art.getAllConvo().then((data: any) => {
+      this.displayCurentMessages = data;
     })
-
   }
 
   // ionViewDidEnter() {
