@@ -42,6 +42,14 @@ firebase.initializeApp({
   messagingSenderId: "326198585168"
 })
 
+// class ScreenOrientationMock extends ScreenOrientation {
+//   lock(type) {
+//     return new Promise((resolve, reject) => {
+//       resolve("locked");
+//     })
+//   }
+// }
+
 @NgModule({
   declarations: [
     MyApp,
