@@ -93,7 +93,7 @@ export class StreetartzProvider {
       user.sendEmailVerification();
       let alert = this.alertCtrl.create({
         title: '',
-        subTitle: "We have sent you an email,Open it up to activate your account.",
+        subTitle: "We have sent you a verification mail, Please activate your account with the link in the mail",
         buttons: ['OK']
       });
       alert.present();
@@ -117,16 +117,20 @@ export class StreetartzProvider {
     }
   }
 
+  sendVerificationLink() {
+    var user = firebase.auth().currentUser;
+    user.sendEmailVerification();
+  }
 
   register(email, password, name) {
     return new Promise((resolve, reject) => {
       this.ngzone.run(() => {
-        let loading = this.loadingCtrl.create({
-          spinner: "bubbles",
-          content: "Signing in....",
-          duration: 4000000
-        });
-        loading.present();
+        // let loading = this.loadingCtrl.create({
+        //   spinner: "bubbles",
+        //   content: "Signing in....",
+        //   duration: 4000000
+        // });
+        // loading.present();
         return firebase
           .auth()
           .createUserWithEmailAndPassword(email, password)
@@ -144,10 +148,11 @@ export class StreetartzProvider {
                   "You have not yet inserted a description about your skills and abilities, update profile to get started."
               });
             resolve();
-            loading.dismiss();
+            // loading.dismiss();
+
           })
           .catch(error => {
-            loading.dismiss();
+            // loading.dismiss();
             const alert = this.alertCtrl.create({
               subTitle: error.message,
               buttons: [
@@ -294,7 +299,7 @@ export class StreetartzProvider {
       duration: 8000
     });
     const toast = this.toastCtrl.create({
-      message: "your imagine had been uploaded!",
+      message: "Your imagine has been uploaded!",
       duration: 3000
     });
     loading.present();
@@ -409,18 +414,18 @@ export class StreetartzProvider {
       duration: 2000
     });
     const toast = this.toastCtrl.create({
-      message: "data has been updated!",
+      message: "Your Profile has been updated!",
       duration: 3000
     });
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
-        toast.present();
         firebase
           .storage()
           .ref(name)
           .putString(pic, "data_url")
           .then(
             () => {
+              toast.present();
               accpt(name);
               console.log(name);
             },
@@ -653,12 +658,7 @@ export class StreetartzProvider {
     });
   }
   viewPicMain() {
-    let loader = this.loadingCtrl.create({
-      spinner: "bubbles",
-      content: "Loading...",
-      duration: 4000000000000000000
-    });
-    loader.present();
+
     return new Promise((accpt, rejc) => {
       firebase
         .database()
@@ -709,8 +709,8 @@ export class StreetartzProvider {
               console.log("empty");
             }
           }),
-            loader.dismiss();
-          accpt(this.DisplayArrUploads);
+
+            accpt(this.DisplayArrUploads);
         });
     });
   }
@@ -755,7 +755,6 @@ export class StreetartzProvider {
     this.keyArr.length = 0;
     return new Promise((accpt, rejc) => {
       this.ngzone.run(() => {
-        var user = firebase.auth().currentUser;
         firebase
           .database()
           .ref("comments/" + key)
@@ -772,7 +771,6 @@ export class StreetartzProvider {
                   var chckId = CommentDetails[key].uid;
                   let obj = {
                     comment: CommentDetails[key].comment,
-                    uid: user.uid,
                     url: this.url,
                     date: moment(
                       CommentDetails[key].date,
@@ -935,6 +933,9 @@ export class StreetartzProvider {
 
   BuyPicture(artkey, userkey, message, picKey) {
     console.log(picKey);
+    console.log(artkey);
+    console.log(userkey);
+    console.log(message);
     return new Promise((accpt, rej) => {
       this.ngzone.run(() => {
         let dateObj = new Date();
@@ -942,24 +943,23 @@ export class StreetartzProvider {
         let time = dateObj
           .toTimeString()
           .replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-        var resuls;
-
-        // firebase
-        // .database()
-        // .ref("messages/" + artkey)
-        // .child(userkey)
-        // .push({
-        //   message: message,
-        //   uid: currentUser,
-        //   time: time,
-        //   status: resuls,
-        //   artKey: picKey
-        // });
+        var resuls = true;
+        firebase
+          .database()
+          .ref("messages/" + artkey)
+          .child(userkey)
+          .push({
+            message: message,
+            uid: currentUser,
+            time: time,
+            status: resuls,
+            artKey: picKey
+          });
 
         resuls = false;
         firebase
           .database()
-          .ref("messages/" + userkey + '/' + artkey + '/' + picKey)
+          .ref("messages2/" + userkey + '/' + artkey + '/' + picKey)
           .push({
             message: message,
             uid: currentUser,
@@ -1250,74 +1250,88 @@ export class StreetartzProvider {
           .ref(path)
           .on("value", data => {
             this.allMessages.length = 0;
-            var messages = data.val();
-            var keys = Object.keys(messages);
-            for (var x = 0; x < keys.length; x++) {
-              var k = keys[x];
-              let obj = {
-                message: messages[k].message,
-                time: messages[k].time,
-                uid: messages[k].uid,
-                status: messages[k].status,
-                artKey: messages[k].artKey
-              };
-              this.allMessages.push(obj);
+            if (data.val() != undefined || data.val() != null) {
+              var messages = data.val();
+              var keys = Object.keys(messages);
+              for (var x = 0; x < keys.length; x++) {
+                var k = keys[x];
+                let obj = {
+                  message: messages[k].message,
+                  time: messages[k].time,
+                  uid: messages[k].uid,
+                  status: messages[k].status,
+                  artKey: messages[k].artKey
+                };
+                this.allMessages.push(obj);
+              }
+              accpt(this.allMessages);
             }
-            accpt(this.allMessages);
           });
       });
     });
   }
-
-
   conversation = new Array();
   messgaes = new Array();
 
   getSentMessages() {
     return new Promise((pass, fail) => {
       var currentUser = firebase.auth().currentUser.uid;
-      firebase.database().ref('messages/' + currentUser).on('value', data => {
-        this.conversation.length = 0;
-        this.allMessages.length = 0;
-        var destinationIDs = data.val();
-        var destKeys = Object.keys(destinationIDs);
-        for (var x = 0; x < destKeys.length; x++) {
-          firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x]).on('value', artKeys => {
-            var artskeyz = artKeys.val();
-            var artKeyzz = Object.keys(artskeyz);
-            for (var i = 0; i < artKeyzz.length; i++) {
-              firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i]).on('value', messages => {
-                var messg = messages.val();
-                var msgKeys = Object.keys(messg);
-                var artKey;
-                var lastMesag;
-                var time;
-                var destKey = destKeys[x]
-                var path = 'messages/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i];
-                for (var y = 0; y < msgKeys.length; y++) {
-                  artKey = messg[msgKeys[y]].artKey;
-                  lastMesag = messg[msgKeys[y]].message;
-                  time = messg[msgKeys[y]].time;
-                }
-                firebase.database().ref('Orders/' + destKeys[x]).on('value', orders => {
-                  var allOrders = orders.val();
-                  var OrdersKey = Object.keys(allOrders);
-                  for (var z = 0; z < OrdersKey.length; z++) {
-                    var k = OrdersKey[z]
-                    var keyArt = allOrders[k].artKey;
-                    if (keyArt == artKey) {
-                      console.log(destKey);
-                      firebase.database().ref('profiles/' + destKey).on('value', profile => {
-                        console.log(profile.val());
-                        this.setConversation(profile.val().downloadurl, lastMesag, time, profile.val().name, path, destKey, allOrders[k].downloadurl, artKey)
+      firebase.database().ref('messages2/' + currentUser).on('value', data => {
+        if (data.val() != undefined || data.val() != undefined) {
+          this.conversation.length = 0;
+          var destinationIDs = data.val();
+          var destKeys = Object.keys(destinationIDs);
+          for (var x = 0; x < destKeys.length; x++) {
+            firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x]).on('value', artKeys => {
+              if (artKeys.val() != undefined || artKeys.val() != null) {
+                var artskeyz = artKeys.val();
+                var artKeyzz = Object.keys(artskeyz);
+                for (var i = 0; i < artKeyzz.length; i++) {
+                  firebase.database().ref('messages2/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i]).on('value', messages => {
+                    if (messages.val() != undefined || messages.val()) {
+                      var messg = messages.val();
+                      var msgKeys = Object.keys(messg);
+                      var artKey;
+                      var lastMesag;
+                      var time;
+                      var destKey = destKeys[x]
+                      var path = 'messages2/' + currentUser + '/' + destKeys[x] + '/' + artKeyzz[i];
+                      for (var y = 0; y < msgKeys.length; y++) {
+                        artKey = messg[msgKeys[y]].artKey;
+                        lastMesag = messg[msgKeys[y]].message;
+                        time = messg[msgKeys[y]].time;
+                      }
+                      firebase.database().ref('Orders/' + destKeys[x]).on('value', orders => {
+                        if (orders.val() != undefined || orders.val() != null) {
+                          var allOrders = orders.val();
+                          var OrdersKey = Object.keys(allOrders);
+                          for (var z = 0; z < OrdersKey.length; z++) {
+                            var k = OrdersKey[z]
+                            var keyArt = allOrders[k].artKey;
+                            if (keyArt == artKey) {
+                              console.log(destKey);
+                              firebase.database().ref('profiles/' + destKey).on('value', profile => {
+                                console.log(profile.val());
+                                this.setConversation(profile.val().downloadurl, lastMesag, time, profile.val().name, path, destKey, allOrders[k].downloadurl, artKey)
+                              })
+                            }
+                          }
+                        }
                       })
                     }
-                  }
-                })
-              })
-              pass('')
-            }
-          })
+                  })
+                  console.log('nothing found');
+                  pass('')
+                }
+              }
+            })
+          }
+        }
+        else {
+          console.log('nothing found');
+          pass('')
+          this.conversation.length = 0;
+          this.allMessages.length = 0;
         }
       })
     })
@@ -1327,8 +1341,26 @@ export class StreetartzProvider {
   checkOrderState(id, key) {
     return new Promise((accpt, rej) => {
       var currentUser = firebase.auth().currentUser.uid;
-      firebase.database().ref('Orders/' + currentUser).on('value', data => {
+      firebase.database().ref('Orders/' + id).on('value', data => {
+        if (data.val() != undefined || data.val() != null) {
+          var details = data.val();
+          var keys = Object.keys(details);
+          for (var x = 0; x < keys.length; x++) {
+            var k = keys[x];
+            console.log(key);
 
+            if (details[k].currentUserId == currentUser && details[k].artKey == key) {
+              console.log('found');
+              accpt(1)
+              break;
+            }
+          }
+          console.log('not found');
+          accpt(0)
+        }
+        else {
+          accpt(0)
+        }
       })
     })
   }
@@ -1339,25 +1371,34 @@ export class StreetartzProvider {
       var currentUser = firebase.auth().currentUser.uid;
       firebase.database().ref('Orders/' + currentUser).on('value', data => {
         this.tempMsgArray.length = 0;
-        var orders = data.val();
-        var keys = Object.keys(orders)
-        var artKey;
-        var lastMesag;
-        var time;
-        var path;
-        for (var x = 0; x < keys.length; x++) {
-          var k = keys[x]
-          path = 'messages2/' + orders[k].currentUserId + '/' + currentUser + '/' + orders[k].artKey;
-          let Obj = {
-            path: path,
-            id: orders[k].currentUserId,
-            url: orders[k].downloadurl,
+        this.step2Arr.length = 0;
+        this.step3Arr.length = 0;
+        if (data.val() != undefined || data.val() != null) {
+          console.log('direct');
+          this.tempMsgArray.length = 0;
+          var orders = data.val();
+          var keys = Object.keys(orders)
+          var artKey;
+          var lastMesag;
+          var time;
+          var path;
+          for (var x = 0; x < keys.length; x++) {
+            var k = keys[x]
+            path = 'messages2/' + orders[k].currentUserId + '/' + currentUser + '/' + orders[k].artKey;
+            let Obj = {
+              path: path,
+              id: orders[k].currentUserId,
+              url: orders[k].downloadurl,
+            }
+            this.tempMsgArray.push(Obj)
           }
-          this.tempMsgArray.push(Obj)
+          this.step2(this.tempMsgArray).then(() => {
+            pass('')
+          })
         }
-        setTimeout(() => {
-          this.step2(this.tempMsgArray)
-        }, 100);
+        else {
+          pass('')
+        }
       })
     })
   }
@@ -1366,65 +1407,70 @@ export class StreetartzProvider {
   step2(data) {
     return new Promise((pass, fail) => {
       console.log(data);
-      this.step2Arr.length = 0;
       for (var x = 0; x < data.length; x++) {
         console.log(data[x].path);
         firebase.database().ref(data[x].path).limitToLast(1).on('value', data2 => {
-          this.tempMsgArray.length = 0;
-          var details = data2.val();
-          var keys = Object.keys(details)
-          let obj = {
-            artKey: details[keys[0]].artKey,
-            time: details[keys[0]].time,
-            lastMesag: details[keys[0]].message,
-            id: details[keys[0]].uid
+          if (data2.val() != undefined || data2.val() != null) {
+            var details = data2.val();
+            var keys = Object.keys(details)
+            let obj = {
+              artKey: details[keys[0]].artKey,
+              time: details[keys[0]].time,
+              lastMesag: details[keys[0]].message,
+              id: details[keys[0]].uid
+            }
+            this.step2Arr.push(obj)
           }
-          this.step2Arr.push(obj)
         })
       }
       setTimeout(() => {
-        this.step3(data, this.step2Arr)
-      }, 700);
+        this.step3(data, this.step2Arr).then(() => {
+          pass('')
+        })
+      }, 1400);
     })
   }
 
   step3Arr = new Array();
   step3(users, messgages) {
     return new Promise((pass, fail) => {
-      console.log(messgages.length);
       for (var x = 0; x < messgages.length; x++) {
-        console.log(messgages[x].id);
-        firebase.database().ref('profiles/' + messgages[x].id).on('value', data2 => {
-          this.step3Arr.length = 0;
-          this.step2Arr.length = 0;
-          console.log(data2.val());
-          let obj = {
-            url: data2.val().downloadurl,
-            name: data2.val().name
-          }
-        })
+        if (users[x] != undefined || users[x] != null) {
+          firebase.database().ref('profiles/' + users[x].id).on('value', data2 => {
+            let obj = {
+              url: data2.val().downloadurl,
+              name: data2.val().name
+            }
+            this.step3Arr.push(obj)
+          })
+        }
       }
+      this.combine(users, messgages, this.step3Arr).then(() => {
+        pass('')
+      })
     })
   }
 
-  // getProfiles(data) {
-  //   return new Promise((accpt, rej) => {
-  //     console.log(data.length);
-  //     var temp = data;
-  //     console.log(data[0]);
-  //     var artKey = data[0].artKey
-  //     var lastMesag = data[0].lastMesag
-  //     var time = data[0].time
-  //     var path = data[0].path;
-  //     var url = data[0].url
-  //     var id = data[0].id
-  //     firebase.database().ref('profiles/' + data[0].id).on('value', profile => {
-  //       console.log(lastMesag);
-  //       this.setConversation(profile.val().downloadurl, lastMesag, time, profile.val().name, path, id, url, artKey)
-  //     })
-  //     accpt('')
-  //   })
-  // }
+  combine(users, mes, pro) {
+    return new Promise((accpt, rej) => {
+      setTimeout(() => {
+        console.log(users);
+        console.log(mes);
+        console.log(pro);
+        console.log(users.length);
+
+        for (var x = 0; x < users.length; x++) {
+          this.setConversation(pro[x].url, mes[x].lastMesag, mes[x].time, pro[x].name, users[x].path, users[x].id, users[x].url, mes[x].artKey)
+        }
+        // this.tempMsgArray.length = 0;
+        this.step2Arr.length = 0;
+        // this.step3Arr.length = 0;
+        accpt('')
+      }, 900);
+    })
+  }
+
+
   setConversation(image, lastMessage, time, name, path, id, pic, key) {
     console.log(key);
     var currentUser = firebase.auth().currentUser.uid;

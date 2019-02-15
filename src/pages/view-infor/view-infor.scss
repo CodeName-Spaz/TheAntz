@@ -1,4 +1,4 @@
-page-view-infor {
+page-view-infor {   
     ion-col{
         // border: 2px solid red;
         width: 100%;
@@ -79,7 +79,7 @@ page-view-infor {
         position: relative;
         border: 0.05px solid rgb(218, 218, 218);
         box-shadow: 0 2px 5px rgb(187, 187, 187);
-        background: white;
+        background: rgba(38, 71, 126, 0.295);
         border-radius: 15px;
         border-top-left-radius: 0;
         min-width: 80px;
@@ -100,7 +100,7 @@ page-view-infor {
         position: relative;
         border: 0.05px solid rgb(218, 218, 218);
         box-shadow: 0 2px 5px rgb(187, 187, 187);
-        background: rgb(197, 197, 197);
+        background: rgba(153, 108, 30, 0.205);
         border-radius: 15px;
         border-top-left-radius: 0;
         width: 80vw;
